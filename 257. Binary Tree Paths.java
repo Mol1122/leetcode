@@ -9,23 +9,48 @@
  */
 class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
-        List<String> result = new ArrayList<>();
+        //divide conquer DFS:当前node跟两边儿子的关系就是在两儿子前加上root.val
+//         List<String> results = new ArrayList<>();
+//         if (root == null) {
+//             return results;
+//         }
+//         List<String> leftPath = binaryTreePaths(root.left);
+//         List<String> rightPath = binaryTreePaths(root.right);
+        
+//         for (String str : leftPath) {
+//             results.add(root.val + "->" + str);
+//         }
+//         for (String str : rightPath) { //leaves
+//             results.add(root.val + "->" + str);
+//         }
+//         if (results.size() == 0) {
+//             results.add("" + root.val);
+//         }
+//         return results;
+        
+        //traverse:难点在于你如何append string
+        List<String> results = new ArrayList<>();
         if (root == null) {
-            return result;
+            return results;
         }
-        List<String> left = binaryTreePaths(root.left);
-        List<String> right = binaryTreePaths(root.right);
-        for (String p : left) {
-            result.add(root.val + "->" + p);
+        helper(root, "", results);
+        return results;
+    }
+    
+    private void helper(TreeNode root, String path, List<String> results) {
+        if (root == null) {
+            return;
         }
-        for (String p : right) {
-            result.add(root.val + "->" + p);
+    
+        if (root.left == null && root.right == null) {
+            results.add(path + root.val);
+            return;
         }
-        if (result.size() == 0) {
-            result.add("" + root.val);
+        if (root.left != null) {
+            helper(root.left, path + root.val + "->", results);
         }
-        return result;
+        if (root.right != null) {
+            helper(root.right, path + root.val + "->", results);
+        }
     }
 }
-
-/* 算法：分治型DFS (divide and conqure) */
