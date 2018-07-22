@@ -1,45 +1,51 @@
 class Solution {
     public boolean isMatch(String s, String p) {
+        //记忆化搜索 + DFS
         if (s == null || p == null) {
             return false;
         }
-        int n = s.length();
-        int m = p.length();
-        boolean[][] dp = new boolean[n + 1][m + 1];
+        boolean[][] visited = new boolean[s.length()][p.length()];
+        boolean[][] memo = new boolean[s.length()][p.length()];
         
-        //both s, p empty
-        dp[0][0] = true;
+        return dfs(s, 0, p, 0, memo, visited);
+    }
+    
+    private boolean dfs(String s, int sIndex, String p, int pIndex, boolean[][] memo, boolean[][] visited) {
+        if (pIndex == p.length()) {
+            return sIndex == s.length();
+        }
+        if (sIndex == s.length()) {
+            return starCheck(p, pIndex);
+        }
+        if (visited[sIndex][pIndex]) {
+            return memo[sIndex][pIndex];
+        }
+        char sChar = s.charAt(sIndex);
+        char pChar = p.charAt(pIndex);
+        boolean match = false;
         
-        //s not empty, p empty
-        for (int i = 1; i <= n; i++) {
-            dp[i][0] = false;
+        if (pIndex + 1 < p.length() && p.charAt(pIndex + 1) == '*') {
+            match = dfs(s, sIndex, p, pIndex + 2, memo, visited) ||
+                (charMatch(sChar, pChar) && dfs(s, sIndex + 1, p, pIndex, memo, visited));
+        } else {
+            match = charMatch(sChar, pChar) && dfs(s, sIndex + 1, p, pIndex + 1, memo, visited);
         }
         
-        //s emtpy, p not empty
-        for (int j = 1; j <= m; j++) {
-            dp[0][1] = false;
-            if (j >= 2) {
-                dp[0][j] = dp[0][j - 2] && p.charAt(j - 1) == '*';
+        visited[sIndex][pIndex] = true;
+        memo[sIndex][pIndex] = match;
+        return match;
+    }
+    
+    private boolean charMatch(char sChar, char pChar) {
+        return sChar == pChar || pChar == '.';
+    }
+    
+    private boolean starCheck(String p, int index) {
+        for (int i = index; i < p.length(); i += 2) {
+            if (i + 1 >= p.length() || p.charAt(i + 1) != '*') {
+                return false;
             }
         }
-        //s, p not empty
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                char c = p.charAt(j - 1);
-                if (c != '*') {
-                    dp[i][j] = dp[i - 1][j - 1] && (s.charAt(i - 1) == c || c == '.');
-                } else {
-                    if (j == 1) {
-                        dp[i][j] = false;
-                        continue;
-                    }
-                    dp[i][j] = dp[i][j - 2] || (dp[i - 1][j] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.' ));
-                }
-            }
-        }
-        return dp[n][m];
+        return true;
     }
 }
-
-/* 算法：动态规划
-** 时间复杂度： O(nm)*/

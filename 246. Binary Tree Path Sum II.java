@@ -17,6 +17,8 @@ public class Solution {
      * @param target: An integer
      * @return: all valid paths
      */
+
+    // Binary Tree Path Sum II
     public List<List<Integer>> binaryTreePathSum2(TreeNode root, int target) {
         List<List<Integer>> results = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
@@ -54,4 +56,6 @@ public class Solution {
     }
 }
 /* 算法：有点类似于搜索类的DFS
-** 难点：最后52行一定要减去最后一个数。因为算法是先往左走到最底层，每走到新的一层就加上root,然后根据path看看能不能组合成sum. 当左右两边都走完的时候要减掉root (path.remove(path.size() - 1), 表示这一层的左右两边都走过了。 这样走到右子树的时候不会包含左子树的值 */
+** 难点：最后52行一定要减去最后一个数。因为算法是先往左走到最底层，每走到新的一层就加上root,然后根据path看看能不能组合成sum. 
+当左右两边都走完的时候要减掉root (path.remove(path.size() - 1), 表示这一层的左右两边都走过了。 
+这样走到右子树的时候不会包含左子树的值 */
