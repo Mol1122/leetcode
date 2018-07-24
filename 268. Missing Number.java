@@ -1,22 +1,23 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return -1;
+        int n = nums.length, i = 0;
+        
+        while (i < n) {
+            while (nums[i] != i && nums[i] < n) {
+                int temp = nums[i];
+                nums[i] = nums[temp];
+                nums[temp] = temp;
+            }
+            i++;
         }
-        int[] arr = new int[nums.length + 1];
-        for (int n : nums) {
-            arr[n] = n;
-        }
-       /* for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        } */
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != i) {
+        for (i = 0; i < n; i++) {
+            if (nums[i] != i) {
                 return i;
             }
         }
-        return 0;
+        return n;
     }
 }
 
-/* 算法：利用新开数组去一一对应地判断 */
+/* 算法：两层for循环就能把所有该在index位置上的放回位置上, 并且不占用格外空间
+** 时间复杂度：O(n^2) */
