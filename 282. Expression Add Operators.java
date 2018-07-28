@@ -1,32 +1,42 @@
 class Solution {
     public List<String> addOperators(String num, int target) {
-        List<String> ans = new ArrayList<>();
-        dfs(num, target, 0, "", 0, 0, ans);
-        return ans;
+        List<String> results = new ArrayList<>();
+        if (num == null || num.length() == 0) {
+            return results;
+        }
+        dfs(num, 0, target, "", 0, 0, results);
+        return results;
     }
     
-    private void dfs(String num, int target, int start, String str, long sum, long lastF, List<String> ans) {
-        if (start == num.length()) {
-            if (target == sum) {
-                ans.add(str);
+    private void dfs(String num, int startIndex, int target, String str, long sum, long lastF, List<String> results) {
+        if (startIndex == num.length()) {
+            if (sum == target) {
+                results.add(str);
             }
             return;
         }
-        for (int i = start; i < num.length(); i++) {
-            long x = Long.parseLong(num.substring(start, i + 1));
-            if (start == 0) {
-                dfs(num, target, i + 1, "" + x, x, x, ans);
+        // for (String s : results) {
+        //     System.out.println(s);
+        // }
+        
+        for (int i = startIndex; i < num.length(); i++) {
+            String sub = num.substring(startIndex, i + 1);
+            
+            long x = Long.parseLong(sub);
+            
+            if (startIndex == 0) {
+                dfs(num, i + 1, target, "" + x, x, x, results);
             } else {
-                dfs(num, target, i + 1, str + "*" + x, sum - lastF + x * lastF, x * lastF, ans);
-                dfs(num, target, i + 1, str + "+" + x, sum + x, x, ans);
-                dfs(num, target, i + 1, str + "-" + x, sum - x, -x, ans);
+                dfs(num, i + 1, target, str + "*" + x, sum - lastF + lastF * x, lastF * x, results);
+                dfs(num, i + 1, target, str + "+" + x, sum + x, x, results);
+                dfs(num, i + 1, target, str + "-" + x, sum - x, -x, results);
             }
             if (x == 0) {
-                break;
+                break; //以0开头的数只能取一次
             }
         }
     }
 }
 
-/* 算法：枚举型dfs
-** 难点：long sum, long lastF */
+/* 算法：字符串的切割 = combination, 用combination的通用模版就好
+** 难点：第一个字符，和前缀为0的字符需要单独判断 */
