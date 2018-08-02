@@ -1,70 +1,75 @@
 class LRUCache {
-    private class Node {
-        int key;
-        int value;
-        Node prev;
-        Node next;
+    class ListNode {
+        int key, val;
+        ListNode next;
         
-        public Node(int key, int value) {
+        public ListNode(int key, int value) {
             this.key = key;
-            this.value = value;
-            prev = null;
-            next = null;
+            this.val = value;
+            this.next = null;
         }
     }
-    int capacity = 0;
-    HashMap<Integer, Node> hs = new HashMap<>();
-    Node head = new Node(-1, -1);
-    Node tail = new Node(-1, -1);
-
+    int capacity, size;
+    Map<Integer, ListNode> keyToPrev;
+    ListNode dummy, tail;
+    
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        head.next = tail;
-        tail.prev = head;
+        this.size = 0;
+        keyToPrev = new HashMap<>();
+        dummy = new ListNode(0, 0);
+        tail = dummy;
     }
     
     public int get(int key) {
-        if (!hs.containsKey(key)) {
+        if (!keyToPrev.containsKey(key)) {
             return -1;
         }
-        //remove the current
-        Node current = hs.get(key);
-        current.prev.next = current.next;
-        current.next.prev = current.prev;
+        moveToTail(key);
+        return tail.val;
+    }
+    
+    private void moveToTail(int key) {
+        ListNode prev = keyToPrev.get(key);
+        ListNode curr = prev.next;
         
-        move_to_tail(current);
-        return hs.get(key).value;
+        if (tail == curr) {
+            return;
+        }
+        prev.next = prev.next.next;
+        tail.next = curr;
+        if (prev.next != null) {
+            keyToPrev.put(prev.next.key, prev);
+        }
+        keyToPrev.put(key, tail);
+        tail = curr;
     }
     
     public void put(int key, int value) {
-        if (get(key) != -1) { //already call move_to_tail
-            hs.get(key).value = value;
+        if (get(key) != -1) {
+            ListNode prev = keyToPrev.get(key);
+            prev.next.val = value;
+           // moveToTail(key);
             return;
         }
-        if (hs.size() == capacity) {
-            hs.remove(head.next.key); //别忘了
-            head.next = head.next.next;
-            head.next.prev = head; 
+        if (size < capacity) {
+            size++;
+            ListNode node = new ListNode(key, value);
+            tail.next = node;
+            keyToPrev.put(key, tail);
+            tail = node;
+            return;
         }
-        Node temp = new Node(key, value);
-        hs.put(key, temp);
-        move_to_tail(temp);
-    }
-    
-    private void move_to_tail(Node current) {
-        current.prev = tail.prev;
-        tail.prev = current;
-        current.prev.next = current;
-        current.next = tail;
+        ListNode first = dummy.next;
+        keyToPrev.remove(first.key);
+        
+        first.key = key;
+        first.val = value;
+        keyToPrev.put(key, dummy);
+        
+        moveToTail(key);
     }
 }
 
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */
-
-/* 难点：pointer的指向
-** 算法：用LinkedList去保存least recently used, hashmap是为了更快找到相对应的 linkedlist Node */
+/* 算法：因为每次更新都往后append,所以想到用linked list,然后因为要快速找到listnode,所以想到用hash.
+** 难点：1.moveToTail的时候要判断tail == curr 2.每次放入hash的要是key,不能是val*/
