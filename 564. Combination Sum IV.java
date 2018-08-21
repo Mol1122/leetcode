@@ -4,32 +4,28 @@ public class Solution {
      * @param target: An integer
      * @return: An integer
      */
-    public int backPackVI(int[] nums, int target) {
-        if (nums == null || nums.length == 0) {
+    public int backPackVI(int[] A, int m) {
+        if (A == null || A.length == 0) {
             return 0;
         }
-        int n = nums.length;
-        int[] dp = new int[target + 1];
-        // dp[0] = 1;
-        // for (int i = 1; i <= target; i++) {
-        //     for (int j = 1; j <= n; j++) {;
-        //         if (nums[j - 1] <= i) {
-        //             dp[i] += dp[i - nums[j - 1]];
-        //         }
-        //     }
-        // }
-        // return dp[target];
-        dp[0] = 1;
-        for (int i = 0; i <= target; i++) {
-            for (int j = 0; j < n; j++) {
-                if (nums[j] <= i) {
-                    dp[i] += dp[i - nums[j]];
+        int n = A.length;
+        int[] f = new int[m + 1];
+        f[0] = 1;
+        
+        //跟coin change的解法一样
+        for (int j = 0; j <= m; j++) {
+            //遍历最后放入背包的物品
+            for (int i = 0; i < n; i++) {
+                if (j - A[i] >= 0) {
+                    f[j] += f[j - A[i]];
                 }
             }
         }
-        return dp[target];
+        return f[m];
     }
 }
 
-/* 算法: dp[i]表示的是和为i的组合的个数，外层的for循环表示的是遍历所有可能的和，就像0-1背包的遍历所有的物品。
-**       内层for循环表示的是所有可能的放入的数,相当于所有可能体积，就像0-1背包要遍历所有可能的体积 */
+/* 算法：f[i] = 有多少种组合能拼出重量i
+    f[i] = f[i-A0] + f[i-A1] +…+ f[i-A[N-1]]
+** 难点：跟之前的题不同的地方在于，之前是判断数组的最后一个item要不要放进背包。
+         这题判断的是放进背包的是哪一个item */

@@ -4,45 +4,22 @@ public class Solution {
      * @return: A boolean which equals to true if the first player will win
      */
     public boolean firstWillWin(int n) {
-        int[] dp = new int[n + 1];
-        return MemorySearch(n, dp);
-    }
-    
-    private boolean MemorySearch(int n, int[] dp) {
-        if (dp[n] != 0) {
-            if (dp[n] == 2) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        if (n <= 0) { //0 empty, 1 false, 2 true
-            dp[n] = 1;
-        } else if (n == 1) {
-            dp[n] = 2;
-        } else if (n == 2) {
-            dp[n] = 2;
-        } else if (n == 3) {
-            dp[n] = 1;
-        } else {
-            if((MemorySearch(n-2, dp) && MemorySearch(n-3, dp)) || 
-                (MemorySearch(n-3, dp) && MemorySearch(n-4, dp) )) {
-                dp[n] = 2;
-            } else {
-                dp[n] = 1;
-            }
-        }
-        if (dp[n] == 2) {
-            return true;
-        } else {
+        boolean[] f = new boolean[n + 1];
+        if (n == 0) {
             return false;
         }
+        if (n <= 2) {
+            return true;
+        }
+        f[1] = true;
+        f[2] = true;
+        for (int i = 3; i <= n; i++) {
+            f[i] = f[i - 1] == false || f[i - 2] == false;
+        }
+        return f[n];
     }
 }
 
-/* 算法：博弈类dp.
-   state: dp[i]现在还剩i个硬币，现在“先手”取硬币的人最后的输赢状况
-   function：do[i] = (dp[1-2] && dp[i-3]) || (dp[i-3] && dp[i-4])     (1/1, 1/2, 2/1, 2/2)
-   initialize:dp[0] = false, dp[1] = true, dp[2] = true, dp[3] = false
-   answer: dp[n] 
-   时间复杂度：O(n) */
+/* 算法：f[i] = f[i-1] == FALSE OR f[i-2] == FALSE 表示还剩i个石子时，当前先手时候会取胜
+** 时间复杂度: O(n)
+** 空间复杂度：O(n), 优化后可以到O(1) */
