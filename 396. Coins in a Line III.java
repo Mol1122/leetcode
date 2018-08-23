@@ -3,38 +3,28 @@ public class Solution {
      * @param values: a vector of integers
      * @return: a boolean which equals to true if the first player will win
      */
-    public boolean firstWillWin(int[] values) {
-        int n = values.length;
-        int[][] dp = new int[n + 1][n + 1];
-        boolean[][] flag = new boolean[n + 1][n + 1];
-        int sum = 0;
+    public boolean firstWillWin(int[] A) {
+        if (A == null || A.length == 0) {
+            return false;
+        }
+        int n = A.length;
+        int[][] f = new int[n][n];
         
-        for (int item : values) {
-            sum += item;
+        for (int i = 0; i < n; i++) {
+            f[i][i] = A[i]; //当前先手只剩一个数可以取，后手没有树可以取，差值就是A[i]
         }
-        return sum < 2 * searchMemory(0, values.length - 1, dp, flag, values);
-    }
-    
-    private int searchMemory(int left, int right, int[][] dp, boolean[][] flag, int[] values) {
-        if (flag[left][right]) {
-            return dp[left][right];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i + 1; j < n; j++) {
+                f[i][j] = Math.max(-f[i + 1][j] + A[i], -f[i][j - 1] + A[j]);
+            }
         }
-        flag[left][right] = true;
-        if (left > right) {
-            dp[left][right] = 0;
-        } else if (left == right) {
-            dp[left][right] = values[left];
-        } else if (left + 1 == right) {
-            dp[left][right] = Math.max(values[left], values[right]);
-        } else {
-            int  pick_left = Math.min(searchMemory(left + 2, right, dp, flag, values), searchMemory(left + 1, right - 1, dp, flag, values)) + values[left];
-            int  pick_right = Math.min(searchMemory(left, right - 2, dp, flag, values), searchMemory(left + 1, right - 1, dp, flag, values)) + values[right];
-            dp[left][right] = Math.max(pick_left, pick_right);   
-        }
-        return dp[left][right];
+        return f[0][n - 1] >= 0;
     }
 }
 
-/* 算法：博弈类dp
-** 时间复杂度：O(n^2) 因为本质上是遍历一个二维数组 
-** 难点：values[left] 和values[right] 要写在Math.min的外面 */
+/* 算法：博弈类dp + 区间型dp, 设f[i][j]为一方先手在面对a[i..j]这些数字时，能得到的最大的与对
+                              手的数字差
+** 难点：设己方数字和是A，对手数字和是B，即目标是A>=B，等价于A-B>=0,这样的好处是存一个数就够了 
+**       当一方X面对剩下的数字，可以认为X就是当前的先手，他的目标就是最
+            大化SX=X-Y   
+         对于X来说，Sx = -Sy + m */
