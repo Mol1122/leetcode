@@ -33,7 +33,7 @@ public class Solution {
             return partition(nums, start, right, k);
         }
         if (k >= left) {
-            return partition(nums, left, end, k);
+            return partition(nums, left, right, k);
         }
         return nums[k];
     }
