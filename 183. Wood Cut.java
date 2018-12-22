@@ -5,25 +5,28 @@ public class Solution {
      * @return: The maximum length of the small pieces
      */
     public int woodCut(int[] L, int k) {
+        if (L == null || L.length == 0) {
+            return 0;
+        }
         int start = 0, end = 0;
-        for (int item : L) {
-            end = Math.max(end, item);
+        for (int l : L) {
+            end = Math.max(l, end);
         }
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            if (count(L, mid, k) >= k) {
+            if (count(L, mid) >= k) {
                 start = mid;
             } else {
                 end = mid;
             }
         }
-        if (count(L, end, k) >= k) {
+        if (count(L, end) >= k) {
             return end;
         }
         return start;
     }
     
-    private int count(int[] L, int len, int k) {
+    private int count(int[] L, int len) {
         int sum = 0;
         for (int l : L) {
             sum += l / len;
