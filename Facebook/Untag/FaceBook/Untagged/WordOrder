@@ -1,0 +1,47 @@
+public class Main {
+    //要思考万一字符不在order里面怎么办
+    public static void main(String[] args) {
+        Main test = new Main();
+        char[] order = new char[]{'a','c','b'};
+        String[] wordlist = new String[]{"a","aa","cb","bc"};
+        System.out.print(test.isOrdered(wordlist,order));
+
+    }
+    Time complexity: O(all characters) space complexity: O(order.length)
+    public boolean isOrdered(String[] wordlist, char[] order) {
+        // check corner cases
+        // there is no duplicate characters in the order
+        // ensure the characters used in wordlist are all in the order
+        if (wordlist == null || wordlist.length <= 1 || order == null || order.length <= 1) {
+            return true;
+        }
+        // construct a order map
+        Map<Character,Integer> ch2order = new HashMap<Character, Integer>();
+        for (int i = 0; i < order.length; i++) {
+            ch2order.put(order[i],i);
+        }
+        for (int i = 0; i < wordlist.length - 1; i++) {
+            if (compare(wordlist[i],wordlist[i+1],ch2order) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int compare(String str1, String str2, Map<Character,Integer> ch2order) {
+        int s1pos = 0;
+        int s2pos = 0;
+        while (s1pos < str1.length() && s2pos < str2.length()) {
+            char s1curt = str1.charAt(s1pos);
+            char s2curt = str2.charAt(s2pos);
+            if (s1curt != s2curt) {
+                return ch2order.get(s1curt) - ch2order.get(s2curt) < 0? -1:1;
+            }
+            s1pos ++;
+            s2pos ++;
+        }
+        if (s1.length() == s2.length()) {
+          return 0;}
+         return s1.length() > s2.length()?1:-1;
+    }
+}

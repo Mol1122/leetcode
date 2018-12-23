@@ -1,0 +1,16 @@
+public List<List<Integer>> getAllLeafs(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        helper(root, res);
+        return res;
+    }
+    public int helper(TreeNode root, List<List<Integer>> res) {
+        if (root == null) return -1;
+        int level = -1;
+        for (TreeNode item : root.children) {
+            level = Math.max(level, helper(item,res));
+        }
+        level += 1;
+        if (level >= res.size()) res.add(new ArrayList<>());
+        res.get(level).add(root.val);
+        return level;
+    }

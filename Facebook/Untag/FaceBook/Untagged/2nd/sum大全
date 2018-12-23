@@ -1,0 +1,162 @@
+
+// Two sum sorted和unsorted的方式太简单了，这里略过~ 记得帮我检查一哈代码
+//given list [[1,2],[2,1],[1,4],[1,0]]，k = 3   two sum list找两个item相同
+public int[] twoSum(int[][] pairs, int k) {
+    Map<Integer,Set<Integer>> num2num = new HashMap<>();
+    for (int[] pair : pairs) {
+      if (!num2num.containsKey(pair[0])) num2num.put(pair[0],new HashSet<>());
+      num2num.get(pair[0]).add(pair[1]);
+    }
+    int[] res = new int[4];
+    for (Map.Entry<Integer, Set<Integer>> item : num2num.entrySet()) {
+      if (num2num.containsKey(k - item.getKey())) {
+        Set<Integer> left = item.getValue();
+        Set<Integer> right = num2num.get(k - item.getKey());
+        for (int leftval : left) {
+          if (right.contains(k - leftval)) {
+            res[0] = item.getKey();
+            res[1] = k - item.getKey();
+            res[2] = leftval;
+            res[3] = k - leftval;
+          }
+        }
+      }
+    }
+    return res;
+  }
+
+//Three sum
+// 1 hash map no sort
+// time complexity O(n^2)  space: o(n)
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) return result;
+        Set<List<Integer>> res = new HashSet<>();
+        Map<Integer,Integer> val2idx = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            val2idx.put(nums[i],i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (val2idx.containsKey(- nums[i] - nums[j]) && val2idx.get(-nums[i] - nums[j]) > j) {
+                    List<Integer> temp = Arrays.asList(nums[i],nums[j], - nums[i]-nums[j]);
+                    Collections.sort(temp);
+                    res.add(temp);
+                }
+            }
+        }
+        result = new ArrayList<>(res);
+        return result;
+    }
+    
+    
+  // 2: sort
+  // time complexity O(n^2)   space: o(1)
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) return result;
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left < right) {
+                if (nums[left] + nums[right] + nums[i] == 0) {
+                    int leftVal = nums[left];
+                    int rightVal = nums[right];
+                    result.add(Arrays.asList(nums[i],nums[left],nums[right]));
+                    while (left < right && nums[left] == leftVal) left ++;
+                    while (left < right && nums[right] == rightVal) right --;
+                }
+                else if (nums[left] + nums[right] + nums[i] > 0) {
+                    right --;
+                }
+                else left ++;
+            }
+            int curtVal = nums[i];
+            while (i < nums.length - 2 && nums[i+1] == curtVal) i++;
+        }
+        return result;
+    }
+    
+    
+    // 4sum
+    // unsort time complexity O(k * n^2) (best n^2, worst o^3) 
+ private class Pair {
+         int l;
+        int r;
+        public Pair(int l, int r) {
+            this.l = l;
+            this.r = r;
+        }
+    }
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Set<List<Integer>> result = new HashSet<>();
+        Map<Integer,List<Pair>> val2index = new HashMap<>();
+        if (nums == null || nums.length == 0) {
+            return new ArrayList<>(result);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (val2index.containsKey(target - nums[i] - nums[j])) {
+                    List<Pair> index = val2index.get(target - nums[i] - nums[j]);
+                    for (Pair item : index) {
+                        if (item.r >= i) {
+                            continue;
+                        }
+                        List<Integer> temp = Arrays.asList(nums[item.l],nums[item.r],nums[i],nums[j]);
+                        Collections.sort(temp);
+                        result.add(temp);
+                    }
+                }
+                if (!val2index.containsKey(nums[i] + nums[j])) {
+                    val2index.put(nums[i] + nums[j], new ArrayList<Pair>());
+                }
+                val2index.get(nums[i]+nums[j]).add(new Pair(i,j));
+            }
+        }
+        return new ArrayList<>(result);
+    }
+    
+    // sort : Time : O(n^3)
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        // check corner cases
+        if (nums == null || nums.length == 0) {
+            return results;
+        }
+        Arrays.sort(nums);
+        int curtSum;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i-1]) {
+                continue;
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                if ((j != i + 1) && nums[j] == nums[j-1]) {
+                    continue;
+                }
+                int left = j + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    curtSum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (curtSum == target) {
+                        results.add(Arrays.asList(nums[i],nums[j],nums[left],nums[right]));
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left ++;
+                        }
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right --;
+                        }
+                        left ++;
+                    }
+                    else if (curtSum > target) {
+                        right --;
+                    }
+                    else {
+                        left ++;
+                    }
+                       
+                }
+            }
+        }
+        return results;
+    }
