@@ -10,7 +10,7 @@ public class Solution {
         for (int i = 1; i <= n; i++) {
             //枚举最后一个数j
             f[i] = Integer.MAX_VALUE;
-            for (int j = 1; j * j <= i; j++) {
+            for (int j = 1; j * j <= i; j++) { //相当于最后一个区间有多长
                 f[i] = Math.min(f[i], f[i - j * j] + 1);
             }
         }

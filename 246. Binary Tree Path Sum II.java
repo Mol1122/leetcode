@@ -17,45 +17,31 @@ public class Solution {
      * @param target: An integer
      * @return: all valid paths
      */
-
-    // Binary Tree Path Sum II
+    
+    //Binary Tree Path Sum II
     public List<List<Integer>> binaryTreePathSum2(TreeNode root, int target) {
         List<List<Integer>> results = new ArrayList<>();
-        List<Integer> path = new ArrayList<>();
         if (root == null) {
             return results;
         }
-        helper(root, target, 0, path, results);
+        dfs(root, target, new ArrayList<>(), results);
         return results;
     }
     
-    private void helper(TreeNode root, int target, int level, List<Integer> path, List<List<Integer>> results) {
+    private void dfs(TreeNode root, int target, List<Integer> path, List<List<Integer>> results) {
         if (root == null) {
             return;
         }
-        int tempSum = target;
         path.add(root.val);
-        for (int i = level; i >= 0; i--) {
-            tempSum -= path.get(i);
-            if (tempSum == 0) {
-                List<Integer> temp = new ArrayList<>();
-                for (int j = i; j <= level; j++) {
-                    temp.add(path.get(j));
-                }
-                results.add(temp);
+        int sum = 0;
+        for (int i = path.size() - 1; i >= 0; i--) {
+            sum += path.get(i);
+            if (sum == target) {
+                results.add(new ArrayList(path.subList(i, path.size())));
             }
         }
-        System.out.println("Before:");
-        for (int i : path) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-        helper(root.left, target, level + 1, path, results);
-        helper(root.right, target, level + 1, path, results);
+        dfs(root.left, target, path, results);
+        dfs(root.right, target, path, results);
         path.remove(path.size() - 1);
     }
 }
-/* 算法：有点类似于搜索类的DFS
-** 难点：最后52行一定要减去最后一个数。因为算法是先往左走到最底层，每走到新的一层就加上root,然后根据path看看能不能组合成sum. 
-当左右两边都走完的时候要减掉root (path.remove(path.size() - 1), 表示这一层的左右两边都走过了。 
-这样走到右子树的时候不会包含左子树的值 */

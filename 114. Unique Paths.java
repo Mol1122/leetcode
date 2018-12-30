@@ -5,22 +5,23 @@ public class Solution {
      * @return: An integer
      */
     public int uniquePaths(int m, int n) {
-        int[][] f = new int[2][n];
+        //定义dp数组
+        int[][] f = new int[m][n];
         
+        //计算顺序：从小往大
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                //初始化
                 if (i == 0 || j == 0) {
-                    f[i%2][j] = 1;
+                    f[i][j] = 1;
+                    continue;
                 }
-                else {
-                    f[i%2][j] = f[(i-1)%2][j] + f[i%2][j-1];
-                }
+                //后一步和前一步的关系，由转移方程得到
+                f[i][j] = f[i - 1][j] + f[i][j - 1];
             }
         }
-        
-        return f[(m-1)%2][n-1];
+        return f[m - 1][n - 1];
     }
 }
 
-/* 算法：dynamic programming. 状态，方程，赋值，答案
-** 空间优化：只需要保存两行就能求出新值，所以mod 2*/
+/* 算法：dynamic programming */
