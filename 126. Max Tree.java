@@ -16,33 +16,30 @@ public class Solution {
      * @return: The root of max tree.
      */
     public TreeNode maxTree(int[] A) {
-        if (A == null || A.length == 0) {
-            return null;
-        }
-        Stack<TreeNode> stack = new Stack<>();
-        for (int i = 0; i <= A.length; i++) {
-            TreeNode right = i == A.length ? new TreeNode(Integer.MAX_VALUE) :
+       if (A == null || A.length == 0) {
+           return null;
+       }
+       Stack<TreeNode> stack = new Stack<>();
+       
+       for (int i = 0; i <= A.length; i++) {
+           TreeNode right = i == A.length ? new TreeNode(Integer.MAX_VALUE) :
                             new TreeNode(A[i]);
-            while (!stack.isEmpty()) {
-                if (right.val > stack.peek().val) {
-                    TreeNode nowNode = stack.pop();
-                    if (stack.isEmpty()) {
+            while (!stack.isEmpty() && right.val > stack.peek().val) {
+                TreeNode nowNode = stack.pop();
+                if (stack.isEmpty()) {
+                    right.left = nowNode;
+                } else {
+                    TreeNode left = stack.peek();
+                    if (left.val > right.val) {
                         right.left = nowNode;
                     } else {
-                        TreeNode left = stack.peek();
-                        if (left.val > right.val) {
-                            right.left = nowNode;
-                        } else {
-                            left.right = nowNode;
-                        }
+                        left.right = nowNode;
                     }
-                } else {
-                    break;
                 }
             }
             stack.push(right);
-        }
-        return stack.peek().left;
+       }
+       return stack.peek().left;
     }
 }
 

@@ -161,7 +161,8 @@ public class Solution {
 /* 
 564. Combination Sum IV
 Given an integer array nums with all positive numbers and no duplicates, 
-find the number of possible combinations that add up to a positive integer target. */
+find the number of possible combinations that add up to a positive integer target.
+答案里是允许有重复的 */
 public class Solution {
     /**
      * @param nums: an integer array and all positive numbers, no duplicates

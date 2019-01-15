@@ -306,3 +306,43 @@ public class Solution {
         return max;
     }
 }
+
+    public String longestCommonSubstring(String s1, String s2) {
+        if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0) {
+            return "";
+        }
+        int n = s1.length();
+        int m = s2.length();
+
+        int[][] f = new int[n + 1][m + 1];
+
+        int max = Integer.MIN_VALUE;
+        int index1 = 0, index2 = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s1.charAt(i - 1) != s2.charAt(j - 1)) {
+                    f[i][j] = 0;
+                } else {
+                    f[i][j] = f[i - 1][j - 1] + 1;
+                    if (max < f[i][j]) {
+                        max = f[i][j];
+                        index1 = i - 1;
+                        index2 = j - 1;
+                    }
+                }
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (index1 >= 0 && index2 >= 0) {
+            if (s1.charAt(index1) != s2.charAt(index2)) {
+                break;
+            }
+            sb.append(s1.charAt(index1));
+            index1--;
+            index2--;
+        }
+        return sb.reverse().toString();
+    }
+
+
