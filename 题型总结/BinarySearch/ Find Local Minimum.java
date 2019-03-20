@@ -1,22 +1,23 @@
 class Solution {
-    public int peakIndexInMountainArray(int[] A) {
-        int start = 1, end = A.length - 2;
-        while (start + 1 < end) {
-            int mid = (start + end) / 2;
-            if (A[mid] < A[mid - 1]) {
-                end = mid;
-            } else if (A[mid] < A[mid + 1]) {
-                start = mid;
-            } else {
-                start = mid;
-            }
-        }
-        if (A[start] < A[end]) {
-            return end;
-        } else {
-            return start;
-        }
-    }
+    public int localMinimum(int[] nums) {
+      if (nums == null || nums.length == 0) {
+          return 0;
+      }
+      int start = 0, end = nums.length - 1;
+      while (start + 1 < end) {
+          int mid = start + (end - start) / 2;
+          if (nums[mid - 1] < nums[mid]) {
+              end = mid;
+          } else {
+              start = mid;
+          }
+      }
+      if (nums[start] < nums[end]) {
+          return start;
+      } else {
+          return end;
+      }
+  }
 }
 
 /* 算法：binary search

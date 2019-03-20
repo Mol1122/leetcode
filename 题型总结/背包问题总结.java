@@ -146,7 +146,7 @@ public class Solution {
         
         // f[0] = 1;
         // for (int i = 1; i <= target; i++) {
-        //     f[1] = 0;
+        //     f[i] = 0;
         // }
         
         // for (int i = 1; i <= n; i++) {
