@@ -1,9 +1,0 @@
-A: B C D
-
-B: A Z X
-C: A Z Y
-D: A Z C
-
-Z: B C D
-
-
