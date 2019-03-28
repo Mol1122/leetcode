@@ -21,7 +21,7 @@ public class Solution {
   }
   
   private ListNode merge(ListNode head1, ListNode head2) {
-        ListNode dummy = new ListNode(-1);
+  /*      ListNode dummy = new ListNode(-1);
         ListNode tail = dummy;
         int index = 0;
         
@@ -34,6 +34,24 @@ public class Solution {
                 head2 = head2.next;
             }
             index++;
+            tail = tail.next;
+        }
+        if (head1 != null) {
+            tail.next = head1;
+        }
+        if (head2 != null) {
+            tail.next = head2;
+        }
+        return dummy.next;  */
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+        
+        while (head1 != null && head2 != null) {
+            tail.next = head1;
+            head1 = head1.next;
+            tail = tail.next;
+            tail.next = head2;
+            head2 = head2.next;
             tail = tail.next;
         }
         if (head1 != null) {
