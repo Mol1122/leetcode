@@ -1,0 +1,66 @@
+/**
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode reverseKGroup(ListNode head, int k) {
+      if (head == null || head.next == null) {
+          return head;
+      }
+      ListNode dummy = new ListNode(-1);
+      ListNode tail = dummy, temp = null, prev = null;
+      
+      int count = 0;
+      while (head != null) {
+          temp = head;
+          count = 0;
+          for (int i = 0; i < k; i++) {
+              if (head == null) {
+                  break;
+              }
+              count++;
+              prev = head;
+              head = head.next;
+          }
+          prev.next = null;
+          if (count == k) {
+              tail.next = reverse(temp);
+          } else {
+              tail.next = temp;
+          }
+          tail = getTail(tail);
+      }
+      return dummy.next;
+  }
+  
+  private ListNode getTail(ListNode head) {
+      if (head == null) {
+          return head;
+      }
+      while (head.next != null) {
+          head = head.next;
+      }
+      return head;
+  }
+  
+  private ListNode reverse(ListNode head) {
+      ListNode curr = head, prev = null, next = null;
+    
+      while (curr != null) {
+          next = curr.next;
+          curr.next = prev;
+          prev = curr;
+          curr = next;
+      }
+      return prev;
+  }
+}
+
+/* 时间复杂度：O(n)
+** 空间复杂度：O(1) */

@@ -68,4 +68,24 @@ public class Solution {
       }
       return results;
   }
+
+  // another method
+  public void inOrder(TreeNode root) {
+      if (root == null) {
+          return;
+      }
+      Deque<TreeNode> stack = new ArrayDeque<>();
+      TreeNode curr = root;
+
+      while (curr != null || !stack.isEmpty()) {
+          if (curr != null) {
+            stack.offerLast(curr);
+            curr = curr.left;
+          } else {
+            curr = stack.pollLast();
+            System.out.println(curr.val);
+            curr = curr.right;
+          }
+      }
+  }
 }

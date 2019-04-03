@@ -29,4 +29,13 @@ public class Solution {
 }
 
 /* 时间复杂度：O(n)
-** 空间复杂度：O(height) = O(n) */
+** 空间复杂度：O(n) or O(height) 
+                (5a, 5b)
+                /      \
+            (1a, 1b)   (3a, 3b)
+            /     \        /   \
+        (2a, 2b)  (4a, 4b) ......
+
+
+
+*/
