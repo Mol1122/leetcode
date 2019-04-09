@@ -18,7 +18,7 @@ public TreeNode delete(TreeNode root, int target) {
 
 	if (root.right.left == null) {
 		root.right.left = root.left;
-		return root.right
+		return root.right;
 	}
 
 	TreeNode smallest = deleteSmallest(root.right);
