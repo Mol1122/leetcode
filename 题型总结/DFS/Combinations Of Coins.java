@@ -1,3 +1,5 @@
+/* Given a number of different denominations of coins (e.g., 1 cent, 5 cents, 10 cents, 25 cents),
+ get all the possible ways to pay a target number of cents. */
 public class Solution {
   public List<List<Integer>> combinations(int target, int[] coins) {
       List<List<Integer>> results = new ArrayList<>();
