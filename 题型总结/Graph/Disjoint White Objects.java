@@ -76,5 +76,5 @@ class Pair {
         但是bfs的时间复杂度最多就是O(n^2), 所以更好。union find适合于直接告诉你
         要union的两个东西[a, b], 不需要自己for循环去找
    时间复杂度：O(n^2)
-   空间复杂度：O(1)
+   空间复杂度：O(n^2) due to queue
 */
