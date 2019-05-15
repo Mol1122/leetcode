@@ -9,67 +9,41 @@
  * }
  */
 public class Solution {
-/*  public boolean isBST(TreeNode root) {
-      //preorder, time: O(n), space: O(height)
-      if (root == null) {
-          return true;
-      }
-      return isBSTHelper(root, null, null);
-  }
-  
-  private boolean isBSTHelper(TreeNode root, TreeNode minNode, TreeNode maxNode) {
-      if (root == null) {
-          return true;
-      }
-      if (minNode != null && minNode.key >= root.key) {
-          return false;
-      }
-      if (maxNode != null && maxNode.key <= root.key) {
-          return false;
-      }
-      return isBSTHelper(root.left, minNode, root) && isBSTHelper(root.right, root, maxNode);
-  }  */
-  
-  //postorder, time: O(n), space: O(height)
   public boolean isBST(TreeNode root) {
+      //preorder
+      //return isBST(root, null, null);
+    
+      //postorder
+      return helper(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+  }
+  
+  //postorder
+  private boolean helper(TreeNode root, int min, int max) {
       if (root == null) {
           return true;
       }
-      ResultType rt = helper(root);
-      return rt.isValid;
+      if (!helper(root.left, min, root.key) || !helper(root.right, root.key, max)) {
+          return false;
+      }
+      if (root.key >= max || root.key <= min) {
+          return false;
+      }
+      return true;
   }
   
-  private ResultType helper(TreeNode root) {
+  //preorder
+  private boolean isBST(TreeNode root, TreeNode minNode, TreeNode maxNode) {
       if (root == null) {
-          return new ResultType(true);
+          return true;
       }
-      ResultType left = helper(root.left);
-      ResultType right = helper(root.right);
-      
-      if (!left.isValid || !right.isValid) {
-          return new ResultType(false);
+      if (minNode != null && root.key <= minNode.key) {
+          return false;
       }
-      if (left.maxNode != null && left.maxNode.key >= root.key) {
-          return new ResultType(false);
+      if (maxNode != null && root.key >= maxNode.key) {
+          return false;
       }
-      if (right.minNode != null && right.minNode.key <= root.key) {
-          return new ResultType(false);
-      }
-      ResultType rt = new ResultType(true);
-      rt.minNode = left.minNode == null ? root : left.minNode;
-      rt.maxNode = right.maxNode == null ? root : right.maxNode;
-      return rt;
+      return isBST(root.left, minNode, root) && isBST(root.right, root, maxNode);
   }
 }
 
-class ResultType {
-    boolean isValid;
-    TreeNode minNode, maxNode;
-  
-    public ResultType(boolean isValid) {
-        this.isValid = isValid;
-        minNode = maxNode = null;
-    }
-}
-
-
+//time: O(n), space: O(height)

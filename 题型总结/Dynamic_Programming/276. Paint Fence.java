@@ -1,34 +1,47 @@
-public class Solution {
-  public int numWays(int n, int k) {
-      int[] f = {0, k, k*k, 0};
-     
-      if (n <= 2) {
-          return f[n];
-      }
-      if (k == 1) {
-          return 0;
-      }
-      for (int i = 2; i < n; i++) { //在index = i的时候其实已经计算到index = i + 1
-          f[3] = f[2] * (k - 1) + f[1] * (k - 1);
-          f[1] = f[2];
-          f[2] = f[3];
-      }
-      return f[3];
-  }
+/* There is a fence with n posts, each post can be painted with one of the k colors.
+
+You have to paint all the posts such that no more than two adjacent fence posts have the same color.
+
+Return the total number of ways you can paint the fence.
+
+Note:
+n and k are non-negative integers.
+
+Example:
+
+Input: n = 3, k = 2
+Output: 6
+Explanation: Take c1 as color 1, c2 as color 2. All possible ways are:
+
+            post1  post2  post3      
+ -----      -----  -----  -----       
+   1         c1     c1     c2 
+   2         c1     c2     c1 
+   3         c1     c2     c2 
+   4         c2     c1     c1  
+   5         c2     c1     c2
+   6         c2     c2     c1 */ 
+
+class Solution {
+    public int numWays(int n, int k) {
+        int[] f = {0, k, k * k, 0};
+        
+        if (n <= 2) {
+            return f[n];
+        }
+        if (k == 1) {
+            return 0;
+        }
+        for (int i = 2; i < n; i++) {
+            f[3] = f[2] * (k - 1) + f[1] * (k - 1);
+            f[1] = f[2];
+            f[2] = f[3];
+        }
+        return f[3];
+    }
 }
-/* (1) 如果和前一个保持不同，很显然
-
-num_ways_diff(i) = num_ways(i - 1) * (k - 1) // (k - 1) means all colors but the one painted on the (i - 1)th post
- 
-
-(2) 如果和前一个保持相同，由于题目限制不能连续三个相同，那么只有第(i - 1)和(i - 2)不同时，我们才能让第i个和第(i - 1)个相同。
-
-num_ways_same(i) = num_ways_diff(i - 1) * 1 // 1 means only the color that is painted on the (i - 1)th post is allowed
- 
-
-将（1）和（2）加和整理，我们得到
-
-num_ways(i) = num_ways_diff(i) + num_ways_same(i)
-            = num_ways(i - 1) * (k - 1) + num_ways_diff(i - 1) * 1
-            = num_ways(i - 1) * (k - 1) + num_ways(i - 2) * (k - 1) */
-//time: O(n), space: O(1)
+/* 算法：题目要求连续三个fence不能同样的颜色。那么
+        case1. index i不跟index (i - 1)同一个颜色 => f[i - 1] * (k - 1)
+        case2. index i跟index (i - 1)同一个颜色，那么index (i-1)不能和index (i-2)同一个颜色 =>
+               f[i - 2] * (k - 1)
+        */
