@@ -57,7 +57,29 @@ public class Solution {
       max[0] = Math.max(max[0], Math.max(left, right) + root.key);
       max[0] = Math.max(max[0], left + right + root.key);
     
-      return Math.max(Math.max(left, right) + root.key, 0);
+      return Math.max(Math.max(left, right) + root.key, 0); //这个地方保证了传上去的一定是正数, positive contribution
   }
+
+  /*
+  //第二种理解方式
+    public int maxPathSum(TreeNode root) {
+        int[] max = {Integer.MIN_VALUE};
+        largestPath(root, max);
+        return max[0];
+    }
+
+    private int largestPath(TreeNode root, int[] max) {
+        if (root == null) {
+            return 0;
+        }
+        int left = largestPath(root.left, max);
+        int right = largestPath(root.right, max);
+        left = left < 0 ? 0 : left; //左边有positive contribution的才加进去
+        right = right < 0 ? 0 : right; //右边有positive contribution的才加进去
+
+        max[0] = Math.max(max[0], root.key + left + right);
+        return Math.max(left, right) + root.key;
+    } 
+   */
 }
 //time: O(n), space: O(height)

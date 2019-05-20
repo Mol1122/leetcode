@@ -28,6 +28,7 @@ If target = 11, There exists a path only containing the node 11.
 
 How is the binary tree represented?
  */
+//“三部曲”思想
 public class Solution {
   public int maxPathSum(TreeNode root) {
       int[] max = {Integer.MIN_VALUE};
@@ -48,3 +49,27 @@ public class Solution {
   }
 }
 //time: O(n), space: O(height)
+
+//get max subarray思想
+public class Solution {
+  public int maxPathSum(TreeNode root) {
+    int[] max = {Integer.MIN_VALUE};
+    largestSum(root, max, 0);
+    return max[0];
+  }
+
+  private void largestSum(TreeNode root, int[] max, int sum) {
+    if (root == null) {
+        return;
+    }
+    if (sum > 0) {
+        sum = sum + root.key;
+    } else {
+        sum = root.key;
+    }
+    max[0] = Math.max(max[0], sum);
+    //preorder traversal
+    largestSum(root.left, max, sum);
+    largestSum(root.right, max, sum);
+  }
+}

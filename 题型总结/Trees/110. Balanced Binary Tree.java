@@ -8,29 +8,25 @@
  * }
  */
 class Solution {
-    boolean isBalanced = true;
     public boolean isBalanced(TreeNode root) {
-        if (root == null) {
-            return true;
-        }
-        helper(root);
-        return isBalanced;
+        return getHeight(root) != -1; 
     }
     
-    private int helper(TreeNode root) {
+    private int getHeight(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int left = helper(root.left);
-        int right = helper(root.right);
+        int left = getHeight(root.left);
+        int right = getHeight(root.right);
         
+        if (left == -1 || right == -1) {
+            return -1;
+        }
         if (Math.abs(left - right) > 1) {
-            isBalanced = false;
+            return -1;
         }
         return Math.max(left, right) + 1;
     }
 }
-
-/* 算法：分治型dfs
-** 时间复杂度：O(n)
-** 空间复杂度：O(n) */
+//算法：利用“三部曲”思想
+//time: O(n), space: O(height)
