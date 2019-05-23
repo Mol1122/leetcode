@@ -15,7 +15,7 @@ class Solution {
         
         //左大段右小段思想
         for (int i = 1; i <= n; i++) {
-            for (int j = 0; j <= i; j++) { //遍历左大段的长度
+            for (int j = 0; j <= i; j++) { //遍历左大段的长度,这也是startIndex of the right substring
                 if (f[j] && dict.contains(s.substring(j, i))) {
                     f[i] = true;
                     break;
