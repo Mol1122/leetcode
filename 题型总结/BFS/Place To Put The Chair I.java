@@ -87,3 +87,4 @@ class Pair {
     }
 }
 //time: O(n^2), space: O(n^2)
+//难点：只有'O'不能走

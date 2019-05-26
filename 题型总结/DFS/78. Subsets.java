@@ -21,7 +21,7 @@ public class Solution {
   }
 }
 
-/* 时间复杂度：O(n^2)
+/* 时间复杂度：O(2^n)
 ** 空间复杂度：O(n)
             {}
           /     \
