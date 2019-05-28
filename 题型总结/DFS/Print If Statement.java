@@ -1,9 +1,31 @@
+/* Given an integer n, print/output all possible if blocks for it. Say n=2 output should be
+
+
+
+if {
+
+}
+
+if {
+
+}
+
+<newline>
+
+if {
+
+  if {// here should exist two spaces before each inner block
+
+  }
+
+} */
+
 public class Solution{
 	public void checkBlock(int n) {
-		if (s == null || s.length() == 0) {
+		if (n == 0) {
 			return;
 		}
-		getAllBlocks(new char[2 * n], s.length(), s.length(), 0);
+		getAllBlocks(new char[2 * n], n, n, 0);
 	}
 
 	private void getAllBlocks(char[] sc, int left, int right, int pos) {
