@@ -9,7 +9,7 @@ Examples
 l = 1, m = 1, n = 0, all the valid permutations are ["()<>", "(<>)", "<()>", "<>()"]
 
  */
- 
+
 public class Solution {
   public List<String> validParentheses(int l, int m, int n) {
     final char[] paren = new char[] {'(', ')', '<', '>', '{', '}'};
@@ -31,21 +31,21 @@ public class Solution {
         if (i % 2 == 0) { //left paren
             if (remain[i] > 0) { //只要左括号还有剩余，都可以加
                 sb.append(paren[i]);
-                stack.offerFirst(paren[i]);
+                stack.offerLast(paren[i]);
                 remain[i]--;
                 dfs(paren, remain, targetLen, stack, sb, results);
                 sb.deleteCharAt(sb.length() - 1);
-                stack.pollFirst();
+                stack.pollLast();
                 remain[i]++; 
             }
         } else { //right paren
-            if (!stack.isEmpty() && stack.peekFirst() == paren[i - 1]) {
+            if (!stack.isEmpty() && stack.peekLast() == paren[i - 1]) {
                 sb.append(paren[i]);
-                stack.pollFirst();
+                stack.pollLast();
                 remain[i]--;
                 dfs(paren, remain, targetLen, stack, sb, results);
                 sb.deleteCharAt(sb.length() - 1);
-                stack.offerFirst(paren[i - 1]);
+                stack.offerLast(paren[i - 1]);
                 remain[i]++;
             }
         }
