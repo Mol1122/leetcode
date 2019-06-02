@@ -29,7 +29,7 @@ public class Solution {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (grid[i][j] == 'E') {
+                if (grid[i][j] == 'E') { //里面只会被执行k次， k = #'E'
                     equipCount++;
                     boolean[][] visited = new boolean[n][m];
                     bfs(grid, distance, visited, equip, i, j);
@@ -86,5 +86,6 @@ class Pair {
         this.y = y;
     }
 }
-//time: O(n^2), space: O(n^2)
+//time: O(k*mn）, bfs最多被叫了k次，bfs里最多poll mn次
+//space: O(nm)
 //难点：只有'O'不能走
