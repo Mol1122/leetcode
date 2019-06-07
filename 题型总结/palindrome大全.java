@@ -127,99 +127,99 @@ class Solution {
 
 //674. Longest Continuous Increasing Subsequence
 //input: [1, 3, 5, 4, 7], output: 3
-class Solution {
-    public int findLengthOfLCIS(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        
-        int n = nums.length;
-        int answer = 1;
-        
-        // from left to right
-        int length = 1; // just A[0] itself
-        for (int i = 1; i < n; i++) {
-            if (nums[i] > nums[i - 1]) {
-                length++;
-            } else {
-                length = 1;
-            }
-            answer = Math.max(answer, length);
-        }
-        return answer;
-    }
+public class Solution {
+  public int longest(int[] nums) {
+      if (nums == null || nums.length == 0) {
+          return 0;
+      }
+      int[] f = new int[nums.length];
+      f[0] = 1;
+      int max = 1;
+      for (int i = 1; i < nums.length; i++) {
+          if (nums[i] > nums[i - 1]) {
+              f[i] = f[i - 1] + 1;
+          } else {
+              f[i] = 1;
+          }
+          max = Math.max(max, f[i]);
+      }
+      return max;
+  }
 }
+//f[i] = the longest subarray ending at index i
+//time: O(n), space: 可以优化到O(1)
+// 7, 2, 3, 1, 5, 8, 9, 6
+//          i     i
 
 /* 算法：普通dp,从左往右和从右往左都遍历一边 */
 
 //300. Longest Increasing Subsequence
-class Solution {
-    public int lengthOfLIS(int[] nums) {
-        /* 算法：f[j] = 以nums[j]为结尾的最长上升子序列长度 
-        ** 时间复杂度：O(n^2), 空间复杂度：O(n) */
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }        
-        int n = nums.length;
-        int[] f = new int[n];
-        
-        int max = 0;
-        for (int j = 0; j < n; j++) {
-            f[j] = 1;
-            for (int i = 0; i < j; i++) {
-                if (nums[i] < nums[j]) {
-                    f[j] = Math.max(f[j], f[i] + 1);
-                }
-            }
-            max = Math.max(max, f[j]);
-        }
-        return max;
-        
-        
-        
-//         if (nums == null || nums.length == 0) {
-//             return 0;
-//         }
-//         int[] minLast = new int[nums.length + 1];
-//         minLast[0] = Integer.MIN_VALUE; //因为是算长度而不是index，就忽略0这个index,也是为了避免溢出
-//         for (int i = 1; i < nums.length + 1; i++) {
-//             minLast[i] = Integer.MAX_VALUE;
-//         }
-//         //find the first minLast >= nums[i]
-//         for (int i = 0; i < nums.length; i++) {
-//             int index = binarySearch(minLast, nums[i]);
-//             minLast[index] = nums[i];
-//         }
-//         for (int i = nums.length; i >= 0; i--) {
-//             if (minLast[i] != Integer.MAX_VALUE) {
-//                 return i;
-//             }
-//         }
-//         return 0;
-//     }
+public class Solution {
+  public int longest(int[] nums) {
+      if (nums == null || nums.length == 0) {
+          return 0;
+      }
+      int[] f = new int[nums.length];
+      f[0] = 1;
+      int max = 1;
     
-//     private int binarySearch(int[] minLast, int num) {
-//         int start = 0, end = minLast.length - 1;
-//         while (start + 1 < end) {
-//             int mid = start + (end - start) / 2;
-//             if (minLast[mid] <= num) {
-//                 start = mid;
-//             } else {
-//                 end = mid;
-//             }
-//         }
-//         if (minLast[start] >= num) {
-//             return start;
-//         }
-//         return end;
-//     }
-    }      
+      for (int i = 1; i < nums.length; i++) {
+          f[i] = 1;
+          for (int j = 0; j < i; j++) {
+              if (nums[j] < nums[i]) {
+                  f[i] = Math.max(f[i], f[j] + 1);
+              }
+          }
+          max = Math.max(max, f[i]);
+      }
+      return max;
+  }
 }
-/* 算法：这个idea来源于，找start of the increasing subsequence, 10>9所以一定从9开始。然后对于每一个数都是想找左边的第一个比他大的数，然后替换掉它
 
-minLast数组实际上记录上升的子序列，minLast = min是为了不越界。遍历每个数，在minLast里面找到第一个比他大的数，然后替换掉(只有替换掉才能保证上升趋势)
-** 时间复杂度：用binary search的方法实现O(nlogn)的时间复杂度。  
-** 空间复杂度：O(n) */
+public class Solution {
+  public int longest(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return 0;
+    }
+    int[] minLast = new int[nums.length + 1];
+    minLast[0] = Integer.MIN_VALUE;
+    for (int i = 1; i < nums.length + 1; i++) {
+        minLast[i] = Integer.MAX_VALUE;
+    }
+    //find the first minLast >= num[i]
+    for (int i = 0; i < nums.length; i++) {
+        int index = binarySearch(minLast, nums[i]);
+        minLast[index] = nums[i];
+    }
+
+    for (int i = minLast.length - 1; i >= 0; i--) {
+        if (minLast[i] != Integer.MAX_VALUE) {
+            return i;
+        }
+    }
+    return 0;
+  }
+
+  private int binarySearch(int[] minLast, int num) {
+    int start = 0, end = minLast.length - 1;
+    while (start + 1 < end) {
+        int mid = start + (end - start) / 2;
+        if (minLast[mid] <= num) {
+            start = mid;
+        } else {
+            end = mid;
+        }
+    }
+    if (minLast[start] >= num) {
+        return start;
+    }
+    return end;
+  }
+}
+// minLast[i]: i is the max length of the longest ascending sequence ending at nums[i], 
+// minLast[i] is the last ending number, 之前遍历过的array, 长度为i时的结尾是什么
+//time: O(nlogn), space: O(n)
+
 
 //128. Longest Consecutive Sequence
 class Solution {
