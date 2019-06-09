@@ -72,4 +72,6 @@ public class Solution {
     return map;
   }
 }
+//systematic way of solving problem
 //time: O(n^2 * 4^word.length()), space: O(n^2)
+//难点：值得注意的是，同一个字母可以被重复使用，只是不在同一个单词里被重复使用就好
