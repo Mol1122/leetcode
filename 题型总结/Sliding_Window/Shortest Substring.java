@@ -14,28 +14,36 @@ input = "aabcc", k = 4, output = "". */
 
 public class Solution {
   public String shortest(String s, int k) {
-    if (s == null || s.length() == 0) {
+    if (s == null || s.length() == 0 || k == 0) {
         return "";
     }
+    char[] sc = s.toCharArray();
     String minStr = "";
     int min = Integer.MAX_VALUE;
     Map<Character, Integer> map = new HashMap<>();
 
-    for (int i = 0; i < s.length(); i++) {
-        for (int j = i; j < s.length(); j++) {
-            if (map.size() < k || map.size() == k && map.containsKey(s.charAt(j))) {
-                map.putIfAbsent(s.charAt(j), 0);
-                map.put(s.charAt(j), map.get(s.charAt(j) + 1));
-                if (map.size() == k && min > j - i + 1) {
-                    min = j - i + 1;
-                    minStr = s.substring(i, j + 1);
-                }
+    int j = 0;
+    for (int i = 0; i < sc.length; i++) {
+        while (j < sc.length && map.size() < k) {
+            map.putIfAbsent(sc[j], 0);
+            map.put(sc[j], map.get(sc[j]) + 1);
+            j++;
+        }
+        if (map.size() == k) {
+            if (j - i < min) {
+                min = j - i;
+                minStr = s.substring(i, j);
             }
         }
-        map = new HashMap<>();
+        if (map.containsKey(sc[i])) {
+            map.put(sc[i], map.get(sc[i]) - 1);
+            if (map.get(sc[i]) == 0) {
+                map.remove(sc[i]);
+            }
+        }
     }
+    
     return minStr;
   }
 }
-//难点：j指针必须要回溯，因为当删掉i的时候，长度有可能变为更短
-//time: O(n^2*k), space: O(n)
+//time: O(nk), space: O(n)

@@ -45,4 +45,4 @@ public class Solution {
         return maxStr.equals("") ? null : maxStr;
     }
 }
-//time: O(n), space: O(n)
+//time: O(n * k), space: O(n)
