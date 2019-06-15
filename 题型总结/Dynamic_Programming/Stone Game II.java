@@ -31,46 +31,42 @@ public class Solution {
         if (A == null || A.length == 0) {
             return 0;
         }
-        
         int n = A.length;
-        int[][] opt = new int[n * 2][n * 2];
-        boolean[][] flag = new boolean[n * 2][n * 2];
-        int[][] sum = new int[n * 2][n * 2];
-        for (int i = 0; i < n * 2; ++i) {
-            sum[i][i] = A[i % n];
-            for (int j = i + 1; j < n * 2; ++j) {
+        int[][] memo = new int[2 * n][2 * n];
+        boolean[][] visited = new boolean[2 * n][2 * n];
+        int[][] sums = new int[2 * n][2 * n];
+        
+        for (int i = 0; i < 2 * n; i++) {
+            sums[i][i] = A[i % n];
+            for (int j = i + 1; j < 2 * n; j++) {
                 if (i != (j % n)) {
-                    sum[i][j] = sum[i][j - 1] + A[j % n];
+                    sums[i][j] = sums[i][j - 1] + A[j % n];
                 }
             }
         }
-        
-        int result = Integer.MAX_VALUE;
-        for (int i = 0; i < n; ++i) {
-            result = Math.min(memorySearch(A, opt, flag, sum, i, i + n - 1), result);
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            min = Math.min(min, memorySearch(A, memo, visited, sums, i, i + n - 1));
         }
-        return result;
+        return min;
     }
     
-    private int memorySearch(int[] A, int[][] opt, boolean[][] flag, int[][] sum,
-                                int i, int j) {
-        if (flag[i][j]) {
-            return opt[i][j];
+    private int memorySearch(int[] A, int[][] memo, boolean[][] visited, int[][] sums, int start, int end) {
+        if (visited[start][end]) {
+            return memo[start][end];
         }
-        flag[i][j] = true;
-        
-        int count = Integer.MAX_VALUE;
-        if (i == j) {
-            opt[i][j] = 0;
+        visited[start][end] = true;
+        if (start == end) {
+            memo[start][end] = 0;
         } else {
-            opt[i][j] = Integer.MAX_VALUE;
-            for (int k = i; k < j; ++k) {
-                int left = memorySearch(A, opt, flag, sum, i, k);
-                int right = memorySearch(A, opt, flag, sum, k + 1, j);
-                opt[i][j] = Math.min(opt[i][j], left + right + sum[i][j]);
+            memo[start][end] = Integer.MAX_VALUE;
+            for (int k = start; k < end; k++) {
+                int left = memorySearch(A, memo, visited, sums, start, k);
+                int right = memorySearch(A, memo, visited, sums, k + 1, end);
+                memo[start][end] = Math.min(memo[start][end], left + right + sums[start][end]);
             }
         }
-        return opt[i][j];
+        return memo[start][end];
     }
 }
-//time: O(n^n), space: O(n^2)
+//time: O(n^n * n), space: O(n^2)
