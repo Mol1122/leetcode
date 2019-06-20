@@ -69,4 +69,4 @@ public class Solution {
         return memo[start][end];
     }
 }
-//time: O(n^n * n), space: O(n^2)
+//time: O(n^3), space: O(n^2)
