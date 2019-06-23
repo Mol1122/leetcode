@@ -50,7 +50,7 @@ public class Solution {
 }
 //time: O(n), space: O(height)
 
-//get max subarray思想
+//get max subarray思想 (从上往下)
 public class Solution {
   public int maxPathSum(TreeNode root) {
     int[] max = {Integer.MIN_VALUE};
@@ -73,3 +73,27 @@ public class Solution {
     largestSum(root.right, max, sum);
   }
 }
+//time: O(n), space: O(height)
+
+ //get max subarray思想 (从下往上)
+public class Solution {
+  public int maxPathSum(TreeNode root) {
+    int[] max = {Integer.MIN_VALUE};
+    largestSum(root, max);
+    return max[0];
+  }
+
+  private int largestSum(TreeNode root, int[] max) {
+    if (root == null) {
+      return 0;
+    }
+    int left = largestSum(root.left, max);
+    int right = largestSum(root.right, max);
+
+    int temp = Math.max(0, Math.max(left, right)) + root.key;
+    max[0] = Math.max(max[0], temp);
+
+    return temp;
+  }
+}
+//time: O(n), space: O(height)
