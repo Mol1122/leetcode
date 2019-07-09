@@ -47,3 +47,50 @@ public class Solution {
 }
 
 //time: O(n), space: O(height)
+
+// iterative way
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode prev = null;
+        
+        while (root != null) {
+            stack.offerLast(root);
+            root = root.left;
+        }
+        
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.peekLast();
+            if (prev != null && prev.val >= curr.val) {
+                return false;
+            }
+            prev = curr;
+            if (curr.right == null) {
+                curr = stack.pollLast();
+                while (!stack.isEmpty() && stack.peekLast().right == curr) {
+                    curr = stack.pollLast();
+                }
+            } else {
+                curr = curr.right;
+                while (curr != null) {
+                    stack.offerLast(curr);
+                    curr = curr.left;
+                }
+            }
+        }
+        return true;
+    }
+    
+    private void pushLeft(TreeNode curr, Deque<TreeNode> stack) {
+        while (curr != null) {
+            stack.offerLast(curr);
+            curr = curr.left;
+        }
+    }
+}
+
+//inorder traversal的另一种写法
+//time: O(n), space: O(height)
