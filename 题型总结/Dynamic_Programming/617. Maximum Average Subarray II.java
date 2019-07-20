@@ -27,7 +27,7 @@ public class Solution {
      * @return: the maximum average
      */
     public double maxAverage(int[] nums, int k) {
-        if (nums == null || nums.length == 0) {
+        if (nums == null || nums.length < k) {
             return 0.0;
         }
         double start = -1e12, end = 1e12, eps = 1e-6;
@@ -51,10 +51,6 @@ public class Solution {
     private boolean check(int[] nums, double avg, int k) {
         double[] sums = new double[nums.length + 1];
         double min = 0, max = 0;
-        
-        for (int i = 0; i < k ; i++) {
-            max += nums[i];
-        }
         
         for (int i = 1; i <= nums.length; i++) {
             sums[i] = sums[i - 1] + (nums[i - 1] - avg);
