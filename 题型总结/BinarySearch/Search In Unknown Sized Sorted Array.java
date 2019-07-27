@@ -8,8 +8,7 @@ dictionary.get(i) will return null(Java)/INT_MIN(C++)/None(Python) if index i is
 Examples
 
 A = {1, 2, 5, 9, ......}, T = 5, return 2
-A = {1, 2, 5, 9, 12, ......}, T = 7, return -1
-*/
+A = {1, 2, 5, 9, 12, ......}, T = 7, return -1 */
 
 // You do not need to implement the Dictionary interface.
 // You can use it directly, the implementation is provided when testing your solution.
@@ -29,12 +28,12 @@ public class Solution {
   private int binarySearch(Dictionary dict, int target, int start, int end) {
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            if (dict.get(mid) == target) {
-                return mid;
-            } else if (target < dict.get(mid)) {
+            if (dict.get(mid) == null || dict.get(mid) > target) {
                 end = mid;
-            } else {
+            } else if (dict.get(mid) < target) {
                 start = mid;
+            } else {
+                return mid;
             }
         }
         if (dict.get(start) != null && dict.get(start) == target) {
@@ -45,3 +44,4 @@ public class Solution {
         return -1;
     }
 }
+//time: Jump Out: O(log_2(n)) + Jump In: O(log_2(2n))
