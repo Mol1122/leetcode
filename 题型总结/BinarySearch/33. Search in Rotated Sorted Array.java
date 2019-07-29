@@ -1,3 +1,19 @@
+/* Given a target integer T and an integer array A, A is sorted in ascending order first, then shifted by an arbitrary number of positions.
+
+For Example, A = {3, 4, 5, 1, 2} (shifted left by 2 positions). Find the index i such that A[i] == T or return -1 if there is no such index.
+
+Assumptions
+
+There are no duplicate elements in the array.
+Examples
+
+A = {3, 4, 5, 1, 2}, T = 4, return 1
+A = {1, 2, 3, 4, 5}, T = 4, return 3
+A = {3, 5, 6, 1, 2}, T = 4, return -1
+Corner Cases
+
+What if A is null or A is of zero length? We should return -1 in this case. */
+
 class Solution {
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
@@ -31,5 +47,5 @@ class Solution {
 }
 
 /* 算法：二分。因为并不知道pivot在哪里，但是可以肯定的是，pivot肯定在mid的左边或者右边。这就意味着，mid的左边或者右边一定是升序的.
-时间复杂度：O(logn)
+时间复杂度：O(logn), space: O(1)
 */

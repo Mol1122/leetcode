@@ -1,3 +1,21 @@
+/* Given two integers a and b, calculate a / b without using divide/mod operations.
+
+Examples:
+
+0 / 1 = 0
+
+1 / 0 = Integer.MAX_VALUE
+
+-1 / 0 = Integer.MAX_VALUE
+
+11 / 2 = 5
+
+-11 / 2 = -5
+
+11 / -2 = -5
+
+-11 / -2 = 5 */
+
 class Solution {
     public int divide(int dividend, int divisor) {
         if (divisor == 0) {
@@ -37,3 +55,4 @@ class Solution {
 以此类推，看有多少个17相加能小于等于dividend
 
 难点： 因为Integer.MIN_VALUE没有对应的正数，所以它的abs就是它自己，因此变为long进行处理 */
+//time: O(logn), space: O(1)

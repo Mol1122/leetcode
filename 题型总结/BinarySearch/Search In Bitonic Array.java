@@ -1,3 +1,14 @@
+/* Search for a target number in a bitonic array, return the index of the target number if found in the array, or return -1.
+
+A bitonic array is a combination of two sequence: the first sequence is a monotonically increasing one and the second sequence is a monotonically decreasing one.
+
+Assumptions:
+
+The array is not null.
+Examples:
+
+array = {1, 4, 7, 11, 6, 2, -3, -8}, target = 2, return 5. */
+
 public class Solution {
   public int search(int[] nums, int target) {
       if (nums == null || nums.length == 0) {
@@ -59,7 +70,7 @@ public class Solution {
       }
   }
   
-  
+  //find the first element in decreasing array
   private int getBitonic(int[] nums) {
       int start = 0, end = nums.length - 1;
       while (start + 1 < end) {
@@ -76,3 +87,4 @@ public class Solution {
       return end;
   }
 }
+//time: O(logn), space: O(1)

@@ -10,93 +10,90 @@ For example, given the following image:
 and x = 0, y = 2,
 
 Return 6. */
-class Solution {
-    public int minArea(char[][] image, int x, int y) {
-        if (image == null || image.length == 0 || image[0].length == 0) {
-            return 0;
-        }
-        int n = image.length;
-        int m = image[0].length;
-        
-        int left = findLeft(image, 0, y);
-        int right = findRight(image, y, m - 1);
-        int top = findTop(image, 0, x);
-        int bottom = findButtom(image, x, n - 1);
-        
-        return (right - left + 1) * (bottom - top + 1);
+public class Solution {
+  public int minArea(int[][] image, int x, int y) {
+    if (image == null || image.length == 0 || image[0].length == 0) {
+      return 0;
     }
-    private boolean isEmptyColumn(char[][] image, int col) {
-        for (int i = 0; i < image.length; i++) {
-            if (image[i][col] == '1') {
-                return false;
-            }
-        }
-        return true;
+    int left = findLeft(image, 0, y);
+    int right = findRight(image, y, image[0].length - 1);
+    int top = findTop(image, 0, x);
+    int bottom = findBottom(image, x, image.length - 1);
+
+    return (right - left + 1) * (bottom - top + 1);
+  }
+
+  private boolean isEmptyCol(int[][] image, int col) {
+    for (int i = 0; i < image.length; i++) {
+      if (image[i][col] == 1) {
+        return false;
+      }
     }
-    private boolean isEmptyRow(char[][] image, int row) {
-        for (int j = 0; j < image[0].length; j++) {
-            if (image[row][j] == '1') {
-                return false;
-            }
-        }
-        return true;
+    return true;
+  }
+
+  private boolean isEmptyRow(int[][] image, int row) {
+    for (int i = 0; i < image[0].length; i++) {
+      if (image[row][i] == 1) {
+        return false;
+      }
     }
-    private int findLeft(char[][] image, int start, int end) {
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            if (isEmptyColumn(image, mid)) {
-                start = mid;
-            } else {
-                end = mid;
-            }
-        }
-        if (isEmptyColumn(image, start)) {
-            return end;
-        }
-        return start;
+    return true;
+  }
+
+  private int findLeft(int[][] image, int start, int end) {
+    while (start + 1 < end) {
+      int mid = start + (end - start) / 2;
+      if (isEmptyCol(image, mid)) {
+        start = mid;
+      } else {
+        end = mid;
+      }
     }
-    private int findRight(char[][] image, int start, int end) {
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            if (isEmptyColumn(image, mid)) {
-                end = mid;
-            } else {
-                start = mid;
-            }
-        }
-        if (isEmptyColumn(image, end)) {
-            return start;
-        }
-        return end;
+    if (isEmptyCol(image, start)) {
+      return end;
     }
-    private int findTop(char[][] image, int start, int end) {
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            if (isEmptyRow(image, mid)) {
-                start = mid;
-            } else {
-                end = mid;
-            }
-        }
-        if (isEmptyRow(image, start)) {
-            return end;
-        }
-        return start;
+    return start;
+  }
+
+  private int findRight(int[][] image, int start, int end) {
+    while (start + 1 < end) {
+      int mid = start + (end - start) / 2;
+      if (isEmptyCol(image, mid)) {
+        end = mid;
+      } else {
+        start = mid;
+      }
     }
-    private int findButtom(char[][] image, int start, int end) {
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            if (isEmptyRow(image, mid)) {
-                end = mid;
-            } else {
-                start = mid;
-            }
-        }
-        if (isEmptyRow(image, end)) {
-            return start;
-        }
-        return end;
+    if (isEmptyCol(image, end)) {
+      return start;
     }
+    return end;
+  }
+
+  private int findTop(int[][] image, int start, int end) {
+    while (start + 1 < end) {
+      int mid = start + (end - start) / 2;
+      if (isEmptyRow(image, mid)) {
+        start = mid;
+      } else {
+        end = mid;
+      }
+    }
+    if (isEmptyRow(image, start)) {
+      return end;
+    }
+    return start;
+  }
+
+  private int findBottom(int[][] image, int start, int end) {
+    for (int i = end; i >= start; i--) {
+      if (!isEmptyRow(image, i)) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }
 
 /* 算法：利用二分找到上下左右，还有再算出面积
