@@ -63,4 +63,4 @@ class Solution {
     }
 }
 //算法：二分答案
-//time: O(log(range)), space: O(1)
+//time: O(log(range) * n), space: O(1)

@@ -1,11 +1,13 @@
 /**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+Find the middle node of a given linked list.
+
+Examples
+
+L = null, return null
+L = 1 -> null, return 1
+L = 1 -> 2 -> null, return 1
+L = 1 -> 2 -> 3 -> null, return 2
+L = 1 -> 2 -> 3 -> 4 -> null, return 2 */
 class Solution {
     //如果是偶数个，return第二个middle node
     public ListNode middleNode(ListNode head) {
