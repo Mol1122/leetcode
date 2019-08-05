@@ -1,13 +1,14 @@
 /**
- * class ListNode {
- *   public int value;
- *   public ListNode next;
- *   public ListNode(int value) {
- *     this.value = value;
- *     next = null;
- *   }
- * }
- */
+Delete the node at the given index for the given linked list.
+
+Examples
+
+[1, 2, 3], delete at 1 --> [1, 3]
+
+[1, 2, 3], delete at 4 --> [1, 2, 3]
+
+[1, 2, 3], delete at 0 --> [2, 3] */
+
 public class Solution {
   public ListNode deleteNode(ListNode head, int index) {
       if (head == null || index < 0) {

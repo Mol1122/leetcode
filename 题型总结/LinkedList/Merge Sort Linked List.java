@@ -1,13 +1,13 @@
 /**
- * class ListNode {
- *   public int value;
- *   public ListNode next;
- *   public ListNode(int value) {
- *     this.value = value;
- *     next = null;
- *   }
- * }
- */
+Given a singly-linked list, where each node contains an integer value, sort it in ascending order. The merge sort algorithm should be used to solve this problem.
+
+Examples
+
+null, is sorted to null
+1 -> null, is sorted to 1 -> null
+1 -> 2 -> 3 -> null, is sorted to 1 -> 2 -> 3 -> null
+4 -> 2 -> 6 -> -3 -> 5 -> null, is sorted to -3 -> 2 -> 4 -> 5 -> 6 */
+
 public class Solution {
   public ListNode mergeSort(ListNode head) {
       if (head == null || head.next == null) {
@@ -55,8 +55,5 @@ public class Solution {
       return slow;
   }
 }
-/* 
-时间复杂度：O(nlogn)
-空间复杂度：O(1)
-1 -> 2 
-*/
+
+//time: O(nlogn), space: O(logn)
