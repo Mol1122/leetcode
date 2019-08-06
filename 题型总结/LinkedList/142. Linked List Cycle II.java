@@ -1,14 +1,6 @@
 /**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
+Check if a given linked list has a cycle. Return the node where the cycle starts. Return null if there is no cycle. */
+
 public class Solution {
     public ListNode detectCycle(ListNode head) {
         if (head == null || head.next == null) {
@@ -35,3 +27,4 @@ public class Solution {
 }
 
 /* 算法：先判断是否有循环，有的话从start of list node开始，和the next of the first meeting node开始，每次各走一步，第一次的相遇点就是环形起点 */
+//time: O(n), space: O(n)
