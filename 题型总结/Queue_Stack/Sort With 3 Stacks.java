@@ -4,14 +4,13 @@ After sorting the original stack should contain the sorted integers and from top
 
 Assumptions:
 
-The given stack is not null.
- */
+The given stack is not null. */
 
 public class Solution {
   public void sort(LinkedList<Integer> s1) { //intput
     LinkedList<Integer> s2 = new LinkedList<Integer>(); //buffer
     LinkedList<Integer> s3 = new LinkedList<Integer>(); //output
-    // Write your solution here.
+    
     if (s1.size() <= 1) {
         return;
     }

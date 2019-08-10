@@ -1,59 +1,55 @@
 //常规做法
 public class Solution {
-  Stack<Integer> stack;
-  Stack<Integer> minStack;
-  
+  Deque<Integer> stack1;
+  Deque<Integer> stack2;
+
   public Solution() {
-    stack = new Stack<>();
-    minStack = new Stack<>();
+    stack1 = new ArrayDeque<>();
+    stack2 = new ArrayDeque<>();
   }
   
   public int pop() {
-    if (stack.isEmpty()) {
-        return -1;
+    if (stack1.isEmpty()) {
+      return -1;
     }
-    minStack.pop();
-    return stack.pop();
+    stack2.pollLast();
+    return stack1.pollLast();
   }
   
   public void push(int element) {
-    stack.push(element);
-    if (minStack.isEmpty()) {
-        minStack.push(element);
+    stack1.offerLast(element);
+    if (stack2.isEmpty()) {
+      stack2.offerLast(element);
     } else {
-        if (element <= minStack.peek()) {
-            minStack.push(element);
-        } else {
-            minStack.push(minStack.peek());
-        }
+      stack2.offerLast(Math.min(stack2.peekLast(), element));
     }
   }
   
   public int top() {
-    if (stack.isEmpty()) {
-        return -1;
+    if (stack1.isEmpty()) {
+      return -1;
     }
-    return stack.peek();
+    return stack1.peekLast();
   }
   
   public int min() {
-    if (stack.isEmpty()) {
-        return -1;
+    if (stack1.isEmpty()) {
+      return -1;
     }
-    return minStack.peek();
+    return stack2.peekLast();
   }
 }
-
-/* 时间复杂度：O(1), space: O(n) */
+//time: O(n), space: O(1)
 
 
 // How to optimize the space usage of minStack assuming that there are a lot of duplicates?
 public class Solution {
-  Stack<Integer> stack;
-  Stack<Pair> minStack;
+  Deque<Integer> stack;
+  Deque<Pair> minStack;
+
   public Solution() {
-    stack = new Stack<>();
-    minStack = new Stack<>();
+    stack = new ArrayDeque<>();
+    minStack = new ArrayDeque<>();
   }
   
   public int pop() {
@@ -61,36 +57,36 @@ public class Solution {
       return -1;
     }
     int size = stack.size();
-    int value = stack.pop();
-    if (minStack.peek().e2 == size) {
-        minStack.pop();
+    int value = stack.pollLast();
+    if (minStack.peekLast().e2 == size) {
+      minStack.pollLast();
     }
     return value;
   }
   
-  public void push(int x) {
-    stack.push(x);
+  public void push(int element) {
+    stack.offerLast(element);
     if (minStack.isEmpty()) {
-        minStack.push(new Pair(x, stack.size()));
+      minStack.offerLast(new Pair(element, stack.size()));
     } else {
-        if (x < minStack.peek().e1) {
-            minStack.push(new Pair(x, stack.size()));
-        }
+      if (element < minStack.peekLast().e1) {
+        minStack.offerLast(new Pair(element, stack.size()));
+      }
     }
   }
   
   public int top() {
     if (stack.isEmpty()) {
-        return -1;
+      return -1;
     }
-    return stack.peek();
+    return stack.peekLast();
   }
   
   public int min() {
     if (stack.isEmpty()) {
-       return -1;
+      return -1;
     }
-    return minStack.peek().e1;
+    return minStack.peekLast().e1;
   }
 }
 
