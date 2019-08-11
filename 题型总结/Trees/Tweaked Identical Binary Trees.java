@@ -1,13 +1,30 @@
 /**
- * public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * }
- */
+Determine whether two given binary trees are identical assuming any number of ‘tweak’s are allowed. A tweak is defined as a swap of the children of one node in the tree.
+
+Examples
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \
+
+1      4
+
+and
+
+        5
+
+      /    \
+
+    8        3
+
+           /   \
+
+          1     4   */
+
 public class Solution {
   public boolean isTweakedIdentical(TreeNode one, TreeNode two) {
       if (one == null && two == null) {
@@ -23,7 +40,8 @@ public class Solution {
   }
 }
 
-/* 时间复杂度：O(4^(log_2n)) = O(2^2 * (log_2n)) = O(2^(lon_n ^2)) = O(n^2) 最balanced的情况就是这样，也是最坏的情况
+/* 时间复杂度：O(4^(log_2（n）)) = O(2^2 * (log_2（n）)) = O(2^(log_2(n ^2)) = O(n^2) 最balanced的情况就是这样，也是最坏的情况.
+             因为一共有log_2(n)层，每层有4个分叉
 ** 空间复杂度：O(height)
 
 

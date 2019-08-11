@@ -1,13 +1,36 @@
 /**
- * public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * }
- */
+Check if a given binary tree is symmetric.
+
+Examples
+
+        5
+
+      /    \
+
+    3        3
+
+  /   \    /   \
+
+1      4  4      1
+
+is symmetric.
+
+        5
+
+      /    \
+
+    3        3
+
+  /   \    /   \
+
+1      4  1      4
+
+is not symmetric.
+
+Corner Cases
+
+What if the binary tree is null? Return true in this case. */
+
 public class Solution {
   public boolean isSymmetric(TreeNode root) {
       if (root == null) {
@@ -27,7 +50,7 @@ public class Solution {
       return helper(left.left, right.right) && helper(left.right, right.left);
   }
 }
-
+//算法：把value从上往下传递(then从下往上)的题目
 /* 时间复杂度：O(n)
 ** 空间复杂度：O(n) or O(height) 
                 (5a, 5b)

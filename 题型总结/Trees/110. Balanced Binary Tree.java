@@ -1,12 +1,32 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Check if a given binary tree is balanced. A balanced binary tree is one in which the depths of every node’s left and right subtree differ by at most 1.
+
+Examples
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+1      4        11
+
+is balanced binary tree,
+
+        5
+
+      /
+
+    3
+
+  /   \
+
+1      4
+
+is not balanced binary tree. */
+
 class Solution {
     public boolean isBalanced(TreeNode root) {
         return getHeight(root) != -1; 
