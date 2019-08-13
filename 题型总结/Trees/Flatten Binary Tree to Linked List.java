@@ -20,12 +20,11 @@ The flattened tree should look like:
           \
            5
             \
-             6
- */ 
+             6       */ 
 
 class Solution {
     //TreeNode lastNode = null;
-    public void flatten(TreeNode root) {
+    public TreeNode flatten(TreeNode root) {
         //traverse, pre-order
         // if (root == null) {
         //     return;
@@ -43,6 +42,7 @@ class Solution {
         
         //divided conquer, 总是后序遍历的思想
        helper(root);
+       return root;
     }
     
    private TreeNode helper(TreeNode root) {

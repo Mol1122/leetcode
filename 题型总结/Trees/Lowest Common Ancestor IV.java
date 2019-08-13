@@ -23,8 +23,7 @@ Examples
 
 The lowest common ancestor of 2, 3, 14 is 5
 
-The lowest common ancestor of 2, 3, 9 is 9
- */
+The lowest common ancestor of 2, 3, 9 is 9 */
  
 public class Solution {
   public TreeNode lowestCommonAncestor(TreeNode root, List<TreeNode> nodes) {

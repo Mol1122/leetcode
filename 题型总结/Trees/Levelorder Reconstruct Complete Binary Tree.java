@@ -11,7 +11,7 @@ Examples:
 
  /   \
 
-2     3 */
+2     3      */
 
 public class Solution {
   int index = 0;

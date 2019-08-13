@@ -25,8 +25,8 @@ The lowest common ancestor of 2 and 14 is 5
 
 The lowest common ancestor of 2 and 9 is 9
 
-The lowest common ancestor of 2 and 8 is null (8 is not in the tree)
- */
+The lowest common ancestor of 2 and 8 is null (8 is not in the tree) */
+
 public class Solution {
   public TreeNode lowestCommonAncestor(TreeNode root,
       TreeNode one, TreeNode two) {

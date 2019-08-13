@@ -24,10 +24,8 @@ If target = 20, There exists a path 11 + 6 + 3, the sum of the path is target.
 
 If target = 10, There does not exist any paths sum of which is target.
 
-If target = 11, There exists a path only containing the node 11.
+If target = 11, There exists a path only containing the node 11. */
 
-How is the binary tree represented?
- */
 //“三部曲”思想
 public class Solution {
   public int maxPathSum(TreeNode root) {

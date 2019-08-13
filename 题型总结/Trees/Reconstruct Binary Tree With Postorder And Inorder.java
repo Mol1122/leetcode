@@ -1,13 +1,28 @@
 /**
- * public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * }
- */
+Given the postorder and inorder traversal sequence of a binary tree, reconstruct the original tree.
+
+Assumptions
+
+The given sequences are not null and they have the same length
+There are no duplicate keys in the binary tree
+Examples
+
+postorder traversal = {1, 4, 3, 11, 8, 5}
+
+inorder traversal = {1, 3, 4, 5, 8, 11}
+
+the corresponding binary tree is
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+1      4        11       */
+
 public class Solution {
   public TreeNode reconstruct(int[] in, int[] post) {
     if (in == null || post == null || in.length != post.length) {

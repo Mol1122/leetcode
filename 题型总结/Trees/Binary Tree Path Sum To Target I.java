@@ -12,10 +12,10 @@ Given the below binary tree and target = 16,
           1    3  4
          /  \      \
         7    2      1
-return true, as there exist a root-to-leaf path 5-8-3 which sum is 16.
- */
+return true, as there exist a root-to-leaf path 5-8-3 which sum is 16. */
+
 public class Solution {
-  public boolean exist(TreeNode root, int target) {
+  public boolean exist(TreeNode root, int target) { 
     boolean[] flag = {false};
     getPath(root, target, flag);
     return flag[0];
