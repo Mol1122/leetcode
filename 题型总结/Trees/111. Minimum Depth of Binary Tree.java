@@ -1,12 +1,21 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+
+Example:
+Given the below binary tree
+
+             5
+
+          /       \
+
+        3         8
+
+           \
+
+               4
+
+minimum depth is 2,path is 5→8.  */
+
 class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) {

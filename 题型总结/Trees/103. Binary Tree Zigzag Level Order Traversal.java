@@ -1,13 +1,20 @@
 /**
- * public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * }
- */
+Get the list of keys in a given binary tree layer by layer in zig-zag order.
+
+Examples
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+ 1     4        11
+
+the result is [5, 3, 8, 11, 4, 1]  */
+
 public class Solution {
   public List<Integer> zigZag(TreeNode root) {
       List<Integer> results = new ArrayList<>();

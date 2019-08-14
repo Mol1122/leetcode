@@ -1,12 +1,22 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+
+Given a Binary Tree, return the right view of it. Right view of a Binary Tree is list of nodes visible when tree is visited from Right side, the order of the nodes in the list should be from top to bottom level of the original tree.
+
+Examples:
+           1
+        /    \
+       2      3
+      / \    /  \
+     4   5   6  7
+    /            \
+    9             8
+
+  /  \
+
+ 10  11
+
+the right view =  [1, 3, 7, 8, 11]  */
+
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> results = new ArrayList<>();
@@ -32,5 +42,7 @@ class Solution {
     }
 }
 
-/* 时间复杂度：O(n)
+/* 
+算法：算是直上直下的问题
+时间复杂度：O(n)
 ** 空间复杂度：O(n) */

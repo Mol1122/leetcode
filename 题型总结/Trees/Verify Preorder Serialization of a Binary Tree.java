@@ -15,7 +15,7 @@ Find an algorithm without reconstructing the tree.
 
 Each comma separated value in the string must be either an integer or a character '#' representing null pointer.
 
-You may assume that the input format is always valid, for example it could never contain two consecutive commas such as "1,,3".
+You may assume that the input format is always valid, for example it could never contain two consecutive commas such as "1,,3".   
 
 Example 1:
 "9,3,4,#,#,1,#,#,2,#,6,#,#"
@@ -36,6 +36,7 @@ public class Solution {
     }
     String[] elements = preorder.split(",");
     Deque<String> stack = new ArrayDeque<>();
+
     for (int i = 0; i < elements.length; i++) {
       if (elements[i].equals("#")) {
         while (!stack.isEmpty() && stack.peekLast().equals("#")) {
@@ -55,3 +56,6 @@ public class Solution {
   }
 }
 //time: O(n), space: O(n)
+//算法：stack可以理解成莫逆recursion, 因为我们没有办法从root到leaf判断，必须要先知道leaf的情况。
+//     你可以想一下如果遍历到了leaf node, 一定是digit + # + # 这种pattern. 所以我们从后往前检查，一旦确定以这个digit为root的subtree是valid的，就可以从stack pop出去，
+//     但是为了标记这个subtree已经是valid的信息给它的parent, 最后再push进去一个 # , 因为 # 也可以表示一个valid subtree的情况

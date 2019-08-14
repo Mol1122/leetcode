@@ -23,7 +23,7 @@ a?b?c:d:e  -->
 
 /    \
 
-c    d */
+c    d     */
 
 public class Solution {
   public ExpNode tree(String exp) {
@@ -55,3 +55,7 @@ public class Solution {
   }
 }
 //time: O(n), space: O(n)
+/* 不要定义成class field的就不要定义成field
+
+laicode后台只会create一个Solution object，然后多次call tree()这个method在不同的test case上，如果你把index定义成field，
+之前test case run过了之后的结果会保存下来对之后的结果有影响 */

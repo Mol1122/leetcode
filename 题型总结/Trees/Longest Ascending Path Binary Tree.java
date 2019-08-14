@@ -32,7 +32,7 @@ The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
 
       /
 
-    4 */
+    4    */
 
 public class Solution {
   public int longest(TreeNode root) {

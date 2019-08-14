@@ -1,13 +1,26 @@
 /**
- * public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * }
- */
+Given the levelorder traversal sequence of a binary search tree, reconstruct the original tree.
+
+Assumptions
+
+The given sequence is not null
+There are no duplicate keys in the binary search tree
+Examples
+
+levelorder traversal = {5, 3, 8, 1, 4, 11}
+
+the corresponding binary search tree is
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+1      4        11   */
+
 public class Solution {
   public TreeNode reconstruct(int[] level) {
     if (level == null || level.length == 0) {

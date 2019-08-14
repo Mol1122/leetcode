@@ -31,7 +31,7 @@ class Solution {
                 return false;
             }
             while (!stack.isEmpty() && num > stack.peekLast()) {
-                lowbound = stack.pollLast();
+                lowbound = stack.pollLast(); //去到右子树的时候，value一定要大于left subtree value
             }
             stack.offerLast(num);
         }

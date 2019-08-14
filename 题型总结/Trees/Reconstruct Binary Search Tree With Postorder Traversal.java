@@ -1,13 +1,26 @@
 /**
- * public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * }
- */
+Given the postorder traversal sequence of a binary search tree, reconstruct the original tree.
+
+Assumptions
+
+The given sequence is not null
+There are no duplicate keys in the binary search tree
+Examples
+
+postorder traversal = {1, 4, 3, 11, 8, 5}
+
+the corresponding binary search tree is
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+1      4        11    */
+
 public class Solution {
   int index;
   public TreeNode reconstruct(int[] post) {

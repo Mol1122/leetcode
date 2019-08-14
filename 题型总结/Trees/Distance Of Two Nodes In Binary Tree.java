@@ -20,7 +20,7 @@ Examples:
        \
 
          8
-
+    
 distance(4, 5) = 2
 
 distance(4, 6) = 4 */
