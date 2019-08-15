@@ -1,5 +1,10 @@
 /**
-Given a binary tree, return its border view. The border view is defined as follow: first get all the border nodes at left side(from root and always go to the left subtree unless the left subtree does not exist until reach a leaf node), then get all the leaf nodes(from left to right), at last get all the border nodes at right side(similar to left border but from bottom to top), the list of border view should not contain duplicate nodes. Note that for the given root, if it has no left sub-tree or right sub-tree, it is considered the left border/right border, but this rule applies to only the input tree not any sub-tree of it.
+Given a binary tree, return its border view. The border view is defined as follow: first get all the border nodes 
+at left side(from root and always go to the left subtree unless the left subtree does not exist until reach a leaf node), 
+then get all the leaf nodes(from left to right), at last get all the border nodes at right side(similar to left border but from 
+bottom to top), the list of border view should not contain duplicate nodes. Note that for the given root, if it has no left 
+sub-tree or right sub-tree, it is considered the left border/right border, but this rule applies to only the input tree not 
+any sub-tree of it.
 
 Examples:
            1
@@ -16,8 +21,8 @@ Examples:
 
 the border view =  [1, 2, 4, 9, 11, 5, 8, 7, 3]
 
-1, 2, 4, 9, 11 are the left border, 11, 5, 8, 7 are the leaf nodes, 7, 3, 1 are the right border.
- */
+1, 2, 4, 9, 11 are the left border, 11, 5, 8, 7 are the leaf nodes, 7, 3, 1 are the right border.  */
+
 class Solution {
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
         List<Integer> results = new ArrayList<>();

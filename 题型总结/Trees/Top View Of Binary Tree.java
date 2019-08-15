@@ -10,8 +10,8 @@ Examples:
  / \   / \
 4  (5,6)  7
 
-the top view is [4, 2, 1, 3, 7]
- */
+the top view is [4, 2, 1, 3, 7]  */
+
 public class Solution {
   public List<Integer> topView(TreeNode root) {
     List<Integer> results = new ArrayList<>();

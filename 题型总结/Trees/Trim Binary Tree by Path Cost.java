@@ -13,10 +13,10 @@ For example, in the following binary tree, the node 5 has its path cost to be 3,
              4          5             6
 
            /   \                      /
-
+ 
          7      8                  9
 
-Given a binary tree, try to delete all the nodes that have no paths whose cost is >= k that go through it. In the above example, 
+Given a binary tree, try to delete all the nodes that have no paths whose cost is < k that go through it. In the above example, 
 node 5 will be deleted  for k = 4. */
 
 public class Solution {

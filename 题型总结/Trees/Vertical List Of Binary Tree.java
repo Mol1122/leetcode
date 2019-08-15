@@ -20,7 +20,7 @@ Output:
  [1, 5, 6], // 3rd left-most column, top->bottom, left->right
  [3, 8],
  [7],
- [9]]   */
+ [9]]      */
 
 public class Solution {
   public List<List<Integer>> verticalPrint(TreeNode root) {

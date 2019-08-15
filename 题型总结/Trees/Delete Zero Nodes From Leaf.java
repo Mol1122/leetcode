@@ -48,7 +48,7 @@ After another round, deleting all the leaf nodes with 0, the tree becomds:
 
           0
            \
-            3
+            3   
              \
               7   
 
@@ -70,7 +70,7 @@ public class Solution {
     }
     TreeNode left = delete(root.left);
     TreeNode right = delete(root.right);
-    if (left == null) {
+    if (left == null) { //容易漏掉
       root.left = null;
     }
     if (right == null) {

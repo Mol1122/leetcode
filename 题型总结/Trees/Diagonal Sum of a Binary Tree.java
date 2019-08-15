@@ -5,6 +5,7 @@ Given a Binary Tree, print all diagonal sums.
 For the above input tree, output should be:
 
 { 11, 14, 5 }  */
+
 public class Solution {
   public List<Integer> diagonalSum(TreeNode root) {
     List<Integer> results = new ArrayList<>();

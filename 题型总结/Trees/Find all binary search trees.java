@@ -13,8 +13,7 @@ Output:
 
      /         /                              \                \
 
-   2        1                                  2               3
- */
+   2        1                                  2               3       */
  
 public class Solution {
   public List<TreeNode> generateBSTs(int n) {

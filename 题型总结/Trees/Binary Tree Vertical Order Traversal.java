@@ -40,9 +40,8 @@ Given binary tree [3,9,8,4,0,1,7,null,null,null,2,5] (0's right child is 2 and 1
    5   2
 return its vertical order traversal as:
 
-[4,9,5,3,0,1,8,2,7]
+[4,9,5,3,0,1,8,2,7]  */
 
- */
 public class Solution {
   public List<Integer> verticalOrder(TreeNode root) {
     List<Integer> results = new ArrayList<>();
@@ -77,16 +76,4 @@ public class Solution {
     return results;
   }
 }
-
-class Pair {
-  TreeNode node;
-  int x, y;
-
-  public Pair(TreeNode node, int x, int y) {
-    this.node = node;
-    this.x = x;
-    this.y = y;
-  }
-}
-
 //time: O(n), space: O(n)
