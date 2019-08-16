@@ -1,4 +1,5 @@
-/* Given two sorted arrays A and B, of sizes m and n respectively. Define s = a + b, where a is one element from A and b is one element from B. Find the Kth smallest s out of all possible s'.
+/* Given two sorted arrays A and B, of sizes m and n respectively. Define s = a + b, where a is one element from A and b is one element from B. 
+Find the Kth smallest s out of all possible s'.
 
 Assumptions
 
@@ -54,4 +55,4 @@ class Pair {
      this.sum = sum;
    }
 }
-//time: O(klogk), space: O(n + m)
+//time: O(klogk), space: O(n * m)

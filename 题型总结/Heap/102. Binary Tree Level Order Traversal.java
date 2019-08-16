@@ -1,12 +1,20 @@
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Get the list of list of keys in a given binary tree layer by layer. Each layer is represented by a list of keys and the keys are traversed from left to right.
+
+Examples
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+ 1     4        11
+
+the result is [ [5], [3, 8], [1, 4, 11] ]  */
+
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> results = new ArrayList<>();

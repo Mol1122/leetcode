@@ -1,0 +1,58 @@
+/* Given a composition with different kinds of words, return a list of the top K most frequent words in the composition.
+
+Assumptions
+
+the composition is not null and is not guaranteed to be sorted
+K >= 1 and K could be larger than the number of distinct words in the composition, in this case, just return all the distinct words
+Return
+
+a list of words ordered from most frequent one to least frequent one (the list could be of size K or smaller than K)
+Examples
+
+Composition = ["a", "a", "b", "b", "b", "b", "c", "c", "c", "d"], top 2 frequent words are [“b”, “c”]
+Composition = ["a", "a", "b", "b", "b", "b", "c", "c", "c", "d"], top 4 frequent words are [“b”, “c”, "a", "d"]
+Composition = ["a", "a", "b", "b", "b", "b", "c", "c", "c", "d"], top 5 frequent words are [“b”, “c”, "a", "d"] */
+
+public class Solution {
+  public String[] topKFrequent(String[] words, int k) {
+    if (words == null || words.length == 0) {
+      return new String[0];
+    }
+    Map<String, Integer> word2freq = new HashMap<>();
+    for (String word : words) {
+      word2freq.putIfAbsent(word, 0);
+      word2freq.put(word, word2freq.get(word) + 1);
+    }
+    Queue<Pair> minheap = new PriorityQueue<>(k, new Comparator<Pair>() {
+      public int compare(Pair a, Pair b) {
+        if (a.freq != b.freq) {
+          return a.freq - b.freq;
+        }
+        return b.word.compareTo(a.word);
+      }
+    });
+    for (String word : word2freq.keySet()) {
+      minheap.offer(new Pair(word, word2freq.get(word)));
+      if (minheap.size() > k) {
+        minheap.poll();
+      }
+    }
+    String[] results = new String[minheap.size()];
+    int index = results.length - 1;
+    while (!minheap.isEmpty()) {
+      results[index--] = minheap.poll().word;
+    }
+    return results;
+  }
+}
+
+class Pair {
+  String word;
+  int freq;
+
+  public Pair(String word, int freq) {
+    this.word = word;
+    this.freq = freq;
+  }
+}
+//time: O(nlogk), space: O(n)
