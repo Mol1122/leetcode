@@ -23,5 +23,5 @@ public class Solution {
     }
     return max;
   }
-}
+}    
 //time: O(n), space: O(n)

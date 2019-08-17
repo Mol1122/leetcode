@@ -26,7 +26,7 @@ public class Solution {
         char[] sc = s.toCharArray();
         
         for (int i = 0; i < sc.length; i++) {
-            while (j < sc.length && (map.size() < k || map.size() == k && map.containsKey(sc[j]))) {
+            while (j < sc.length && (map.size() < k || map.size() == k && map.containsKey(sc[j]))) { //易错
                 map.putIfAbsent(sc[j], 0);
                 map.put(sc[j], map.get(sc[j]) + 1);
                 j++;

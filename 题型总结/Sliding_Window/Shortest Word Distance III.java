@@ -37,5 +37,5 @@ public class Solution {
     }
     return min;
   }
-}
+}    
 //time: O(nk), space: O(1)

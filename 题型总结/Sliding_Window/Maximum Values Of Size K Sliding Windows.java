@@ -22,10 +22,10 @@ public class Solution {
     }
     Deque<Integer> deque = new ArrayDeque<>();
     for (int i = 0; i < nums.length; i++) {
-        while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+        while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) { //从最近期的开始检查，如果不如当前值大，就删掉.不然会影响下一轮的值
             deque.pollLast();
         }
-        if (!deque.isEmpty() && deque.peekFirst() <= i - k) {
+        if (!deque.isEmpty() && deque.peekFirst() <= i - k) { //<= 容易错
             deque.pollFirst();
         }
         deque.offerLast(i);

@@ -6,7 +6,7 @@ Assume that words = ["practice", "makes", "perfect", "coding", "makes"].
 Given word1 = “coding”, word2 = “practice”, return 3.
 Given word1 = "makes", word2 = "coding", return 1.
 
-Note:
+Note:       
 You may assume that word1 does not equal to word2, and word1 and word2 are both in the list. */
 
 public class Solution {
