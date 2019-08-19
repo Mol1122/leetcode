@@ -15,6 +15,7 @@ Examples
   {  'C',  'C',  'C' } }
 
 we should put the chair at (1, 0), so that the sum of cost from the chair to the two equipment is 1 + 1 = 2, which is minimal. */
+
 public class Solution {
   public List<Integer> putChair(char[][] grid) {
         List<Integer> result = Arrays.asList(-1, -1);

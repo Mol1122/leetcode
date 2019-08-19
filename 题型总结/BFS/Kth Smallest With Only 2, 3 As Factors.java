@@ -10,8 +10,7 @@ the smallest is 1
 the 2nd smallest is 2
 the 3rd smallest is 3
 the 5th smallest is 2 * 3 = 6
-the 6th smallest is 2 ^ 3 * 3 ^ 0 = 8
- */
+the 6th smallest is 2 ^ 3 * 3 ^ 0 = 8 */
  
 public class Solution {
   public int kth(int k) {

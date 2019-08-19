@@ -20,6 +20,7 @@ After running your function, the 2D grid should be:
   2   2   1  -1
   1  -1   2  -1
   0  -1   3   4 */
+  
 public class Solution {
   public int[][] wallsAndGates(int[][] rooms) {
     if (rooms == null || rooms.length == 0) {

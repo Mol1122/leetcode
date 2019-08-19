@@ -1,3 +1,13 @@
+/* Given N pairs of parentheses “()”, return a list with all the valid permutations.
+
+Assumptions
+
+N > 0
+Examples
+
+N = 1, all valid permutations are ["()"]
+N = 3, all valid permutations are ["((()))", "(()())", "(())()", "()(())", "()()()"] */
+
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> results = new ArrayList<>();
