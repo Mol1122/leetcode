@@ -9,7 +9,7 @@ Examples:
 
 if input number is 231, possible words which can be formed are:
 
-[ad, ae, af, bd, be, bf, cd, ce, df] */
+[ad, ae, af, bd, be, bf, cd, ce, df]  */
 
 public class Solution {
   public String[] combinations(int number) {

@@ -1,4 +1,5 @@
-/* Given a set of n integers, divide the set in two subsets of n/2 sizes each such that the difference of the sum of two subsets is as minimum as possible.
+/* Given a set of n integers, divide the set in two subsets of n/2 sizes each such that the difference of the sum of two subsets is 
+as minimum as possible.
 
 Return the minimum difference(absolute value).
 
@@ -37,6 +38,7 @@ public class Solution {
       prefix.add(nums[index]);
       dfs(nums, index + 1, diff, currSum + nums[index], sum, prefix);
       prefix.remove(prefix.size() - 1);
+      
       dfs(nums, index + 1, diff, currSum, sum, prefix);
   }
 }

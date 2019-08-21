@@ -1,4 +1,10 @@
+/* Given a string, determine if a permutation of the string could form a palindrome.
+
+For example,
+"code" -> False, "aab" -> True, "carerac" -> True. */
+
 class Solution {
+    //time: O(n), space: O(n)
     public boolean canPermutePalindrome(String s) {
         if (s == null || s.length() == 0) {
             return true;

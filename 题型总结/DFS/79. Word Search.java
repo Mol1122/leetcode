@@ -7,8 +7,7 @@ Input: board = [[“ABCE”],
                 ]
 Output: Word = “ABCCED”   return true
             Word = “SEE”      return true
-            Word = “ABCB”      return false
-  */
+            Word = “ABCB”      return false  */
 
 public class Solution {
   public boolean isWord(char[][] board, String word) {

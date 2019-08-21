@@ -6,9 +6,7 @@ l, m, n >= 0
 l + m + n > 0
 Examples
 
-l = 1, m = 1, n = 0, all the valid permutations are ["()<>", "(<>)", "<()>", "<>()"]
-
- */
+l = 1, m = 1, n = 0, all the valid permutations are ["()<>", "(<>)", "<()>", "<>()"]  */
 
 public class Solution {
   public List<String> validParentheses(int l, int m, int n) {

@@ -8,20 +8,21 @@ Examples
 
 l = 1, m = 1, n = 0, all the valid permutations are ["()<>", "(<>)", "<()>", "<>()"]
 
-Additional Priority Restriction {} > [] > ()
- */
+Additional Priority Restriction {} > [] > () */
+
 public class Solution {
-	public List<String> validParenthesisII(int l, int m, int n) {
-		List<String> results = new ArrayList<>();
-		final char[] paren = {'(', ')', '[', ']', '{', '}'};
+  public List<String> validParenthesesIII(int l, int m, int n) {
+    Set<String> results = new HashSet<>();
+		final char[] paren = {'(', ')', '<', '>', '{', '}'};
 		int[] remain = {l, l, m, m, n, n};
 		Deque<Character> stack = new ArrayDeque<>();
 		int targetLen = 2 * l + 2 * m + 2 * n;
 		dfs(paren, remain, targetLen, stack, new StringBuilder(), results);
-		return results;
-	}
+		return new ArrayList<>(results);
+  }
 
-	private void dfs(char[] paren, int[] remain, int targetLen, Deque<Character> stack, StringBuilder sb, List<String> results) {
+  private void dfs(char[] paren, int[] remain, int targetLen, Deque<Character> stack, 
+                   StringBuilder sb, Set<String> results) {
 		if (sb.length() == targetLen) {
 			results.add(new String(sb));
 			return;
@@ -44,23 +45,28 @@ public class Solution {
 					remain[i]--;
 					dfs(paren, remain, targetLen, stack, sb, results);
 					remain[i]++;
-					stak.offerLast(paren[i - 1]);
+					stack.offerLast(paren[i - 1]);
 					sb.deleteCharAt(sb.length() - 1);
 				}
 			}
 		}
 	}
 
-	private boolean isValid(char curr, Deque<Character> stack) {
+  private boolean isValid(char curr, Deque<Character> stack) {
 		if (curr == '{') {
-			if (!stack.isEmpty() && (stack.peekLast() == '(' || stack.peekLast() == '[')) {
+			if (!stack.isEmpty() && (stack.peekLast() == '(' || stack.peekLast() == '<' || stack.peekLast() == '{')) {
 				return false;
 			}
-		} else if (curr == '[') {
-			if (!stack.isEmpty() && stack.peekLast() == '(') {
+		} else if (curr == '<') {
+			if (!stack.isEmpty() && (stack.peekLast() == '(' || stack.peekLast() == '<')) {
 				return false;
 			}
-		}
+		} else if (curr == '(') {
+      if (!stack.isEmpty() && stack.peekLast() == '(') {
+        return false;
+      }
+    }
 		return true;
 	}
 }
+//time: O(6^targetLen), space: O(taretLen)

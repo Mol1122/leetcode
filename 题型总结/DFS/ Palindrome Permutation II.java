@@ -1,10 +1,12 @@
-/* Given a string s, return all the palindromic permutations (without duplicates) of it. Return an empty list if no palindromic permutation could be form.
+/* Given a string s, return all the palindromic permutations (without duplicates) of it. 
+Return an empty list if no palindromic permutation could be form.
 
 For example:
 
 Given s = "aabb", return ["abba", "baab"].
 
 Given s = "abc", return []. */
+
 public class Solution {
   public List<String> generatePalindromes(String s) {
       Set<String> results = new HashSet<>();
@@ -12,11 +14,7 @@ public class Solution {
           return new ArrayList<>();
       }
       dfs(s.toCharArray(), 0, results);
-      List<String> list = new ArrayList<>();
-      for (String str :  results) {
-          list.add(str);
-      }
-      return list;
+      return new ArrayList<>();
   }
   
   private void dfs(char[] sc, int index, Set<String> results) {

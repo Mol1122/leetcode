@@ -6,6 +6,7 @@ Set = “abc”, all permutations are [“abc”, “acb”, “bac”, “bca�
 Set = "aba", all permutations are ["aab", "aba", "baa"]
 Set = "", all permutations are [""]
 Set = null, all permutations are [] */
+
 public class Solution {
   public List<String> permutations(String s) {
     List<String> results = new ArrayList<>();

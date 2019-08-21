@@ -40,7 +40,7 @@ public class Solution {
   private void dfs(int[] coins, int index, int target, List<Integer> combination, 
                    List<List<Integer>> results) {
       if (index == coins.length - 1) { //到达最后一层/最后一个数
-          if (target % coins[coins.length - 1] == 0) { //能除尽的话
+          if (target % coins[coins.length - 1] == 0) { //能除尽的话，包含target = 0的情况
               combination.add(target / coins[coins.length - 1]);
               results.add(new ArrayList<>(combination));
               combination.remove(combination.size() - 1);

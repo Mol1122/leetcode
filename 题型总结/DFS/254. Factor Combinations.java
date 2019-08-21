@@ -1,3 +1,27 @@
+/* Given an integer number, return all possible combinations of the factors that can multiply to the target number.
+
+Example
+
+Give A = 24
+
+since 24 = 2 x 2 x 2 x 3
+
+              = 2 x 2 x 6
+
+              = 2 x 3 x 4
+
+              = 2 x 12
+
+              = 3 x 8
+
+              = 4 x 6
+
+your solution should return
+
+{ { 2, 2, 2, 3 }, { 2, 2, 6 }, { 2, 3, 4 }, { 2, 12 }, { 3, 8 }, { 4, 6 } }
+
+note: duplicate combination is not allowed. */
+
 public class Solution {
   public List<List<Integer>> combinations(int target) {
       List<List<Integer>> results = new ArrayList<>();
@@ -29,3 +53,5 @@ public class Solution {
 
 /* 时间复杂度：O(target^n)
 ** 空间复杂度：O(target) */
+
+//另一种解法，时间复杂度为: O(n^target), 空间复杂度为: O(target), 但是写起来比较复杂
