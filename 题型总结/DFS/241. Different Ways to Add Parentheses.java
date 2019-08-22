@@ -47,11 +47,11 @@ public class Solution {
             }
         }
     }
-    if (results.size() == 0) {
+    if (results.size() == 0) { //这是base case, 易漏
         results.add(Integer.parseInt(input));
     }
     Collections.sort(results);
     return results;
   }
 }
-//time: O(n^n), space: O(n)
+//time: O(n^n), space: O(n)   

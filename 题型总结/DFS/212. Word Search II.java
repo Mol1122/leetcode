@@ -28,7 +28,7 @@ public class Solution {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             boolean[][] visited = new boolean[n][m];
-            visited[i][j] = true; 
+            visited[i][j] = true; //放在45行之后也可以
             dfs(board, visited, i, j, board[i][j] + "", prefixIsWord, results);
         }
     }
@@ -74,4 +74,4 @@ public class Solution {
 }
 //systematic way of solving problem
 //time: O(n^2 * 4^word.length()), space: O(n^2)
-//难点：值得注意的是，同一个字母可以被重复使用，只是不在同一个单词里被重复使用就好
+//难点：值得注意的是，同一个字母可以被重复使用，只是不在同一个单词里被重复使用就好    
