@@ -1,4 +1,6 @@
-/* Remove adjacent, repeated characters in a given string, leaving only two characters for each group of such characters. The characters in the string are sorted in ascending order.
+/* Remove adjacent, repeated characters in a given string, 
+leaving only two characters for each group of such characters. 
+The characters in the string are sorted in ascending order.
 
 Assumptions
 
@@ -9,6 +11,26 @@ Examples
 Corner Cases
 
 If the given string is null, we do not need to do anything. */
+
+public class Solution {
+  public String deDup(String s) {
+    if (s == null || s.length() <= 1) {
+      return s;
+    }
+    char[] sc = s.toCharArray();
+    int i = 2;
+
+    for (int j = 2; j < sc.length; j++) {
+      if (sc[j] != sc[i - 2]) {
+        sc[i] = sc[j];
+        i++;
+      }
+    }
+    return new String(sc, 0, i);
+  }
+}
+//time: O(n), space: O(n)
+
 public class Solution {
   public String deDup(String s) {
     if (s == null || s.length() <= 1) {

@@ -6,7 +6,7 @@ Examples
 
 Corner Cases
 
-If the given string is null, we do not need to do anything. */
+If the given string is null, we do not need to do anything. */  
 
 public class Solution {
   public String reverseWords(String s) {

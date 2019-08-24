@@ -1,10 +1,20 @@
+/* Given an original string input, and two strings S and T, replace all occurrences of S in input with T.
+
+Assumptions
+
+input, S and T are not null, S is not empty string
+Examples
+
+input = "appledogapple", S = "apple", T = "cat", input becomes "catdogcat"
+input = "dodododo", S = "dod", T = "a", input becomes "aoao" */
+
 public class Solution {
   public String replace(String input, String s, String t) {
       if (input == null || input.length() == 0) {
           return input;
       }
       char[] sc = input.toCharArray();
-      if (s.length() >= t.length()) {
+      if (s.length() >= t.length()) { //t短就不会overwrite
           return replaceShort(sc, s, t);
       } else {
           return replaceLong(sc, s, t);
@@ -15,7 +25,7 @@ public class Solution {
       List<Integer> matches = getAllMatches(sc, s);
       char[] result = new char[sc.length + matches.size() * (t.length() - s.length())];
       int lastIndex = matches.size() - 1;
-      int slow = result.length - 1;
+      int slow = result.length - 1; //从后往前遍历
       int fast = sc.length - 1;
     
       while (fast >= 0) {
@@ -76,4 +86,4 @@ public class Solution {
    }
 }
 
-/* 时间复杂度：O(k*n) */
+//time：O(k*n), space: O(n) 

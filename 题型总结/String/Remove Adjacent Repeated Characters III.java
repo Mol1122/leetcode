@@ -9,9 +9,10 @@ Examples
 Corner Cases
 
 If the given string is null, we do not need to do anything. */
+
 public class Solution {
   public String deDup(String s) {
-    if (s == null | s.length() <= 1) {
+    if (s == null || s.length() <= 1) {
         return s;
     }
     int i = 0;
@@ -33,3 +34,4 @@ public class Solution {
   }
 }
 //time: O(n), space: O(n)
+//只需要把一个group里重复的全部删除即可，不需要recursively do that

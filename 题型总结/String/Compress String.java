@@ -1,4 +1,5 @@
-/* Given a string, replace adjacent, repeated characters with the character followed by the number of repeated occurrences. If the character does not has any adjacent, repeated occurrences, it is not changed.
+/* Given a string, replace adjacent, repeated characters with the character followed by the number of 
+repeated occurrences. If the character does not has any adjacent, repeated occurrences, it is not changed.
 
 Assumptions
 
