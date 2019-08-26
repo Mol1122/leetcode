@@ -58,7 +58,7 @@ public class Solution {
   }
 }
 // f[i] = the max sum from index 0 to i, must include index i
-// time: O(n), space: O()
+// time: O(n), space: O(1)
 
 /*  Follow up: How to return the left and right border of the Solution?
 1. Use four temp variables: cur_left, global_left, cur_right, global_right

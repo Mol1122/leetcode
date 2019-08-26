@@ -1,4 +1,5 @@
-/* Given a word, smallest way to split it by concatenating words from a given dictionary? Example:   Dictionary:
+/* Given a word, smallest way to split it by concatenating words from a given dictionary? 
+Example:   Dictionary:
 bob
 cat
 rob

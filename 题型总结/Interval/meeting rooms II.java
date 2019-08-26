@@ -4,6 +4,7 @@ find the minimum number of conference rooms required.
 For example,
 Given [[0, 30],[5, 10],[15, 20]],
 return 2. */
+
 public class Solution {
   public int minMeetingRooms(int[][] intervals) {
     if (intervals == null || intervals.length == 0) {
