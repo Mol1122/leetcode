@@ -24,7 +24,7 @@ public class Solution {
           f[i][j] = f[i - 1][j - 1] + 1;
           if (f[i][j] > max) {
             max = f[i][j];
-            result = A.substring(i - f[i][j], i);
+            result = A.substring(i - f[i][j], i); //易错
           }
         }
       }

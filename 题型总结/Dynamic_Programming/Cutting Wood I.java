@@ -1,4 +1,7 @@
-/* There is a wooden stick with length L >= 1, we need to cut it into pieces, where the cutting positions are defined in an int array A. The positions are guaranteed to be in ascending order in the range of [1, L - 1]. The cost of each cut is the length of the stick segment being cut. Determine the minimum total cost to cut the stick into the defined pieces.
+/* There is a wooden stick with length L >= 1, we need to cut it into pieces, 
+where the cutting positions are defined in an int array A. The positions are guaranteed 
+to be in ascending order in the range of [1, L - 1]. The cost of each cut is the length 
+of the stick segment being cut. Determine the minimum total cost to cut the stick into the defined pieces.
 
 Examples
 
@@ -18,7 +21,7 @@ public class Solution {
     int n = helper.length;
     int[][] f = new int[n][n];
 
-    for (int i = n; i >= 0; i--) {
+    for (int i = n - 1; i >= 0; i--) {
         for (int j = i + 1; j < n; j++) {
             if (j == i + 1) {
                 f[i][j] = 0;

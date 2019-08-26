@@ -1,4 +1,5 @@
-/* Generate an M * N 2D array in spiral order clock-wise starting from the top left corner, using the numbers of 1, 2, 3, …, M * N in increasing order.
+/* Generate an M * N 2D array in spiral order clock-wise starting from the top left corner, 
+using the numbers of 1, 2, 3, …, M * N in increasing order.
 
 Assumptions
 

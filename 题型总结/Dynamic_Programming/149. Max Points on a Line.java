@@ -1,11 +1,13 @@
-/* Given an array of 2D coordinates of points (all the coordinates are integers), find the largest number of points that can be crossed by a single line in 2D space.
+/* Given an array of 2D coordinates of points (all the coordinates are integers), 
+find the largest number of points that can be crossed by a single line in 2D space.
 
 Assumptions
 
 The given array is not null and it has at least 2 points
 Examples
 
-<0, 0>, <1, 1>, <2, 3>, <3, 3>, the maximum number of points on a line is 3(<0, 0>, <1, 1>, <3, 3> are on the same line) */
+<0, 0>, <1, 1>, <2, 3>, <3, 3>, the maximum number of points on a line is 3(<0, 0>, <1, 1>, <3, 3> 
+are on the same line) */
 
 /*
 * class Point {
@@ -25,7 +27,7 @@ public class Solution {
     int max = 0;
     for (int i = 0; i < points.length; i++) {
         Point seed = points[i];
-        int same = 1;
+        int same = 1; //易错，一定要一开始把自己加上
         int sameX = 0;
         int most = 0; //the max number of points that are on the same line as seed
         Map<Double, Integer> slope2count = new HashMap<>();
@@ -52,3 +54,4 @@ public class Solution {
   }
 }
 //time: O(n^2), space: O(n)
+//算法：If two points pass the same third point and have the same slope, then , the two points are on the same line
