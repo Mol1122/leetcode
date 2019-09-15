@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Main m = new Main();
 //        System.out.println(m.getBinary(161));
-        List<Integer> results = m.countingBits((int)161);
+//        List<Integer> results = m.countingBits((int)161);
 //        for (int num : results) {
 //            System.out.print(num + ", ");
 //        }
@@ -20,9 +20,104 @@ public class Main {
 //        } finally {
 //            System.out.println("Error");
 //        }
-        List<Integer> slope = Arrays.asList(5, 1, 2, 3, 3, 4);
-        m.climbTheHill(slope);
+//        List<Integer> slope = Arrays.asList(5, 1, 2, 3, 3, 4);
+//        m.climbTheHill(slope);
+//        Map<String, List<String>> files = new HashMap<>();
+//        files.put("file1", Arrays.asList("line1", "line2", "file2.file", "line3", "line4", "file3.file"));
+//        files.put("file2", Arrays.asList("line5", "line6", "file4.file111"));
+//        files.put("file3", Arrays.asList("line7", "line8"));
+//        files.put("file4", Arrays.asList("line9"));
+//        System.out.println(m.getAllContent(files));
+
+        List<String> results = m.getDeepestString("(a([e]) {(abc)})");
+        for (String s : results) {
+            System.out.println(s);
+        }
+
     }
+
+    /*  
+   "(a2[dg{}])"    return ""
+   "(a([e]) {(abc)})"‍‍‌‌‍‍‌‌‍‌‌‌‍‍‌‍‌  return ["e", "abc"]
+   "hello, World!"  return "hello, World!" */
+    public List<String> getDeepestString(String s) {
+        List<String> results = new ArrayList<>();
+        if (s == null || s.length() == 0) {
+            return results;
+        }
+        int max = 0, depth = 0;
+        String temp = "";
+
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                depth++;
+                temp = "";
+            } else if (c == ')' || c == ']' || c == '}') {
+                if (depth > max) {
+                    max = depth;
+                    results.clear();
+                    results.add(temp);
+                } else if (depth == max) {
+                    results.add(temp);
+                }
+                temp = "";
+                depth--;
+            } else {
+                temp += c;
+            }
+        }
+        return max == 0 ? Arrays.asList(s) : results;
+    }
+
+    public String getAllContent(Map<String, List<String>> files) {
+        String result = "";
+        Set<String> visited = new HashSet<>();
+
+        for (String filename : files.keySet()) {
+            System.out.println("Filename = " + filename);
+            if (visited.contains(filename)) {
+                continue;
+            }
+            visited.add(filename);
+            for (String content : files.get(filename)) {
+                if (!content.contains(".")) {
+                    result += content + ", ";
+                } else {
+//                    System.out.println(content);
+                    String[] another = content.split("\\.");
+
+                    List<String> contents = getContent(files, another[0], visited);
+                    for (String str : contents) {
+                        result += str + ", ";
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private List<String> getContent(Map<String, List<String>> files, String filename, Set<String> visited) {
+        List<String> result = new ArrayList<>();
+        if (visited.contains(filename)) {
+            return result;
+        }
+        visited.add(filename);
+        for (String content : files.get(filename)) {
+            if (!content.contains(".")) {
+                result.add(content);
+            } else {
+                String[] another = content.split("\\.");
+                List<String> contents = getContent(files, another[0], visited);
+                for (String str : contents) {
+                    result.add(str);
+                }
+            }
+        }
+        return result;
+    }
+
+
 
     public long climbTheHill(List<Integer> slope) {
         if (slope == null || slope.size() == 0) {

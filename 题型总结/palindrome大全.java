@@ -307,6 +307,7 @@ public class Solution {
     }
 }
 
+//这个写法太繁琐
     public String longestCommonSubstring(String s1, String s2) {
         if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0) {
             return "";
@@ -344,5 +345,33 @@ public class Solution {
         }
         return sb.reverse().toString();
     }
+
+public class Solution {
+  public String longestCommon(String A, String B) {
+    if (A == null || B == null || A.length() == 0 || B.length() == 0) {
+      return "";
+    }
+    int n = A.length();
+    int m = B.length();
+    int[][] f = new int[n + 1][m + 1];
+
+    int max = 0;
+    String result = "";
+    for (int i = 1; i <= n; i++) {
+      for (int j = 1; j <= m; j++) {
+        if (A.charAt(i - 1) == B.charAt(j - 1)) {
+          f[i][j] = f[i - 1][j - 1] + 1;
+          if (f[i][j] > max) {
+            max = f[i][j];
+            result = A.substring(i - f[i][j], i);
+          }
+        }
+      }
+    }
+    return result;
+  }
+}
+//f[i][j] = the longest common substring ending at index i in A and index j in B
+//time: O(n * m), space: O(n * m)
 
 
