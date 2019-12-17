@@ -96,10 +96,11 @@ class Solution {
             for (int j = 0; j < words[i].length() && j < words[i + 1].length(); j++) {
                 if (words[i].charAt(j) != words[i + 1].charAt(j)) {
                     graph.get(words[i].charAt(j)).add(words[i + 1].charAt(j));
-                    break;
+                    break; //易漏
                 }
             }
         }
         return graph;
     }
 }
+//time: O()

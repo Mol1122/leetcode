@@ -26,6 +26,32 @@ public class Main {
         }
     }
 
+    public int researchTheEdge(int[][] matrix) {
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int x = n - 1, y = 0, dir = 0;
+
+        while (true) {
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m) {
+                return dir;
+            }
+            if (matrix[nx][ny] == 1) {
+                dir = (dir + 1) % 4;
+                nx = x + dx[dir];
+                ny = y + dy[dir];
+            }
+            x = nx;
+            y = ny;
+        }
+        return -1;
+    }
+
     public List<String> allPermutation(String s) {
         List<String> results = new ArrayList<>();
         if (s == null || s.length() == 0) {
