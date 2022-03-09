@@ -20,6 +20,40 @@ Example
 
           [1, 1, 6] */
 
+//二叉树式解法
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] nums, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums == null) {
+            return results;
+        }
+        Arrays.sort(nums);
+        dfs(nums, 0, 0, target, new ArrayList<>(), results);
+        return results;
+    }
+    
+    private void dfs(int[] nums, int index, int currSum, int target, List<Integer> temp, List<List<Integer>> results) {  
+        if (currSum >= target) {
+            if (currSum == target) {
+                results.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        if (index == nums.length) {
+            return;
+        }
+        
+        temp.add(nums[index]);
+        dfs(nums, index + 1, currSum + nums[index], target, temp, results);
+        temp.remove(temp.size() - 1);
+        
+        while (index < nums.length - 1 && nums[index] == nums[index + 1]) {
+            index++;
+        }
+        
+        dfs(nums, index + 1, currSum, target, temp, results);
+    }
+}
 //time: O(2^n), space: O(n)          
 public class Solution {
   public List<List<Integer>> combinationSum2(int[] nums, int target) {

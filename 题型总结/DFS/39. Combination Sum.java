@@ -16,7 +16,50 @@ Example
 
      [2, 2, 3] */
 
-//Recommended
+//二叉树式解法
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] nums, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums == null) {
+            return results;
+        }
+        List<Integer> list = removeDuplicates(nums);
+        dfs(list, 0, 0, target, new ArrayList<>(), results);
+        return results;
+    }
+
+    private void dfs(List<Integer> list, int index, int currSum, int target, List<Integer> temp, List<List<Integer>> results) {
+        if (currSum >= target) {
+            if (currSum == target) {
+                results.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        if (index == list.size()) {
+            return;
+        }
+        temp.add(list.get(index));
+        dfs(list, index, currSum + list.get(index), target, temp, results);
+        temp.remove(temp.size() - 1);
+
+        dfs(list, index + 1, currSum, target, temp, results);
+    }
+
+    private List<Integer> removeDuplicates(int[] nums) {
+        List<Integer> results = new ArrayList<>();
+        Arrays.sort(nums);
+        
+        for (int i = 0; i < nums.length; i++) {
+            results.add(nums[i]);
+            while (i < nums.length - 1 && nums[i] == nums[i + 1]) {
+                i++;
+            }
+        }
+        return results;
+    }
+}
+
+// DFS
 public class Solution {
   public List<List<Integer>> combinationSum(int[] nums, int target) {
       List<List<Integer>> results = new ArrayList<>();

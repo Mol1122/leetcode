@@ -13,6 +13,35 @@ Example 2:
 Input: k = 3, n = 9
 Output: [[1,2,6], [1,3,5], [2,3,4]] */
 
+//二叉树式解法
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (k <= 0) {
+            return results;
+        }
+        dfs(1, 0, target, k, new ArrayList<>(), results);
+        return results;
+    }
+    
+    private void dfs(int index, int currSum, int target, int k, List<Integer> temp, List<List<Integer>> results) {
+        if (temp.size() == k) {
+            if (currSum == target) {
+                results.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        if (index > 9) {
+            return;
+        }
+        temp.add(index);
+        dfs(index + 1, currSum + index, target, k, temp, results);
+        temp.remove(temp.size() - 1);
+        
+        dfs(index + 1, currSum, target, k, temp, results);
+    }
+}
+
 class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> results = new ArrayList<>();
