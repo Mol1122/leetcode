@@ -13,38 +13,38 @@ matrix = [
 target = 3
 Output: true */
 
-class Solution {
+public class Solution {
+    /**
+     * @param matrix: matrix, a list of lists of integers
+     * @param target: An integer
+     * @return: a boolean, indicate whether matrix contains target
+     */
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        if (matrix == null || matrix.length == 0) {
             return false;
         }
         int n = matrix.length;
         int m = matrix[0].length;
+
         int start = 0, end = n * m - 1;
-        
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            int row = mid / m;
-            int col = mid % m;
-            if (matrix[row][col] == target) {
-                return true;
-            } else if (target < matrix[row][col]) {
+            int number = matrix[mid / m][mid % m];
+            if (target < number) {
                 end = mid;
             } else {
-                start = mid;                                                                      
+                start = mid;
             }
         }
-        int row = start / m;
-        int col = start % m;
-        if (matrix[row][col] == target) {
+        if (matrix[start / m][start % m] == target) {
             return true;
         }
-        row = end / m;
-        col = end % m;
-        if (matrix[row][col] == target) {
+        if (matrix[end / m][end % m] == target) {
             return true;
         }
         return false;
     }
 }
-//time: O(n * m), space: O(1)
+/* 算法：把2d array变成1d, 再用二分法. 主要是因为下一行的第一个数比上一行最后一个数大
+** 难点：  number = matrix[mid / m][mid % m]; 
+time: O(log(n * m)), space: O(1) */
