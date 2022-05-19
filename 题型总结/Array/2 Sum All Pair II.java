@@ -11,9 +11,9 @@ A = {2, 1, 3, 2, 4, 3, 4, 2}, target = 6, return [[2, 4], [3, 3]]
  
 public class Solution {
   public List<List<Integer>> allPairs(int[] nums, int target) {
-      List<List<Integer>> results = new ArrayList<>();
+      Set<List<Integer>> results = new HashSet<>();
       if (nums == null || nums.length < 2) {
-          return results;
+          return new ArrayList<>();
       }
       Set<Integer> set = new HashSet<>();
       for (int i = 0; i < nums.length; i++) {
@@ -25,7 +25,7 @@ public class Solution {
           }
           set.add(nums[i]);
       }
-      return results;
+      return new ArrayList<>(results);
   }
 }
 //time: O(n), space: O(n)

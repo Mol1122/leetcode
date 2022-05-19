@@ -17,30 +17,42 @@ A solution set is:
 
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        Set<List<Integer>> results = new HashSet<>();
-        if (nums == null || nums.length == 0) {
-            return new ArrayList<>(results);
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums == null || nums.length < 4) {
+            return results;
         }
-        Map<Integer, List<int[]>> sum2index = new HashMap<>();
-        
-        for (int j = 1; j < nums.length; j++) {
-            for (int i = 0; i < j; i++) {
-                int sum = nums[i] + nums[j];
-                if (sum2index.containsKey(target - sum)) {
-                    for (int[] pair : sum2index.get(target - sum)) {
-                        if (pair[1] >= i) {
-                            continue;
-                        }
-                        List<Integer> list = Arrays.asList(nums[pair[0]], nums[pair[1]], nums[i], nums[j]);
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 3; i++) {
+            if (i != 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = i + 1; j < nums.length - 2; j++) {
+                if (j != i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                int left = j + 1, right = nums.length - 1;
+                while (left < right) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum == target) {
+                        List<Integer> list = Arrays.asList(nums[i], nums[j], nums[left], nums[right]);
                         Collections.sort(list);
                         results.add(list);
+                        left++;
+                        right--;
+                        while (left < right && nums[left] == nums[left - 1]) {
+                            left++;
+                        }
+                        while (left < right && nums[right] == nums[right + 1]) {
+                            right--;
+                        }
+                    } else if (sum < target) {
+                        left++;
+                    } else {
+                        right--;
                     }
                 }
-                sum2index.putIfAbsent(sum, new ArrayList<>());
-                sum2index.get(sum).add(new int[]{i, j});
-            }    
+            }
         }
-        return new ArrayList<>(results);
+        return results;
     }
 }
-//time: O(n^2), space: O(n)
