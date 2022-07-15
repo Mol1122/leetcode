@@ -99,3 +99,4 @@ class Solution {
         }
     }
 }
+//这题跟find median in data steram的区别是，这题不断在删除

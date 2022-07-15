@@ -45,3 +45,46 @@ public class Solution {
 }
 
 //time: O(n), space: O(n)
+
+public class Solution {
+    /**
+     * @param s: a string
+     * @param p: a string
+     * @return: a list of index
+     */
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> results = new ArrayList<>();
+        if (s.length() < p.length()) {
+            return results;
+        }
+        char[] sc = s.toCharArray();
+        char[] pc = p.toCharArray();
+        int[] det = new int[256];
+        
+        for (int i = 0; i < pc.length; i++) {
+            det[pc[i]]--;
+            det[sc[i]]++;
+        }
+        int absSum = 0;
+        for (int i = 0; i < 256; i++) {
+            absSum += Math.abs(det[i]);
+        }
+        if (absSum == 0) {
+            results.add(0);
+        }
+        for (int i = pc.length; i < sc.length; i++) {
+            char r = sc[i];
+            char l = sc[i - pc.length];
+            absSum = absSum - Math.abs(det[r]) - Math.abs(det[l]);
+            
+            det[r]++;
+            det[l]--;
+            
+            absSum = absSum + Math.abs(det[r]) + Math.abs(det[l]);
+            if (absSum == 0) {
+                results.add(i - pc.length + 1);
+            }
+        }
+        return results;
+    }
+}

@@ -1,6 +1,4 @@
-/* You are given a 0-indexed array nums that consists of n distinct positive integers. 
-Apply m operations to this array, where in the ith operation you replace the number operations[i][0] 
-with operations[i][1].
+/* You are given a 0-indexed array nums that consists of n distinct positive integers. Apply m operations to this array, where in the ith operation you replace the number operations[i][0] with operations[i][1].
 
 It is guaranteed that in the ith operation:
 
@@ -27,20 +25,7 @@ Explanation: We perform the following operations to nums:
 - Replace the number 1 with 3. nums becomes [3,2].
 - Replace the number 2 with 1. nums becomes [3,1].
 - Replace the number 3 with 2. nums becomes [2,1].
-We return the array [2,1].
- 
-
-Constraints:
-
-n == nums.length
-m == operations.length
-1 <= n, m <= 105
-All the values of nums are distinct.
-operations[i].length == 2
-1 <= nums[i], operations[i][0], operations[i][1] <= 106
-operations[i][0] will exist in nums when applying the ith operation.
-operations[i][1] will not exist in nums when applying the ith operation. */
-
+We return the array [2,1]. */
 class Solution {
     public int[] arrayChange(int[] nums, int[][] ops) {
         if (nums == null || nums.length == 0) {
@@ -59,3 +44,4 @@ class Solution {
     }
 }
 // 因为会超时，我们就要想能不能linear. 因为有顺序要求，所以只能遍历ops. 因为要更新值，所以要记录index of the original value，并且更新后更改记录
+// 一开始的想法是先遍历operations再遍历nums去处理update，但是超时，那我们可以反过来先遍历nums. 因为operation是根据value去update,所以map是val -> index

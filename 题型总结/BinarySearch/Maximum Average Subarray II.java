@@ -61,5 +61,5 @@ public class Solution {
         return false;
     }
 }
-//算法：二分答案。思路应该是看到max subarray，想到用prefixSum;然后要求的是avg, 就用二分去猜avg是多少
+//算法：二分答案 。思路应该是看到max subarray，想到用prefixSum;然后要求的是avg, 就用二分去猜avg是多少
 //time: O(nlogn), space: O(n)
