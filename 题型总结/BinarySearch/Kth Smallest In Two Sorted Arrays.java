@@ -39,7 +39,8 @@ public class Solution {
     }
   }
 }
-//time: O(logn), space: O(logn)
+//time: O(logn + logk) = O(logn): logn ->找到分界点， logk ->找到第k小的数(因为是A里找第k/2个数，B里找k/2个数，然后每次去掉小的那k/2个数，每次去掉k的一半，所以是logk)
+//space: O(logn)
 
 
 public class Solution {

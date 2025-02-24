@@ -44,3 +44,5 @@ public class Solution {
         }
     }
 }
+/* 算法：这是用binary search的思想做出的题。如果mid的数等于end的数，那么end往前挪一位是可以的，只要mid小于最后一个数，那么永远可以往前找
+** 时间复杂度：O(logn) */

@@ -62,5 +62,6 @@ class Solution {
         return true;
     }
 }
-//算法：二分答案
+//算法：二分答案. 
+//subarry是连续数组，sub-sequence才可以不连续
 //time: O(log(range) * n), space: O(1)

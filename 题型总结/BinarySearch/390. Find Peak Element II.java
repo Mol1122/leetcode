@@ -109,4 +109,46 @@ public class Solution {
         return list;
     } 
 }
-//time: O(n + m), space: O(1)
+//time: O(n + m), space: O(1). 因为棋盘最多走完n或者最多走完m
+
+public class Solution {
+    /**
+     * @param a: An integer matrix
+     * @return: The index of the peak
+     */
+    public List<Integer> findPeakII(int[][] nums) {
+        List<Integer> results = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return results;
+        }
+
+        int start = 0, end = nums.length - 1;
+        
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            int col = findMaxIndex(nums, mid);
+
+            if (mid - 1 >= 0 && nums[mid - 1][col] > nums[mid][col]) {
+                end = mid;
+            } else if (mid + 1 < nums.length && nums[mid + 1][col] > nums[mid][col]) {
+                start = mid;
+            } else {
+                return Arrays.asList(mid, col);
+            }
+        }
+        return Arrays.asList(-1, -1); 
+    }
+
+    private int findMaxIndex(int[][] nums, int row) {
+        int col = 0, max = nums[row][0];
+
+        for (int j = 0; j < nums[row].length; j++) {
+            if (nums[row][j] > max) {
+                col = j;
+                max = nums[row][j];
+            }
+        }
+        return col;
+    }
+}
+//time: O(mlogn), space: O(1)
