@@ -67,3 +67,45 @@ class Pair {
     }
 }
 //time: O(nlogk), space: O(k)
+
+//Method 2
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        List<Integer> list = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return new int[0];
+        }
+        TreeSet<Pair> set = new TreeSet<>(new Comparator<Pair>(){
+            public int compare(Pair a, Pair b) {
+                if (a.val == b.val) {
+                    return a.index - b.index;
+                }
+                return a.val - b.val;
+            }
+        });
+
+        for (int i = 0; i < nums.length; i++) {
+            if (i < nums.length) {
+                set.add(new Pair(i, nums[i]));
+            }
+            if (i >= k - 1) {
+                list.add(set.last().val);
+                set.remove(new Pair(i - k + 1, nums[i - k + 1])); 
+            }  
+        }
+        int[] results = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            results[i] = list.get(i);
+        }
+        return results;
+    }
+}
+
+class Pair {
+    int index, val;
+
+    public Pair(int index, int val) {
+        this.index = index;
+        this.val = val;
+    }
+}

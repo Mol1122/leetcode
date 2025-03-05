@@ -35,4 +35,39 @@ public class Solution {
 
 /* 算法：标准的相向型双指针 
 ** 难点：中间的while循环一定是要在判断玩target之后，否则会miss答案 
-** 时间复杂度: O(n) */
+** 时间复杂度: O(nlogn) */
+
+public class Solution {
+    /**
+     * @param nums: an array of integer
+     * @param target: An integer
+     * @return: An integer
+     */
+    public int twoSum6(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        int start = 0, end = nums.length - 1;
+        int count = 0;
+
+        while (start < end) {
+            if (nums[start] + nums[end] == target) {
+                count++;
+                int left = nums[start], right = nums[end];
+                while (start < end && nums[start] == left) {
+                    start++;
+                }
+                while (start < end && nums[end] == right) {
+                    end--;
+                }           
+            } else if (nums[start] + nums[end] < target) {
+                start++;
+            } else {
+                end--;
+            }
+        }
+        return count;
+    }
+}
+//time: Onlogn, space: O(1)
