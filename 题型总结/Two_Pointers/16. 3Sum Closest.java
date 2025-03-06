@@ -16,6 +16,7 @@ Example 2:
 Input: nums = [0,0,0], target = 1
 Output: 0 */
 
+//Method 1
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
         if (nums == null || nums.length < 3) {
@@ -38,5 +39,39 @@ class Solution {
             }
         }
         return bestSum;
+    }
+}
+
+//Method 2
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        if (nums == null || nums.length < 3) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        int[] sum = {0}, diff = {Integer.MAX_VALUE};
+        
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i != 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            twoSum(nums, i + 1, nums.length - 1, nums[i], sum, diff, target);
+        }
+        return sum[0];
+    }
+
+    private void twoSum(int[] nums, int left, int right, int num1, int[] sum, int[] diff, int target) {
+        while (left < right) {
+            int temp = num1 + nums[left] + nums[right];
+            if (Math.abs(temp - target) < diff[0]) {
+                sum[0] = temp;
+                diff[0] = Math.abs(temp - target);
+            }
+            if (temp < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
     }
 }

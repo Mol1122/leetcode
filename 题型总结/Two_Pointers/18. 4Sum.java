@@ -32,7 +32,7 @@ class Solution {
                 }
                 int left = j + 1, right = nums.length - 1;
                 while (left < right) {
-                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    long sum = (long)nums[i] + nums[j] + nums[left] + nums[right];
                     if (sum == target) {
                         List<Integer> list = Arrays.asList(nums[i], nums[j], nums[left], nums[right]);
                         Collections.sort(list);
@@ -56,3 +56,4 @@ class Solution {
         return results;
     }
 }
+//time: O(n^3), space: O(1)
