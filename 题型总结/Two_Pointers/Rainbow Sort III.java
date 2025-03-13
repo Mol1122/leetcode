@@ -12,6 +12,8 @@ k is guaranteed to be >= 1.
 k << logn.
  */
 
+
+//Method 1
 public class Solution {
   public int[] rainbowSortIII(int[] nums, int k) {
     if (nums == null || nums.length == 0) {
@@ -36,3 +38,48 @@ public class Solution {
   }
 }
 //time: O(n), space: O(1)
+
+
+//Method 2
+public class Solution {
+    /**
+     * @param colors: A list of integer
+     * @param k: An integer
+     * @return: nothing
+     */
+    public void sortColors2(int[] colors, int k) {
+        if (colors == null || colors.length == 0) {
+            return;
+        }
+        rainbowSort(colors, 0, colors.length - 1, 1, k);
+    }
+
+    private void rainbowSort(int[] nums, int start, int end, int colorStart, int colorEnd) {
+        if (colorStart == colorEnd) {
+            return;
+        }
+        if (start >= end) {
+            return;
+        }
+        int left = start, right = end;
+        int colorMid = (colorStart + colorEnd) / 2;
+
+        while (left <= right) {
+            while (left <= right && nums[left] <= colorMid) {
+                left++;
+            }
+            while (left <= right && nums[right] > colorMid) {
+                right--;
+            }
+            if (left <= right) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        rainbowSort(nums, start, right, colorStart, colorMid);
+        rainbowSort(nums, left, end, colorMid + 1, colorEnd);
+    }
+}

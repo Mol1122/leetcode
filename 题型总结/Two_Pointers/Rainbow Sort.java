@@ -42,4 +42,5 @@ public class Solution {
     nums[j] = temp;
   }
 }
+//i的左边都是-1, j的左边都是0, k的右边都是1. [j, k]中间是还没有探索的
 //time: O(n), space: O(1)
