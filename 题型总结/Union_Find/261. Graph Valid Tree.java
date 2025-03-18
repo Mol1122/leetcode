@@ -10,6 +10,8 @@ Input: n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
 Output: false
 Note: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0,1] is the same as [1,0] and thus will not appear together in edges. */
 
+
+//Method 1
 class Solution {
     public boolean validTree(int n, int[][] edges) {
         //判断是否联通
@@ -57,3 +59,50 @@ class UnionFind {
 /* 算法： Tree 1. 是连通图 = n node and (n - 1) edges     2. 无环 = 利用unionfind去找两个端点是否属于同一集合，属于说明已经有一条边去连接这两个点，否则，把这两个点连起来 
 
 ** 时间复杂度：O(V + E) */
+
+
+//Method 2
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (edges.length != n - 1) {
+            return false;
+        }
+        UnionFind uf = new UnionFind(n);
+
+        for (int[] edge : edges) {
+            uf.union(edge[0], edge[1]);
+        }
+        return uf.size == 1;
+    }
+}
+
+class UnionFind {
+    int[] father;
+    int size;
+
+    public UnionFind(int n) {
+        father = new int[n];
+        size = n;
+
+        for (int i = 0; i < n; i++) {
+            father[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        if (father[x] == x) {
+            return x;
+        }
+        return father[x] = find(father[x]);
+    }
+
+    public void union(int a, int b) {
+        int root_a = find(a);
+        int root_b = find(b);
+
+        if (root_a != root_b) {
+            father[root_a] = root_b;
+            size--;
+        }
+    }
+}
