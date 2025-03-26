@@ -34,6 +34,8 @@ Explanation:
 The node with value 5 and the node with value 6 have the same position according to the given scheme.
 However, in the report "[1,5,6]", the node value of 5 comes first since 5 is smaller than 6.*/
 
+
+//Method 1
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         List<List<Integer>> results = new ArrayList<>();
@@ -105,3 +107,57 @@ class Pair implements Comparable<Pair> {
 /* 时间复杂度：O(nlogn)
 ** 空间复杂度：O() */
 //跟314不同的是，y是要求decreasing order
+
+//Method 2
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (root == null) {
+            return results;
+        }
+        Map<Integer, PriorityQueue<Pair>> col2nodes = new HashMap<>();
+        Queue<Pair> queue = new LinkedList<>();
+         
+        queue.offer(new Pair(0, 0, root));
+        while (!queue.isEmpty()) {
+            Pair p = queue.poll();
+            col2nodes.putIfAbsent(p.col, new PriorityQueue<Pair>(new Comparator<Pair>(){
+                public int compare(Pair a, Pair b) {
+                    if (a.row == b.row && a.col == b.col) {
+                        return a.node.val - b.node.val;
+                    }
+                    return a.row - b.row;
+                }
+            }));
+            col2nodes.get(p.col).offer(p);
+
+            if (p.node.left != null) {
+                queue.offer(new Pair(p.row + 1, p.col - 1, p.node.left));
+            }
+            if (p.node.right != null) {
+                queue.offer(new Pair(p.row + 1, p.col + 1, p.node.right));
+            }
+        }
+
+        for (int i = Collections.min(col2nodes.keySet()); i <= Collections.max(col2nodes.keySet()); i++) {
+            List<Integer> list = new ArrayList<>();
+            PriorityQueue<Pair> pq = col2nodes.get(i);
+            while (!pq.isEmpty()) {
+                list.add(pq.poll().node.val);
+            }
+            results.add(list);
+        }
+        return results;
+    }
+}
+
+class Pair {
+    int row, col;
+    TreeNode node;
+
+    public Pair(int row, int col, TreeNode node) {
+        this.row = row;
+        this.col = col;
+        this.node = node;
+    }
+}

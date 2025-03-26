@@ -20,6 +20,8 @@ Explanation: There are a total of 4 courses to take. To take course 3 you should
              courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. 
              So one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3] . */
 
+
+//Method 1
 class Solution {
     public int[] findOrder(int numCourses, int[][] preq) {
         if (numCourses == 1) {
@@ -61,3 +63,72 @@ class Solution {
     }
 }
 //time: O(V + E), space: O(V + E)
+
+//Method 2
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<Integer> list = new ArrayList<>();
+        if (prerequisites == null || prerequisites.length == 0) {
+            int[] results = new int[numCourses];
+            for (int i = 0; i < numCourses; i++) {
+                results[i] = i;
+            }
+            return results;
+        }
+        Map<Integer, List<Integer>> graph = getGraph(prerequisites, numCourses);
+        Map<Integer, Integer> indegree = getIndegree(graph);
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int key : graph.keySet()) {
+            if (indegree.get(key) == 0) {
+                queue.offer(key);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            list.add(node);
+
+            for (int neighbor : graph.get(node)) {
+                indegree.put(neighbor, indegree.get(neighbor) - 1);
+                if (indegree.get(neighbor) == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        if (list.size() != numCourses) {
+            return new int[0];
+        }
+        int[] results = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            results[i] = list.get(i);
+        }
+        return results;
+    }
+
+    private Map<Integer, Integer> getIndegree(Map<Integer, List<Integer>> graph) {
+        Map<Integer, Integer> indegree = new HashMap<>();
+
+        for (int key : graph.keySet()) {
+            indegree.put(key, 0);
+        }
+        for (int key : graph.keySet()) {
+            for (int neighbor : graph.get(key)) {
+                indegree.put(neighbor, indegree.get(neighbor) + 1);
+            }
+        }
+        return indegree;
+    }
+
+    private Map<Integer, List<Integer>> getGraph(int[][] prerequisites, int numCourses) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+
+        for (int i = 0; i < numCourses; i++) {
+            graph.put(i, new ArrayList<>());
+        }
+        for (int[] course : prerequisites) {
+            graph.get(course[1]).add(course[0]);
+        }
+        return graph;
+    }
+}
