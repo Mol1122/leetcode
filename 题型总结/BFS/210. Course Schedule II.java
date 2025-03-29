@@ -132,3 +132,51 @@ class Solution {
         return graph;
     }
 }
+
+//Method 3
+public class Solution {
+    /*
+     * @param numCourses: a total of n courses
+     * @param prerequisites: a list of prerequisite pairs
+     * @return: the course order
+     */
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List[] edges = new ArrayList[numCourses]; //the course is the prerequisite of what courses
+        int[] degree = new int[numCourses]; //the course has how many # of prerequisites
+        
+        for (int i = 0; i < numCourses; i++) {
+            edges[i] = new ArrayList<Integer>();
+        }
+        for (int i = 0; i < prerequisites.length; i++) {
+            degree[prerequisites[i][0]]++;
+            edges[prerequisites[i][1]].add(prerequisites[i][0]);
+        }
+        
+        Queue<Integer> queue = new LinkedList<Integer>();
+        for (int i = 0; i < degree.length; i++) {
+            if (degree[i] == 0) { //has no prerequisite
+                queue.offer(i); //add course number into queue
+            }
+        }
+        int count = 0;
+        int[] order = new int[numCourses];
+        while (!queue.isEmpty()) {
+            int course = (int)queue.poll();
+            order[count++] = course;
+            int n = edges[course].size();
+            for (int i = n - 1; i >= 0; i--) {
+                int pointer = (int)edges[course].get(i);
+                degree[pointer]--;
+                
+                if (degree[pointer] == 0) { //has no prerequisite now
+                    queue.offer(pointer);
+                }
+            }
+        }
+        if (count == numCourses) {
+            return order;
+        }
+        return new int[0];
+        
+    }
+}

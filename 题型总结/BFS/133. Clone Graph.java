@@ -6,6 +6,8 @@
  *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
  * };
  */
+
+//Version 1
 public class Solution {
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         if (node == null) {
@@ -51,3 +53,65 @@ public class Solution {
 /* 算法：1. 一边找到所有的点，一边复制所有的点
 **      2. 一边复制所有的边
 ** 时间复杂度： O(n^2) */
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+//Version 2
+class Solution {
+    public Node cloneGraph(Node node) {
+        if (node == null) {
+            return null;
+        }
+        List<Node> nodes = getNodes(node);
+        Map<Node, Node> map = new HashMap<>();
+        
+        for (Node curr : nodes) {
+            map.put(curr, new Node(curr.val));
+        }
+        
+        for (Node curr : map.keySet()) {
+            for (Node neighbor : curr.neighbors) {
+                map.get(curr).neighbors.add(map.get(neighbor));
+            }
+        }
+        return map.get(node);
+    }
+    
+    private List<Node> getNodes(Node node) {
+        List<Node> results = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+        
+        queue.offer(node);
+        visited.add(node);
+        while (!queue.isEmpty()) {
+            Node curr = queue.poll();
+            results.add(curr);
+            for (Node neighbor : curr.neighbors) {
+                if (!visited.contains(neighbor)) {
+                    queue.offer(neighbor);
+                    visited.add(neighbor);
+                }
+            }
+        }
+        return results;
+    }
+}
