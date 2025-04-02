@@ -6,7 +6,35 @@ We may perform an add land operation which turns the water at position into a la
 Return an array of integers answer where answer[i] is the number of islands after turning the cell (ri, ci) into a land.
 
 An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
- */
+Example 1:
+
+Input: n = 4, m = 5, A = [[1,1],[0,1],[3,3],[3,4]]
+Output: [1,1,2,2]
+Explanation:
+0.  00000
+    00000
+    00000
+    00000
+1.  00000
+    01000
+    00000
+    00000
+2.  01000
+    01000
+    00000
+    00000
+3.  01000
+    01000
+    00000
+    00010
+4.  01000
+    01000
+    00000
+    00011
+Example 2:
+
+Input: n = 3, m = 3, A = [[0,0],[0,1],[2,2],[2,1]]
+Output: [1,1,2,2]                                                   */
 
  class Solution {
     public List<Integer> numIslands2(int n, int m, int[][] positions) {
@@ -19,14 +47,14 @@ An island is surrounded by water and is formed by connecting adjacent lands hori
         int[] dx = {1, 0, -1, 0};
         int[] dy = {0, 1, 0, -1};
         
-        for (int[] pos : positions) {
+        for (int[] pos : positions) { //input可能会有相同的pos
             int cx = pos[0];
             int cy = pos[1];
             if (!matrix[cx][cy]) {
                 matrix[cx][cy] = true;
                 uf.size++;
                 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 4; i++) { //不需要用queue 一层一层地向外延伸，只要check周围四个邻居就知道是否相连了
                     int nx = cx + dx[i];
                     int ny = cy + dy[i];
                     if (nx >= 0 && nx < n && ny >= 0 && ny < m && matrix[nx][ny]) {
