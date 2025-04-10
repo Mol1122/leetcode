@@ -40,7 +40,7 @@ class Solution {
             return;
         }
         path.add(root.val);
-        int temp = 0;
+        long temp = 0;
         for (int i = path.size() - 1; i >= 0; i--) {
             temp += path.get(i);
             if (temp == sum) {

@@ -121,6 +121,8 @@ public class Solution {
   }
 }
 //time: O(n), space: O(height)
+//needDeleted是为了判断是不是出现过，如果出现过是不会再一次在set里的，并且return false. 如果没有出现过，那么返回到这一层要删掉，要不等return 回
+//上一层的right node会包含left node的path sum, 是不对的
 
 //NOT RECORMMANDED
 /*public class Solution {

@@ -1,115 +1,100 @@
 /**
- Given a binary tree, determine if it is a valid binary search tree (BST).
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 
-Assume a BST is defined as follows:
-
-The left subtree of a node contains only nodes with keys less than the node's key.
-The right subtree of a node contains only nodes with keys greater than the node's key.
-Both the left and right subtrees must also be binary search trees. */
-
-public class Solution {
-  public boolean isBST(TreeNode root) {
-      //preorder
-      //return isBST(root, null, null);
+//Method 1
+// class Solution {
+//     TreeNode lastNode = null;
+//     boolean isValid = true;
+//     public boolean isValidBST(TreeNode root) {
+//         //inorder traverse
+//         inorderTraverse(root);
+//         return isValid;
+//     }
     
-      //postorder
-      return helper(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-  }
-  
-  //postorder
-  private boolean helper(TreeNode root, int min, int max) {
-      if (root == null) {
-          return true;
-      }
-      if (!helper(root.left, min, root.key) || !helper(root.right, root.key, max)) {
-          return false;
-      }
-      if (root.key >= max || root.key <= min) {
-          return false;
-      }
-      return true;
-  }
-  
-  //preorder
-  private boolean isBST(TreeNode root, TreeNode minNode, TreeNode maxNode) {
-      if (root == null) {
-          return true;
-      }
-      if (minNode != null && root.key <= minNode.key) {
-          return false;
-      }
-      if (maxNode != null && root.key >= maxNode.key) {
-          return false;
-      }
-      return isBST(root.left, minNode, root) && isBST(root.right, root, maxNode);
-  }
+//     private void inorderTraverse(TreeNode root) {
+//         if (root == null) {
+//             return;
+//         }
+//         inorderTraverse(root.left);
+//         if (lastNode != null && lastNode.val >= root.val) {
+//             isValid = false;
+//             return;
+//         }
+//         lastNode = root; // 难点，易忘
+//         inorderTraverse(root.right);
+//     }
+// }
+
+//Method 2
+class Solution {
+    
+    public boolean isValidBST(TreeNode root) {
+        //分治法
+        return dividedConqure(root).isValid;
+    }
+    
+    private ResultType dividedConqure(TreeNode root) {
+        if (root == null) {
+            return new ResultType(true);
+        }
+        ResultType left = dividedConqure(root.left);
+        ResultType right = dividedConqure(root.right);
+        
+        if (!left.isValid || !right.isValid) {
+            return new ResultType(false);
+        }
+        if (left.maxNode != null && left.maxNode.val >= root.val) {
+            return new ResultType(false);
+        }
+        if (right.minNode != null && right.minNode.val <= root.val) {
+            return new ResultType(false);
+        }
+        //is BST
+        ResultType result = new ResultType(true);
+        result.minNode = left.minNode == null ? root : left.minNode;
+        result.maxNode = right.maxNode == null ? root : right.maxNode;
+        return result;
+    }
 }
 
-//preorder
-public class Solution {
-  public boolean isBST(TreeNode root) {
-    if (root == null) {
-      return true;
+class ResultType {
+    boolean isValid;
+    TreeNode maxNode, minNode;
+    
+    public ResultType(boolean isValid) {
+        this.isValid = isValid;
+        maxNode = null;
+        minNode = null;
     }
-    return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-  }
-
-  private boolean isBST(TreeNode root, int min, int max) {
-    if (root == null) {
-      return true;
-    } else if (root.key <= min || root.key >= max) {
-      return false;
-    }
-    return isBST(root.left, min, root.key) && isBST(root.right, root.key, max);
-  }
 }
-//time: O(n), space: O(height)
 
-//time: O(n), space: O(height)
-
-// iterative way, 也是inorder的写法
+//Method 3 (Recommanded)
 class Solution {
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;
         }
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        TreeNode prev = null;
-        
-        while (root != null) {
-            stack.offerLast(root);
-            root = root.left;
-        }
-        
-        while (!stack.isEmpty()) {
-            TreeNode curr = stack.peekLast();
-            if (prev != null && prev.val >= curr.val) {
-                return false;
-            }
-            prev = curr;
-            if (curr.right == null) {
-                curr = stack.pollLast();
-                while (!stack.isEmpty() && stack.peekLast().right == curr) {
-                    curr = stack.pollLast();
-                }
-            } else {
-                curr = curr.right;
-                while (curr != null) {
-                    stack.offerLast(curr);
-                    curr = curr.left;
-                }
-            }
-        }
-        return true;
+        return isBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
     
-    private void pushLeft(TreeNode curr, Deque<TreeNode> stack) {
-        while (curr != null) {
-            stack.offerLast(curr);
-            curr = curr.left;
+    private boolean isBST(TreeNode root, long min, long max) {
+        if (root == null) {
+            return true;
+        } else if (root.val <= min || root.val >= max) {
+            return false;
         }
+        return isBST(root.left, min, root.val) && isBST(root.right, root.val, max);
     }
 }
-
-//inorder traversal的另一种写法
 //time: O(n), space: O(height)
+
+/* 算法：inorder的写法，时间复杂度：O(n)， 因为要遍历所有的node 
+**      分治算法和inorder都要求掌握
+** 难点： 忘记修改root的值，利用全局变量去记录，避免不必要的recursion */

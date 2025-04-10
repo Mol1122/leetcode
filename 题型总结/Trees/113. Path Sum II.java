@@ -21,6 +21,8 @@ Return:
    [5,8,4,5]
 ]
  */
+
+//Method 1
 class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> results = new ArrayList<>();
@@ -50,3 +52,6 @@ class Solution {
     }
 }
 //time: O(n), space: O(height)
+
+/* 算法：二叉树上的dfs。求满足条件的所有路径问题，模版问题
+** 时间复杂度：O(n) */

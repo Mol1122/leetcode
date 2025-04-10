@@ -57,7 +57,7 @@ public class Solution {
       max[0] = Math.max(max[0], Math.max(left, right) + root.key);
       max[0] = Math.max(max[0], left + right + root.key);
     
-      return Math.max(Math.max(left, right) + root.key, 0); //这个地方保证了传上去的一定是正数, positive contribution
+      return Math.max(Math.max(left, right) + root.key, 0); //这个地方保证了传上去的一定是正数, positive contribution. 0表示不包含当前的root.key
   }
 
   /*

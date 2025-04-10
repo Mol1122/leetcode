@@ -48,4 +48,5 @@ public class Solution {
     return root;
   }
 }
+//算法：题目写错了。要把从root到leaf, depth < k的nodes都删掉
 //time: O(n), space: O(height)
