@@ -13,6 +13,7 @@ Given binary tree,
           5   5   5
 return 4.                 */
 
+//Method 1
 public class Solution {
   public int countUnivalSubtrees(TreeNode root) {
     int[] count = {0};
@@ -41,6 +42,60 @@ public class Solution {
   }
 }
 //time: O(n), space: O(height) 
+
+//Method 2
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int countUnivalSubtrees(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int[] count = {0};
+        helper(root, count);
+        return count[0];
+    }
+
+    private Pair helper(TreeNode root, int[] count) {
+        if (root == null) {
+            return new Pair(0, true);
+        }
+        Pair left = helper(root.left, count);
+        Pair right = helper(root.right, count);
+
+        if (!left.hasSameValue || root.left != null && root.val != left.val) {
+            return new Pair(root.val, false);
+        }
+        if (!right.hasSameValue || root.right != null && root.val != right.val) {
+            return new Pair(root.val, false);
+        }
+        count[0]++;
+        return new Pair(root.val, true);
+    }
+}
+
+class Pair {
+    int val;
+    boolean hasSameValue;
+
+    public Pair(int val, boolean hasSameValue) {
+        this.val = val;
+        this.hasSameValue = hasSameValue;
+    }
+}
 
 
 /*class Solution {

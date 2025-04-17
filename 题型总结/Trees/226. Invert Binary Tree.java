@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+//Method 1
 class Solution {
     public TreeNode invertTree(TreeNode root) {
         //non-recursion
@@ -42,5 +44,31 @@ class Solution {
         // root.left = right;
         // root.right = left;
         // return root;
+    }
+}
+
+//Method 2
+public class Solution {
+    /**
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: nothing
+     */
+    public void invertBinaryTree(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        invert(root);
+    }
+
+    private TreeNode invert(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode left = invert(root.left);
+        TreeNode right = invert(root.right);
+
+        root.right = left;
+        root.left = right;
+        return root;
     }
 }
