@@ -17,6 +17,7 @@ Examples:
 
 the right view =  [1, 3, 7, 8, 11]  */
 
+//Method 1
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> results = new ArrayList<>();
@@ -46,3 +47,32 @@ class Solution {
 算法：算是直上直下的问题
 时间复杂度：O(n)
 ** 空间复杂度：O(n) */
+
+//Method 2
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> results = new ArrayList<>();
+        if (root == null) {
+            return results;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (i == size - 1) {
+                    results.add(node.val);
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return results;
+    }
+}
