@@ -26,6 +26,8 @@ Input:
 Output:
 1
  */
+
+//Method 1
 public class Solution {
     /**
      * @param root the root of k-ary tree
@@ -69,5 +71,38 @@ class ResultType {
     public ResultType(int increasing, int decreasing) {
         this.increasing = increasing;
         this.decreasing = decreasing;
+    }
+}
+
+//Method 2
+public class Solution {
+    /**
+     * @param root the root of k-ary tree
+     * @return the length of the longest consecutive sequence path
+     */
+    public int longestConsecutive3(MultiTreeNode root) {
+        int[] max = {0};
+        getPath(root, max);
+        return max[0];
+    }
+
+    private int[] getPath(MultiTreeNode root, int[] max) {
+        if (root == null) {
+            return new int[]{0, 0};
+        }
+        List<int[]> results = new ArrayList<>();
+        for (MultiTreeNode child : root.children) {
+            results.add(getPath(child, max));
+        }
+        int increasing = 1, decreasing = 1;
+        for (int i = 0; i < root.children.size(); i++) {
+            if (root.children.get(i).val == root.val + 1) {
+                increasing = Math.max(increasing, results.get(i)[0] + 1);
+            } else if (root.children.get(i).val == root.val - 1) {
+                decreasing = Math.max(decreasing, results.get(i)[1] + 1);
+            }
+        }
+        max[0] = Math.max(max[0], increasing + decreasing - 1);
+        return new int[]{increasing, decreasing};
     }
 }

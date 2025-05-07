@@ -27,7 +27,7 @@ class Solution {
             if (lowerStack.isEmpty() ||
                    !upperStack.isEmpty() && 
                     target - lowerStack.peek().val > upperStack.peek().val - target) {
-                results.add(upperStack.peek().val);
+                results.add(upperStack.peek().val); //不可以直接pop(), 因为move的过程可能会push新的node进去
                 moveUpper(upperStack);
             } else {
                 results.add(lowerStack.peek().val);

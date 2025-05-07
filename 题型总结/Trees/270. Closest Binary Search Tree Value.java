@@ -8,6 +8,8 @@
  *   }
  * }
  */
+
+//Method 1
 public class Solution {
   int ans = Integer.MIN_VALUE;
   int diff = Integer.MAX_VALUE;
@@ -51,44 +53,77 @@ public class Solution {
       helper(root, target);
       return ans;  */
   }
-  
-  private TreeNode getUpperBound(TreeNode root, int target) {
-      if (root == null) {
-          return null;
-      }
-      if (target > root.key) {
-          return getUpperBound(root.right, target);
-      }
-      TreeNode left = getUpperBound(root.left, target);
-      if (left != null) {
-          return left;
-      }
-      return root;
-  }
-  
-  private TreeNode getLowerBound(TreeNode root, int target) {
-      if (root == null) {
-          return null;
-      }
-      if (target < root.key) {
-          return getLowerBound(root.left, target);
-      }
-      TreeNode right = getLowerBound(root.right, target);
-      if (right != null) {
-          return right;
-      }
-      return root;
-  }
-  
-  private void helper(TreeNode root, int target) {
-      if (root == null) {
-          return;
-      }
-      helper(root.left, target);
-      if (Math.abs(root.key - target) < diff) {
-          ans = root.key;
-          diff = Math.abs(root.key - target);
-      }
-      helper(root.right, target);
-  }
 }
+
+//Method 2
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        if (root == null) {
+            return -1;
+        }
+        TreeNode lowerBound = getLowerBound(root, target);
+        TreeNode upperBound = getUpperBound(root, target);
+
+        if (lowerBound == null) {
+            return upperBound.val;
+        }
+        if (upperBound == null) {
+            return lowerBound.val;
+        }
+        return Math.abs(target - lowerBound.val) <= Math.abs(upperBound.val - target) ? lowerBound.val : upperBound.val;
+    }
+
+    private TreeNode getUpperBound(TreeNode root, double target) {
+        if (root == null) {
+            return null;
+        }
+        if (target == root.val) {
+            return root;
+        }
+        if (target >= root.val) {
+            return getUpperBound(root.right, target);
+        }
+        TreeNode left = getUpperBound(root.left, target);
+        return left == null ? root : left;
+    }
+
+    private TreeNode getLowerBound(TreeNode root, double target) {
+        if (root == null) {
+            return null;
+        }
+        if (target == root.val) {
+            return root;
+        }
+        if (target < root.val) {
+            return getLowerBound(root.left, target);
+        }
+        TreeNode right = getLowerBound(root.right, target);
+        return right == null ? root : right;
+    }
+}
+
+//Method 3
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        double[] diff = {Double.MAX_VALUE};
+        int[] result = {-1};
+        traverse(root, target, diff, result);
+        return result[0];
+    }
+
+    private void traverse(TreeNode root, double target, double[] diff, int[] result) {
+        if (root == null) {
+            return;
+        }
+        if (Math.abs(root.val - target) < diff[0]) {
+            diff[0] = Math.abs(root.val - target);
+            result[0] = root.val;
+        }
+        if (Math.abs(root.val - target) == diff[0] && result[0] > root.val) {
+            result[0] = root.val;
+        }
+        traverse(root.left, target, diff, result);
+        traverse(root.right, target, diff, result);
+    }
+}
+//time: O(n), space: O(1)
