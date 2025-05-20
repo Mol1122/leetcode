@@ -1,13 +1,16 @@
 /**
- * Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
+Description
+Given a binary search tree and a node in it, find the in-order predecessor of that node in the BST.
+
+Example
+Example1
+
+Input: root = {2,1,3}, p = 1
+Output: null
+Example2
+
+Input: root = {2,1}, p = 2
+Output: 1
  */
 
 public class Solution {

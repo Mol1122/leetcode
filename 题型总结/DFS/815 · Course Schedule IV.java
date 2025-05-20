@@ -28,6 +28,7 @@ Output: 2
 Explanation:
 You can have class in order 0->1 or 1->0. */
 
+//Method 1 DFS
 public class Solution {
     int result = 0;
     boolean[] done;
@@ -85,6 +86,73 @@ public class Solution {
         }
         for (int[] course : prerequisites) {
             graph.get(course[1]).add(course[0]);
+        }
+        return graph;
+    }
+}
+
+//Method 2 BFS
+class Solution {
+    public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+        List<Boolean> results = new ArrayList<>();
+        Map<Integer, List<Integer>> graph = getGraph(prerequisites, numCourses);
+        Map<Integer, Integer> indegree = getIndegree(graph);
+        Queue<Integer> queue = new LinkedList<>();
+        Map<Integer, Set<Integer>> map = new HashMap<>(); //node -> all prerequisites
+
+        for (int key : indegree.keySet()) {
+            if (indegree.get(key) == 0) {
+                queue.offer(key);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            for (int neighbor : graph.get(node)) {
+                map.putIfAbsent(neighbor, new HashSet<>());
+                map.get(neighbor).add(node);
+
+                for (int pre : map.getOrDefault(node, new HashSet<>())) { //把间接的prerequisite也加进去
+                    map.get(neighbor).add(pre);
+                }
+
+                indegree.put(neighbor, indegree.get(neighbor) - 1);
+                if (indegree.get(neighbor) == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        for (int[] query : queries) {
+            if (map.getOrDefault(query[1], new HashSet<>()).contains(query[0])) {
+                results.add(true);
+            } else {
+                results.add(false);
+            }
+        }
+        return results;
+    }
+
+    private Map<Integer, Integer> getIndegree(Map<Integer, List<Integer>> graph) {
+        Map<Integer, Integer> indegree = new HashMap<>();
+
+        for (int key : graph.keySet()) {
+            indegree.put(key, 0);
+        }
+        for (int key : graph.keySet()) {
+            for (int neighbor : graph.get(key)) {
+                indegree.put(neighbor, indegree.get(neighbor) + 1);
+            }
+        }
+        return indegree;
+    }
+
+    private Map<Integer, List<Integer>> getGraph(int[][] prerequisites, int numCourses) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+
+        for (int i = 0; i < numCourses; i++) {
+            graph.putIfAbsent(i, new ArrayList<>());
+        }
+        for (int[] course : prerequisites) {
+            graph.get(course[0]).add(course[1]);
         }
         return graph;
     }

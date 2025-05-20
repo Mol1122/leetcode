@@ -16,6 +16,7 @@ Return ["eat","oath"].
 Note:
 You may assume that all inputs are consist of lowercase letters a-z. */
 
+//Method 1
 public class Solution {
   public List<String> findWords(char[][] board, String[] words) {
     Set<String> results = new HashSet<>();
@@ -74,4 +75,69 @@ public class Solution {
 }
 //systematic way of solving problem
 //time: O(n^2 * 4^word.length()), space: O(n^2)
-//难点：值得注意的是，同一个字母可以被重复使用，只是不在同一个单词里被重复使用就好    
+//难点：值得注意的是，同一个字母可以被重复使用，只是不在同一个单词里被重复使用就好  
+
+
+//Method 2
+class Solution {
+    public List<String> findWords(char[][] board, String[] words) {
+        Set<String> results = new HashSet<>();
+        if (board == null || board.length == 0 || words == null || words.length == 0) {
+            return new ArrayList<>();
+        }
+        Map<String, Boolean> prefixIsWord = getMap(words);
+        int n = board.length;
+        int m = board[0].length;
+        boolean[][] visited = new boolean[n][m];
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                sb.append(board[i][j]);
+                visited[i][j] = true;
+                dfs(board, i, j, prefixIsWord, visited, sb, results);
+                visited[i][j] = false;
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+        return new ArrayList<>(results);
+    }
+
+    private void dfs(char[][] board, int x, int y, Map<String, Boolean> prefixIsWord, boolean[][] visited, StringBuilder sb, Set<String> results) {
+        if (!prefixIsWord.containsKey(sb.toString())) {
+            return;
+        }
+        if (prefixIsWord.get(sb.toString())) {
+            results.add(new String(sb));
+        }
+        int[] dx = {1, 0, -1, 0};
+        int[] dy = {0, 1, 0, -1};
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (nx >= 0 && nx < board.length && ny >= 0 && ny < board[0].length && !visited[nx][ny]) {
+                sb.append(board[nx][ny]);
+                visited[nx][ny] = true;
+                dfs(board, nx, ny, prefixIsWord, visited, sb, results);
+                visited[nx][ny] = false;
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
+
+    private Map<String, Boolean> getMap(String[] words) {
+        Map<String, Boolean> map = new HashMap<>();
+
+        for (String word : words) {
+            String prefix = "";
+            for (char c : word.toCharArray()) {
+                prefix += c;
+                map.putIfAbsent(prefix, false);
+            }
+            map.put(word, true);
+        }
+        return map;
+    }
+}  

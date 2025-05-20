@@ -9,6 +9,8 @@ Output: Word = “ABCCED”   return true
             Word = “SEE”      return true  
             Word = “ABCB”      return false  */
 
+
+//Method 1
 public class Solution {
   public boolean isWord(char[][] board, String word) {
     if (board == null || board.length == 0 || word == null || word.length() == 0) {
@@ -52,4 +54,49 @@ public class Solution {
     return false;
   }
 }
-//time: O(n^2 * 4^word.length()), space: O(n^2)
+//time: O(nm * 3^word.length()), space: O(n^2)
+
+//Method 2
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0) {
+            return false;
+        }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (dfs(board, word, 0, i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfs(char[][] board, String word, int index, int x, int y) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+            return false;
+        }
+        if (board[x][y] != word.charAt(index)) {
+            return false;
+        }
+        int[] dx = {1, 0, -1, 0};
+        int[] dy = {0, 1, 0, -1};
+
+        char c = board[x][y];
+        board[x][y] = '#';
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (dfs(board, word, index + 1, nx, ny)) {
+                return true;
+            }
+        }
+        board[x][y] = c;
+        return false;
+    }
+}
