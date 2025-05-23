@@ -10,6 +10,8 @@ Examples:
 
 input = "abc", pattern = "?*", return true. */
 
+
+//Method 1
 public class Solution {
   public boolean match(String s, String p) {
     if (s == null || p == null) {
@@ -17,7 +19,7 @@ public class Solution {
     }
     int n = s.length();
     int m = p.length();
-    boolean[][] memo = new boolean[n][m];
+    boolean[][] memo = new boolean[n][m]; //用一个二维的 boolean 数组来当记忆化数组，记录 s 从 sIndex 开始的后缀 能够匹配上 p 从 pIndex 开始的后缀
     boolean[][] visited = new boolean[n][m];
     return dfs(s, 0, p, 0, visited, memo);
   }
@@ -66,3 +68,30 @@ public class Solution {
   }
 }
 //time: O(2^n), space: O(nm + n)
+
+//Method 2
+    //双指针
+//     public boolean isMatch(String s, String p) {
+//         int i = 0, j = 0, starIndex = -1, iIndex = 0;
+        
+//         while (i < s.length()) {
+//          if ((j < p.length() && p.charAt(j) == '?') || (j < p.length() && s.charAt(i) == p.charAt(j))) {
+//              i++;
+//              j++;
+//          } else if (j < p.length() && p.charAt(j) == '*') {
+//              starIndex = j;
+//              iIndex = i;
+//              j++;
+//          } else if (starIndex != -1) {
+//              j = starIndex + 1;
+//              i = iIndex + 1;
+//              iIndex++;
+//          } else {
+//              return false;
+//          }
+//         }
+//         while (j < p.length() && p.charAt(j) == '*') {
+//          j++;
+//         }
+//         return j == p.length();
+//     }

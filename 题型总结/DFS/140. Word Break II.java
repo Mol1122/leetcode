@@ -57,3 +57,44 @@ class Solution {
     }
 }
 /* 算法：记忆化搜索<-因为要找出所有法案，并且很多次遍历都有重复 */
+
+
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> results = new ArrayList<>();
+        if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
+            return results;
+        }
+        Set<String> dict = new HashSet<>();
+        for (String word : wordDict) {
+            dict.add(word);
+        }
+        Map<String, List<String>> map = new HashMap<>();
+
+        return dfs(s, dict, map);
+    }
+
+    private List<String> dfs(String s, Set<String> dict, Map<String, List<String>> map) {
+        if (map.containsKey(s)) {
+            return map.get(s);
+        }
+        List<String> list = new ArrayList<>();
+        if (s.equals("")) {
+            return list;
+        }
+        if (dict.contains(s)) {
+            list.add(s);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            String sub = s.substring(0, i + 1);
+            if (dict.contains(sub)) {
+                List<String> nexts = dfs(s.substring(i + 1), dict, map);
+                for (String next : nexts) {
+                    list.add(sub + " " + next);
+                }
+            }
+        }
+        map.put(s, list);
+        return list;
+    }
+}
