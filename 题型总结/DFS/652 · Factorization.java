@@ -53,7 +53,7 @@ public class Solution {
                 temp.remove(temp.size() - 1);
             }
         }
-        temp.add(remain);//因为22行剪枝剪多了，当i = remain的时候，应该是可以加进去的，但是remain/remain = 1, remain > 1, 在22行就被剪枝掉了
+        temp.add(remain);//因为22行剪枝剪多了，当i = remain的时候，应该是可以加进去的，但是remain/remain = 1, remain > 1, 在22行就被剪枝掉了. eg. 32 = 2*2*8, 到最后一层的时候i = 8, remain = 8, 这时候i > remain/remain 会被break掉，那就会在这个pick up
         dfs(remain, 1, temp, results);
         temp.remove(temp.size() - 1);
     }
