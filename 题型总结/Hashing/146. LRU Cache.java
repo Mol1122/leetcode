@@ -68,6 +68,7 @@ class LRUCache {
         if (get(key) != -1) {
             ListNode prev = keyToPrev.get(key);
             prev.next.value = value;
+            moveToTail(key);
             return;
         }
         if (size < capacity) {
