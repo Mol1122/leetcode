@@ -1,3 +1,47 @@
+/* Description
+Given an array of integers and a number k, find k non-overlapping subarrays which have the largest sum.
+
+The number in each subarray should be contiguous.
+
+Return the largest sum.
+
+LintCode - Online Judge Solution
+
+Candidate Written Test Screening, Team Competency Assessment, Programming Teaching Exercises, Online Exam Grading
+
+WeChat for information（ID chenleo0002）
+
+
+The subarray should contain at least one number
+
+Example
+Example 1:
+
+Input:
+
+nums = [1,2,3]
+k = 1
+Output:
+
+6
+Explanation:
+
+1 + 2 + 3 = 6
+Example 2:
+
+Input:
+
+nums = [-1,4,-2,3,-2,3]
+k = 2
+Output:
+
+8
+Explanation:
+
+4 + (3 + -2 + 3) = 8
+
+ */
+
 public class Solution {
     /**
      * @param nums: A list of integers
