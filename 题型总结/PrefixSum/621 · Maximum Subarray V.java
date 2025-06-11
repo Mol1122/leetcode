@@ -97,3 +97,9 @@ public class Solution {
 
 //算法： 还是max subarray的算法，max = currSum - min. 但是min是距离k1～k2之前个数的， 要用deque去记录. 单调递增deque, 因为如果新增的prefix比原来的小， 那么没必要存旧的index了
 //time: O(n), space: O(k2-k1)
+
+//sums[i] - sums[i - k1] = sums(length k1)
+//.....     sums[i - k1 - 1]               sums(length k1 + 1)
+//          sums[i - k1 - 2]
+//..........
+//sums[i] - sums[i - k2] = sums(length k2)

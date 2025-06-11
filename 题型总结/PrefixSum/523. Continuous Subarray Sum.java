@@ -13,6 +13,8 @@ Input: [23, 2, 6, 4, 7],  k=6
 Output: True
 Explanation: Because [23, 2, 6, 4, 7] is an continuous subarray of size 5 and sums up to 42. */
 
+
+//Method 1
 class Solution {
     public boolean checkSubarraySum(int[] nums, int k) {
         if (nums == null || nums.length < 2) {
@@ -43,3 +45,30 @@ class Solution {
 ** 难点：map里面存的不是sum，而是余数，因为只有余数能够判断是否为k的倍数 
 ** 时间复杂度：O(n) 
 ** 空间复杂度：O(n) */
+
+//Method 2
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        if (nums == null || nums.length < 2) {
+            return false;
+        }
+        int sum = 0;
+        Map<Integer, Integer> remainder2index = new HashMap<>();
+        remainder2index.put(0, -1);
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            int remainder = sum % k;
+            if (remainder2index.containsKey(remainder) && i - remainder2index.get(remainder) >= 2) {
+                return true;
+            }
+            remainder2index.putIfAbsent(remainder, i); //因为第二次看到remainder的时候index肯定更大, subarray length肯定更短，所以要putIfAbsent
+        }
+        return false;
+    }
+}
+//time: O(n), space: O(k)
+//------------remainder = 2, index
+//            ****** 
+//------------------curr sum, remainder = 2

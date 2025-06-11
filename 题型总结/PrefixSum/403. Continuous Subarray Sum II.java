@@ -16,6 +16,7 @@ Output: [0, 0]
 Challenge
 O(n) time */
 
+//Method 1
 public class Solution {
     class Result{
         public int maxSum;
@@ -89,3 +90,125 @@ public class Solution {
 所以求一遍 minimum subarray 之后，比较两种情况, 取最优解即可
 
 需要特殊考虑 minimum subarray 是取了所有数的情况。 */
+
+//Method 2: double the origianl array + 单调deque
+public class Solution {
+    /**
+     * @param a: An integer array
+     * @return: A list of integers includes the index of the first number and the index of the last number
+     */
+    public List<Integer> continuousSubarraySumII(int[] nums) {
+        List<Integer> results = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return results;
+        }
+        int n = nums.length;
+        int[] array = new int[2 * n];
+        for (int i = 0; i < nums.length; i++) {
+            array[i] = nums[i];
+            array[i + n] = nums[i];
+        }
+        int[] sums = new int[2 * n + 1];
+        int max = Integer.MIN_VALUE;
+        Deque<Integer> deque = new ArrayDeque<>(); //ith num provides of min sum
+
+        for (int i = 1; i <= array.length; i++) {
+            sums[i] = sums[i - 1] + array[i - 1];
+
+            while (!deque.isEmpty() && sums[deque.peekLast()] >= sums[i]) {
+                deque.pollLast();
+            }
+            deque.offerLast(i);
+            if (i != deque.peekFirst() && sums[i] - sums[deque.peekFirst()] > max) {
+                results = Arrays.asList(deque.peekFirst() % n, (i - 1) % n);
+                max = sums[i] - sums[deque.peekFirst()];
+            }
+            if (i == deque.peekFirst() && array[i - 1] > max) {
+                results = Arrays.asList((i - 1) % n, (i - 1) % n);
+                max = array[i - 1];
+            }
+            
+            while (!deque.isEmpty() && deque.peekFirst() <= i - n) {
+                deque.pollFirst();
+            }
+        }
+        return results;
+    }
+}
+//time: O(n), space: O(n)
+
+// [3, 1, -100, -3, 4]
+//. --             ---
+
+// [3, 1, -100, -3, 4, 3, 1, -100, -3, 4]
+//                  -----
+
+
+//---------min
+//         ****** max
+//---------------curr sum
+
+
+//Method 3: normal case + prefix and surfix sum
+public class Solution {
+    /**
+     * @param a: An integer array
+     * @return: A list of integers includes the index of the first number and the index of the last number
+     */
+    public List<Integer> continuousSubarraySumII(int[] nums) {
+        List<Integer> results = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return results;
+        }
+        int n = nums.length;
+        //normal case
+        int sum = 0, min = 0, minIndex = -1, max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            if (sum - min > max) {
+                max = sum - min;
+                results = Arrays.asList(minIndex + 1, i);
+            }
+            if (sum < min) {
+                min = sum;
+                minIndex = i;
+            }
+        }
+        System.out.println("max=" + max);
+        //circular case
+        int[] rightSum = new int[n]; //sum(i ~ end)
+        rightSum[n - 1] = nums[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            rightSum[i] = rightSum[i + 1] + nums[i];
+        }
+        int[] rightMax = new int[n];
+        int[] rightMaxIndex = new int[n];
+        rightMax[n - 1] = nums[n - 1];
+        rightMaxIndex[n - 1] = n - 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (rightMax[i + 1] > rightSum[i]) {
+                rightMax[i] = rightMax[i + 1];
+                rightMaxIndex[i] = rightMaxIndex[i + 1];
+            } else {
+                rightMax[i] = rightSum[i];
+                rightMaxIndex[i] = i;
+            }
+        }
+        int leftSum = 0;
+        for (int i = 0; i < nums.length - 2; i++) {
+            leftSum += nums[i];
+
+            if (leftSum + rightMax[i + 2] > max) {
+                max = leftSum + rightMax[i + 2];
+                results = Arrays.asList(rightMaxIndex[i + 2], i);
+            }
+        }
+        return results;
+    }
+}
+
+// [3, 1, -100, -3, 4]
+//.    ------------    normal case
+//.---              --- circular case

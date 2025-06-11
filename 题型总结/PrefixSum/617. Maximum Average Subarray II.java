@@ -67,8 +67,13 @@ public class Solution {
 }
 
 /*
+we can make a guess of max avg, if we can find a subarray that is size >=k in the nums, we can increase the guess about max avg value, untill we are not able to find one subarray. That avg is the max avg
+
 二分出 average 之后，把数组中的每个数都减去 average，然后的任务就是去求这个数组中，是否有长度 >= k 的 subarray，他的和超过 0。这一步用类似 Maximum Subarray 的解法来做就好了
 eg. x1+x2+x3 / 3 = avg
     x1+x2+x3 = 3*avg
     (x1-avg) + (x2-avg) + (x3 - avg) = 0 =>真正的average
 */
+// nums[1] + nums[2] + ... + nums[i] / count = avg
+// nums[1] + nums[2] + ... + nums[i] = avg * count
+// (nums[1] - avg) + (nums[2] - avg) + ... + (nums[i] - avg) = 0;  <0 means we cannot get the avg based on the numbers, >= 0 means we can get the avg based on the numbers
