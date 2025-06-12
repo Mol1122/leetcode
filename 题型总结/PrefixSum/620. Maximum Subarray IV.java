@@ -23,6 +23,7 @@ Notice
 Ensure that the result is an integer type.
 k > 0 */
 
+//Method 1
 public class Solution {
     /**
      * @param nums: an array of integer
@@ -101,3 +102,29 @@ public class Solution {
 
 /* 算法：前缀和数组
 ** 难点：26行 sum[i - k + 1], 因为i+1和i-k+1隔了k个数. 面试的时候可以带特殊值进去算 */
+
+//Method 2
+public class Solution {
+    /**
+     * @param nums: an array of integer
+     * @param k: an integer
+     * @return: the largest sum
+     */
+    public int maxSubarray4(int[] nums, int k) {
+        if (nums == null || nums.length < k) {
+            return 0;
+        }
+        int[] sums = new int[nums.length + 1];
+        int min = 0, max = Integer.MIN_VALUE;
+
+        for (int i = 1; i <= nums.length; i++) {
+            sums[i] = sums[i -1] + nums[i - 1];
+
+            if (i >= k) {
+                max = Math.max(max, sums[i] - min);
+                min = Math.min(min, sums[i - k + 1]);
+            }
+        }
+        return max;
+    }
+}
