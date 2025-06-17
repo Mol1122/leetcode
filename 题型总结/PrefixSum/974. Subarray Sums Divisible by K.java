@@ -28,7 +28,7 @@ class Solution {
             sum += nums[i];
 
             int remainder = sum % k;
-            if (remainder < 0) {
+            if (remainder < 0) { //in case remainder is negative
                 remainder += k;
             }
 
