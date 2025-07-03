@@ -30,10 +30,10 @@ class Solution {
         
         for (int num : nums) {
             int step = 0;
-            while (!stack.isEmpty() && stack.peekLast().num <= num) {
-                step = Math.max(step, stack.pollLast().step);
+            while (!stack.isEmpty() && stack.peekLast().num <= num) { //<=是因为相同的话要把它从stack拿出。 栈里只存单调递减的数
+                step = Math.max(step, stack.pollLast().step); //直到stack里的上一个数，有多少个数是decreasing
             }
-            stack.offerLast(new Pair(num, stack.isEmpty() ? 0 : step + 1));
+            stack.offerLast(new Pair(num, stack.isEmpty() ? 0 : step + 1)); //从上一个非递减数开始算，到当前这个数，第几个decreasing number  
             max = Math.max(max, stack.peekLast().step);
         }
         return max;
@@ -48,4 +48,11 @@ class Pair {
         this.step = step;
     }
 }
+/*
+假设当前数nums[i] < nums[i - 1]. 那么就让i往后走，看后面有多少个数比nums[i - 1]小。需要往下走的同时回头看，因此想到单调栈
+*/
+
+// [5,3,4,4,7,3,6,11,8,5,11]
+//                     i
+//. 0 1 2 3 0 1 2  0 1 1 2 
 // 算法： 单调栈， time: O(n)

@@ -33,11 +33,11 @@ class Solution {
         if (piles == null || piles.length == 0) {
             return -1;
         }
-        long sum = 0;
+        long max = 0;
         for (int num : piles) {
-            sum += num;
+            max = Math.max(max, num);
         }
-        long start = 1, end = sum;
+        long start = 1, end = max;
 
         while (start + 1 < end) {
             long mid = start + (end - start) / 2;

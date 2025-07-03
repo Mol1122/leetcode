@@ -17,6 +17,7 @@ Examples
 the 5th smallest number is 4
 the 8th smallest number is 6 */
 
+//Method 1
 public class Solution {
   public int kthSmallest(int[][] matrix, int k) {
     if (matrix == null || matrix.length == 0) {
@@ -59,3 +60,45 @@ class Pair {
   }
 }
 //time: O(klog(n*m)), space: O(n * m);
+
+//Method 2
+class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        if (matrix == null || matrix.length == 0) {
+            return -1;
+        }
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int start = matrix[0][0], end = matrix[n - 1][m - 1];
+
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (moreOrEqualKnumbersLessThanMid(matrix, mid, k)) { //how many numbers that is less or equal to mid number
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+        if (moreOrEqualKnumbersLessThanMid(matrix, start, k)) {
+            return start;
+        }
+        return end;
+    }
+
+    private boolean moreOrEqualKnumbersLessThanMid(int[][] matrix, int num, int k) { //how many numbers that is less or equal to mid number
+        int count = 0;
+        int i = matrix.length - 1, j = 0;
+
+        while (i >= 0 && j < matrix[0].length) {
+            if (matrix[i][j] <= num) {
+                count += i + 1;
+                j++;
+            } else {
+                i--;
+            }
+        }
+        return count >= k;
+    }
+}
+//二分答案
+//time: O(nlog(n*n)), space: O(1)

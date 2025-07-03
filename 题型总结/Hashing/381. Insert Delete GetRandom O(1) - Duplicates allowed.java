@@ -35,6 +35,7 @@ randomizedCollection.remove(1);   // return true since the collection contains 1
                                   // Removes 1 from the collection. Collection now contains [1,2].
 randomizedCollection.getRandom(); // getRandom should return 1 or 2, both equally likely.            */
 
+//Method 1
 class RandomizedCollection {
     List<Integer> result;
     Map<Integer, LinkedHashSet<Integer>> map;
@@ -91,3 +92,55 @@ class RandomizedCollection {
 
 /* 算法：利用LinkedHashSet去记录同一个数字出现的所有index, remove比较难，但是只要顺着思路基本就不会有错 
 ** 难点：最后容易忘记remove result最后一个 */
+
+//Method 2
+class RandomizedCollection {
+    List<Integer> nums;
+    Map<Integer, LinkedHashSet<Integer>> num2index;
+    Random rand;
+
+    public RandomizedCollection() {
+        nums = new ArrayList<>();
+        num2index = new HashMap<>();
+        rand = new Random();
+    }
+    
+    public boolean insert(int val) {
+        boolean alreadyExist = num2index.containsKey(val);
+
+        num2index.putIfAbsent(val, new LinkedHashSet<>());
+        num2index.get(val).add(nums.size());
+        nums.add(val);
+
+        return !alreadyExist;
+    }
+    
+    public boolean remove(int val) {
+        if (!num2index.containsKey(val)) {
+            return false;
+        }
+        LinkedHashSet<Integer> valSet = num2index.get(val);
+        int indexToRemove = valSet.iterator().next();
+
+        int last = nums.get(nums.size() - 1);
+        LinkedHashSet<Integer> lastSet = num2index.get(last);
+        int lastIndex = nums.size() - 1; //这种写法就不依赖于nums.size() - 1, 下面几段的顺序可以打乱
+
+        nums.set(indexToRemove, last);
+        nums.remove(nums.size() - 1);
+        
+        valSet.remove(indexToRemove);
+        if (valSet.isEmpty()) {
+            num2index.remove(val);
+        }
+
+        lastSet.remove(lastIndex); //easy to forget
+        lastSet.add(indexToRemove);
+
+        return true;
+    }
+    
+    public int getRandom() {
+        return nums.get(rand.nextInt(nums.size()));
+    }
+}
