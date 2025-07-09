@@ -19,8 +19,15 @@ stack.top(); -> 5
 Note:
 -1e7 <= x <= 1e7
 Number of operations won't exceed 10000.
-The last four operations won't be called when stack is empty. */
+The last four operations won't be called when stack is empty. 
 
+You must come up with a solution that supports O(1) for each top call and O(logn) for each other call.
+
+
+*/
+
+
+//Method 1 TLE
 class MaxStack {
     Stack<Integer> stack;
     Stack<Integer> maxStack;
@@ -78,3 +85,61 @@ class MaxStack {
  * int param_4 = obj.peekMax();
  * int param_5 = obj.popMax();
  */
+
+//Method 2
+class MaxStack {
+    TreeSet<Pair> stack; //sorted based on index
+    TreeSet<Pair> maxStack; //sorted based on number value
+    int index;
+
+    public MaxStack() {
+        stack = new TreeSet<>(new Comparator<Pair>(){
+            public int compare(Pair a, Pair b) {
+                return a.index == b.index ? a.num - b.num : a.index - b.index;
+            }
+        });
+        maxStack = new TreeSet<>(new Comparator<Pair>(){
+            public int compare(Pair a, Pair b) {
+                return a.num == b.num ? a.index - b.index : a.num - b.num;
+            }
+        });
+
+        index = 0;
+    }
+    
+    public void push(int x) { //O(logn)
+        Pair p = new Pair(x, index);
+        stack.add(p);
+        maxStack.add(p);
+        index++;
+    }
+    
+    public int pop() { //O(logn)
+        Pair p = stack.pollLast();
+        maxStack.remove(p);
+        return p.num;
+    }
+    
+    public int top() { //O(1)
+        return stack.last().num;
+    }
+    
+    public int peekMax() { //O(logn)
+        return maxStack.last().num;
+    }
+    
+    public int popMax() { //O(logn)
+        Pair maxPair = maxStack.pollLast();
+        stack.remove(maxPair);
+        return maxPair.num;
+    }
+}
+
+class Pair {
+    int num, index;
+
+    public Pair(int num, int index) {
+        this.num = num;
+        this.index = index;
+    }
+}
