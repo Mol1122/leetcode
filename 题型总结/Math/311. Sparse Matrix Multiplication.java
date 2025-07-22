@@ -53,4 +53,4 @@ class Solution {
 
 /* 算法：因为两个matrix都是稀疏的，因此两个都可以优化。
 ** 难点：26行要明白，t是A的列，同时也是B的行。i， 就肯定要遍历完A的行和B的列 */
-//time: O(n^2), space: O(n^2)
+//time: O(ntm), space: O(1)
