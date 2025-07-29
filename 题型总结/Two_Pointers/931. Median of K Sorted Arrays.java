@@ -1,3 +1,6 @@
+/* Description
+There are k sorted arrays nums. Find the median of the given k sorted arrays. */
+
 public class Solution {
     /**
      * @param nums: the given k sorted arrays
@@ -12,7 +15,7 @@ public class Solution {
             return 0;
         }
         if (n % 2 == 0) {
-            return (findKth(nums, n / 2) + findKth(nums, n / 2 + 1)) / 2.0;
+            return ((long)findKth(nums, n / 2) + (long)findKth(nums, n / 2 + 1)) / 2.0;
         }
         return findKth(nums, n / 2 + 1);
     }
