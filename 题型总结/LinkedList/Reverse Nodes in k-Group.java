@@ -21,6 +21,7 @@ public class Solution {
       while (head != null) {
           temp = head;
           count = 0;
+
           for (int i = 0; i < k; i++) {
               if (head == null) {
                   break;
@@ -30,6 +31,7 @@ public class Solution {
               head = head.next;
           }
           prev.next = null;
+
           if (count == k) {
               tail.next = reverse(temp);
           } else {
@@ -63,5 +65,5 @@ public class Solution {
   }
 }
 
-/* 时间复杂度：O(n)
+/* 时间复杂度：O(n). curr会在n/k个位置停留，reverse是O(k). curr相当于市正着走了一次，O(n), reverse的时候又走了次O(n), O(n) + O(n) = O(n). tail 也是从头走到尾，O(n)
 ** 空间复杂度：O(1) */

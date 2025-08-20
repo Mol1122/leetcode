@@ -101,3 +101,43 @@ class Solution {
     }
 }
 //time: O(n), space: O(n)
+
+
+//Method 3: space: O(1)
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        int leftCount = 0;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                sb.append('(');
+                leftCount++;
+            } else if (c == ')') {
+                if (leftCount > 0) {
+                    sb.append(')');
+                    leftCount--;
+                } else {
+                    continue;
+                }
+            } else {
+                sb.append(c);
+            }
+        }
+        for (int i = sb.length() - 1; i >= 0; i--) {
+            if (leftCount == 0) {
+                return sb.toString();
+            }
+            if (sb.charAt(i) == '(') {
+                sb.deleteCharAt(i);
+                leftCount--;
+            }
+        }
+        return sb.toString();
+    }
+}
+//time: O(n), space: O(1)

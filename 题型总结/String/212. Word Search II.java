@@ -16,6 +16,7 @@ Return ["eat","oath"].
 Note:
 You may assume that all inputs are consist of lowercase letters a-z. */
 
+//Method 1
 public class Solution {
   public List<String> findWords(char[][] board, String[] words) {
     Set<String> results = new HashSet<>();
@@ -70,4 +71,69 @@ public class Solution {
     }
     return map;
   }
+}
+
+
+//Method 2, 会TLE
+class Solution {
+    public List<String> findWords(char[][] board, String[] words) {
+        Set<String> results = new HashSet<>();
+        if (board == null || board.length == 0) {
+            return new ArrayList<>();
+        }
+        Map<String, Boolean> prefixIsWord = getMap(words);
+        int n = board.length;
+        int m = board[0].length;
+        boolean[][] visited = new boolean[n][m];
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                dfs(board, i, j, visited, prefixIsWord, new StringBuilder(), results);
+            }
+        }
+        return new ArrayList<>(results);
+    }
+
+    private void dfs(char[][] board, int x, int y, boolean[][] visited, Map<String, Boolean> prefixIsWord, StringBuilder sb, Set<String> results) {
+        if (sb.toString().length() != 0 && !prefixIsWord.containsKey(sb.toString())) {
+            return;
+        }
+        if (sb.toString().length() != 0 && prefixIsWord.get(sb.toString())) {
+            results.add(new String(sb));
+        }
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+            return;
+        }
+        if (visited[x][y]) {
+            return;
+        }
+        sb.append(board[x][y]);
+        visited[x][y] = true;
+
+        int[] dx = {1, 0, -1, 0};
+        int[] dy = {0, 1, 0, -1};
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            dfs(board, nx, ny, visited, prefixIsWord, sb, results);
+        }
+        visited[x][y] = false;
+        sb.deleteCharAt(sb.length() - 1);
+    }
+
+    private Map<String, Boolean> getMap(String[] words) {
+        Map<String, Boolean> map = new HashMap<>();
+
+        for (String word : words) {
+            String prefix = "";
+            for (char c : word.toCharArray()) {
+                prefix += c;
+                map.putIfAbsent(prefix, false);
+            }
+            map.put(word, true);
+        }
+        return map;
+    }
 }
