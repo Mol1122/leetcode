@@ -9,10 +9,12 @@ import java.util.*;
 class Main {
     public static void main(String[] args) {
         
-        String[][] strs = {{"user_1", "camera", "camera_1"}, 
-                           {"user_1", "group", "group_1"},
-                           {"group_1", "camera", "camera_1"},
-                           {"group_1", "camera", "camera_2"}
+        String[][] strs = {{"user_1", "owe", "camera_1"}, 
+                           {"user_1", "belongs to", "group_1"},
+                           {"group_1", "owe", "camera_1"},
+                           {"group_1", "belongs to", "group_2"},
+                           {"group_2", "owe", "camera_2"},
+                           {"user_2", "owe", "camera_2"}
         };
         
         String result = getPermission(strs);
@@ -25,13 +27,13 @@ class Main {
         }
         Map<String, List<String>> graph = getGraph(strs);
         
-        for (String key : graph.keySet()) {
-            System.out.print(key + ", neighbors: ");
-            for (String neighbor : graph.get(key)) {
-                System.out.print(neighbor + ", ");
-            }
-            System.out.println();
-        }
+        // for (String key : graph.keySet()) {
+        //     System.out.print(key + ", neighbors: ");
+        //     for (String neighbor : graph.get(key)) {
+        //         System.out.print(neighbor + ", ");
+        //     }
+        //     System.out.println();
+        // }
         
         Set<String> users = getUsers(strs);
         Set<String> cameras = getCamera(strs);
